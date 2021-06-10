@@ -1,8 +1,15 @@
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import PhotoList from 'pages/PhotoList';
+
 function App() {
   return (
-    <div className='App'>
-      <h1>Hello From Photobook</h1>
-    </div>
+    <>
+      <Router>
+        <Switch>
+          <Route exact path='/' component={PhotoList} />
+        </Switch>
+      </Router>
+    </>
   );
 }
 
