@@ -69,6 +69,8 @@ const FormGroup = styled.div`
 
   .searchIcon {
     position: absolute;
+    width: 19px;
+    height: 19px;
     margin-left: 16px;
     fill: black;
   }
@@ -95,12 +97,15 @@ const IconWrapper = styled.div`
   height: 49px;
   background: #fff;
   border-radius: 8px;
-  /* background: #a2c8fa 0% 0% no-repeat padding-box; */
-  /* opacity: 0.4; */
 
   display: grid;
   justify-content: center;
   align-content: center;
+
+  :hover {
+    background: #a2c8fa 0% 0% no-repeat padding-box;
+    opacity: 1;
+  }
 `;
 const Icon = styled.img`
   width: 30px;

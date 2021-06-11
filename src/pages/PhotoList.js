@@ -2,7 +2,10 @@ import axios from 'axios';
 import { Component } from 'react';
 import styled from 'styled-components';
 import Masonry from 'react-masonry-css';
-import { Container } from 'styles';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import Loader from 'react-loader-spinner';
+import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
+
 
 const breakpointColumns = {
   default: 3,
@@ -16,6 +19,7 @@ export default class PhotoList extends Component {
   state = {
     photos: [],
     isLoading: false,
+    page: 1,
   };
 
   componentDidMount = () => {
@@ -32,7 +36,7 @@ export default class PhotoList extends Component {
 
       // make a fetch request to the api GET/photos end point
       const response = await axios.get(
-        `${process.env.REACT_APP_UNSPLASH_API_URL}/photos`,
+        `${process.env.REACT_APP_UNSPLASH_API_URL}/photos?page=${this.state.page}&per_page=20`,
         {
           headers: {
             Authorization: `Client-ID ${process.env.REACT_APP_UNSPLASH_ACCESS_KEY}`,
@@ -43,29 +47,55 @@ export default class PhotoList extends Component {
 
       // update state with data
       this.setState({
-        photos: data,
+        photos: [...this.state.photos, ...data],
+        page: this.state.page + 1,
+        isLoading: false,
       });
-
-      // set isLoading back to false
-      this.setState({ isLoading: false });
     } catch (err) {
       console.log('Ooops!', err);
     }
   };
 
   render() {
+    const { photos,isLoading } = this.state;
     return (
-        <Masonry
-          breakpointCols={breakpointColumns}
-          className='masonry-grid'
-          columnClassName='masonry-grid_column'
-        >
-          {this.state.photos.map((photo) => (
-            <GalleryItem key={photo.id}>
-              <GalleryImage src={photo.urls.small} alt={photo.description} />
-            </GalleryItem>
-          ))}
-        </Masonry>
+      <>
+        {isLoading ? (
+          <div class='spinner'>
+            <Loader type='ThreeDots' color='#32D3AC' />
+          </div>
+        ) : (
+          ''
+        )}
+
+        {photos.length > 0 && (
+          <InfiniteScroll
+            dataLength={photos.length}
+            next={this.fetchPhotos}
+            hasMore={true}
+            loader={
+              <div className='spinner'>
+                <Loader type='ThreeDots' color='#32D3AC' />
+              </div>
+            }
+          >
+            <Masonry
+              breakpointCols={breakpointColumns}
+              className='masonry-grid'
+              columnClassName='masonry-grid_column'
+            >
+              {this.state.photos.map((photo) => (
+                <GalleryItem key={photo.id}>
+                  <GalleryImage
+                    src={photo.urls.small}
+                    alt={photo.description}
+                  />
+                </GalleryItem>
+              ))}
+            </Masonry>
+          </InfiniteScroll>
+        )}
+      </>
     );
   }
 }

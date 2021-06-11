@@ -35,4 +35,7 @@ body{
 .masonry-grid_column > div {
   margin: 15px auto;
 }
+.spinner{
+  text-align:center;
+}
 `;
