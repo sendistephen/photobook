@@ -1,4 +1,3 @@
-import Navbar from 'components/Navbar/Navbar';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Container } from 'styles';
@@ -9,9 +8,12 @@ ReactDOM.render(
   <React.StrictMode>
     <GlobalStyles />
     <Container>
-      <Navbar />
       <App />
     </Container>
   </React.StrictMode>,
   document.getElementById('root')
 );
+
+if (module.hot && process.env.NODE_ENV !== 'production') {
+  module.hot.accept();
+}

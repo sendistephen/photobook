@@ -6,7 +6,6 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import Loader from 'react-loader-spinner';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 
-
 const breakpointColumns = {
   default: 3,
   1200: 3,
@@ -57,7 +56,7 @@ export default class PhotoList extends Component {
   };
 
   render() {
-    const { photos,isLoading } = this.state;
+    const { photos, isLoading } = this.state;
     return (
       <>
         {isLoading ? (
@@ -77,6 +76,11 @@ export default class PhotoList extends Component {
               <div className='spinner'>
                 <Loader type='ThreeDots' color='#32D3AC' />
               </div>
+            }
+            endMessage={
+              <Message>
+                <b>There are no more photos</b>
+              </Message>
             }
           >
             <Masonry
@@ -107,4 +111,8 @@ const GalleryItem = styled.div`
 const GalleryImage = styled.img`
   width: 100%;
   border-radius: 10px;
+`;
+const Message = styled.p`
+  text-align: center;
+  font-weight: bold;
 `;

@@ -1,3 +1,5 @@
+import MenuButton from 'components/Buttons/MenuButton';
+import { menu } from 'data/menu';
 import { Component } from 'react';
 import styled from 'styled-components';
 
@@ -8,7 +10,7 @@ export default class Navbar extends Component {
         <HeaderContainer>
           <form>
             <FormGroup>
-              <Icon
+              <img
                 className='searchIcon'
                 src='/images/search.svg'
                 alt='Search Icon'
@@ -17,29 +19,11 @@ export default class Navbar extends Component {
             </FormGroup>
           </form>
           <Wrapper>
-            <div>
-              <IconWrapper>
-                <Icon src='/images/camera.svg' className='icon' alt='desc' />
-              </IconWrapper>
-            </div>
-            <div>
-              <IconWrapper>
-                <Icon
-                  src='/images/IconlyBulkHeart.svg'
-                  className='icon'
-                  alt='desc'
-                />
-              </IconWrapper>
-            </div>
-            <div>
-              <IconWrapper>
-                <Icon
-                  src='/images/IconlyBulkScan.svg'
-                  className='icon'
-                  alt='desc'
-                />
-              </IconWrapper>
-            </div>
+            <MenuWrapper>
+              {menu.map((item, index) => (
+                <MenuButton key={index} item={item} />
+              ))}
+            </MenuWrapper>
           </Wrapper>
         </HeaderContainer>
       </Header>
@@ -59,8 +43,8 @@ const HeaderContainer = styled.div`
   justify-content: center;
   align-items: center;
   grid-template-columns: auto auto;
-  gap: 14px;
-  padding: 20px 0 20px;
+  gap: 50px;
+  padding: 20px 0px 30px;
 `;
 const FormGroup = styled.div`
   position: relative;
@@ -92,24 +76,8 @@ const Wrapper = styled.div`
   grid-template-columns: auto auto auto;
   gap: 14px;
 `;
-const IconWrapper = styled.div`
-  width: 49px;
-  height: 49px;
-  background: #fff;
-  border-radius: 8px;
-
+const MenuWrapper = styled.div`
   display: grid;
-  justify-content: center;
-  align-content: center;
-
-  :hover {
-    background: #a2c8fa 0% 0% no-repeat padding-box;
-    opacity: 1;
-  }
-`;
-const Icon = styled.img`
-  width: 30px;
-  height: 30px;
-  cursor: pointer;
-  opacity: 1;
+  grid-template-columns: auto auto auto;
+  gap: 20px;
 `;
