@@ -1,10 +1,10 @@
 import axios from 'axios';
 import { Component } from 'react';
-import styled from 'styled-components';
 import Masonry from 'react-masonry-css';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Loader from 'react-loader-spinner';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
+import { GalleryImage, GalleryItem, Message } from './PhotoList.styles';
 
 const breakpointColumns = {
   default: 3,
@@ -103,16 +103,3 @@ export default class PhotoList extends Component {
     );
   }
 }
-
-const GalleryItem = styled.div`
-  border-radius: 10px;
-`;
-
-const GalleryImage = styled.img`
-  width: 100%;
-  border-radius: 10px;
-`;
-const Message = styled.p`
-  text-align: center;
-  font-weight: bold;
-`;
