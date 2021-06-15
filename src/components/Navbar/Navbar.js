@@ -10,7 +10,7 @@ import {
   Wrapper,
   SearchIcon,
 } from './Navbar.styles';
-import searchIcon from '../../assets/icons/search.svg';
+import searchIcon from 'assets/icons/search.svg';
 
 export default class Navbar extends Component {
   render() {
