@@ -1,3 +1,4 @@
+import Masonry from 'react-masonry-css';
 import styled from 'styled-components';
 
 export const GalleryItem = styled.div`
@@ -11,4 +12,18 @@ export const GalleryImage = styled.img`
 export const Message = styled.p`
   text-align: center;
   font-weight: bold;
+`;
+export const LoadingSpinner = styled.div`
+  text-align: center;
+`;
+export const StyledMasonry = styled(Masonry)`
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  max-width: 60%;
+  margin: 50px auto;
+
+  @media (max-width: 568px) {
+    max-width: 100%;
+  }
 `;
