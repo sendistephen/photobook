@@ -24,24 +24,20 @@ body{
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 /* Masonry Grid */
-.masonry-grid {
-  display: -webkit-box; 
-  display: -ms-flexbox;
-  display: flex;
-  max-width: 60%;
-  margin: 50px auto;
-}
 .masonry-grid_column {
-  padding-left: 15px; /* gutter size */
+  padding-left: 15px; 
   background-clip: padding-box;
+
+@media (max-width: 568px) {
+    max-width: 100%;
+    padding-left: 0px;
+  }
 }
 
 .masonry-grid_column > div {
   margin: 15px auto;
 }
-.spinner{
-  text-align:center;
-}
+
   &.main-nav-active {
     &:first-child{
       background: #A2C8FA 0% 0% no-repeat padding-box;

@@ -1,10 +1,16 @@
 import axios from 'axios';
 import { Component } from 'react';
-import Masonry from 'react-masonry-css';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Loader from 'react-loader-spinner';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
-import { GalleryImage, GalleryItem, Message } from './PhotoList.styles';
+import getURL from 'utils/api';
+import {
+  GalleryImage,
+  GalleryItem,
+  Message,
+  LoadingSpinner,
+  StyledMasonry,
+} from './PhotoList.styles';
 
 const breakpointColumns = {
   default: 3,
@@ -34,14 +40,11 @@ export default class PhotoList extends Component {
       this.setState({ isLoading: true });
 
       // make a fetch request to the api GET/photos end point
-      const response = await axios.get(
-        `${process.env.REACT_APP_UNSPLASH_API_URL}/photos?page=${this.state.page}&per_page=20`,
-        {
-          headers: {
-            Authorization: `Client-ID ${process.env.REACT_APP_UNSPLASH_ACCESS_KEY}`,
-          },
-        }
-      );
+      const url = getURL({
+        page: this.state.page,
+        per_page: 50,
+      });
+      const response = await axios(url);
       const data = await response.data;
 
       // update state with data
@@ -60,9 +63,9 @@ export default class PhotoList extends Component {
     return (
       <>
         {isLoading ? (
-          <div class='spinner'>
+          <LoadingSpinner>
             <Loader type='ThreeDots' color='#32D3AC' />
-          </div>
+          </LoadingSpinner>
         ) : (
           ''
         )}
@@ -73,9 +76,9 @@ export default class PhotoList extends Component {
             next={this.fetchPhotos}
             hasMore={true}
             loader={
-              <div className='spinner'>
+              <LoadingSpinner>
                 <Loader type='ThreeDots' color='#32D3AC' />
-              </div>
+              </LoadingSpinner>
             }
             endMessage={
               <Message>
@@ -83,9 +86,8 @@ export default class PhotoList extends Component {
               </Message>
             }
           >
-            <Masonry
+            <StyledMasonry
               breakpointCols={breakpointColumns}
-              className='masonry-grid'
               columnClassName='masonry-grid_column'
             >
               {this.state.photos.map((photo) => (
@@ -96,7 +98,7 @@ export default class PhotoList extends Component {
                   />
                 </GalleryItem>
               ))}
-            </Masonry>
+            </StyledMasonry>
           </InfiniteScroll>
         )}
       </>

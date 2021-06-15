@@ -19,14 +19,6 @@ export const FormGroup = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-
-  /* .searchIcon {
-    position: absolute;
-    width: 19px;
-    height: 19px;
-    margin-left: 16px;
-    fill: black;
-  } */
 `;
 export const Input = styled.input`
   background-color: white;
