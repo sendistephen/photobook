@@ -3,7 +3,8 @@ import { Component } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Loader from 'react-loader-spinner';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
-import getURL from 'utils/api';
+import { Link } from 'react-router-dom';
+import { getURL } from 'utils/api';
 import {
   GalleryImage,
   GalleryItem,
@@ -92,10 +93,12 @@ export default class PhotoList extends Component {
             >
               {this.state.photos.map((photo) => (
                 <GalleryItem key={photo.id}>
-                  <GalleryImage
-                    src={photo.urls.small}
-                    alt={photo.description}
-                  />
+                  <Link to={`/photos/${photo.id}`}>
+                    <GalleryImage
+                      src={photo.urls.small}
+                      alt={photo.description}
+                    />
+                  </Link>
                 </GalleryItem>
               ))}
             </StyledMasonry>
