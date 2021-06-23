@@ -1,4 +1,5 @@
 import axios from 'axios';
+import moment from 'moment';
 import { Component } from 'react';
 import Loader from 'react-loader-spinner';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
@@ -89,7 +90,7 @@ export default class Photo extends Component {
                   />
                   <TextWrapper>
                     <Title>{photo.user.username}</Title>
-                    <Subtitle>12 hours ago</Subtitle>
+                    <Subtitle>{moment(photo.updated_at).fromNow()}</Subtitle>
                   </TextWrapper>
                 </Avatar>
                 <OptionsMenu>
