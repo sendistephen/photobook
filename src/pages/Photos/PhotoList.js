@@ -1,9 +1,9 @@
 import axios from 'axios';
+import Modal from 'components/Modal';
 import { Component } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Loader from 'react-loader-spinner';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
-import { Link } from 'react-router-dom';
 import { getURL } from 'utils/api';
 import {
   GalleryImage,
@@ -26,8 +26,18 @@ export default class PhotoList extends Component {
     photos: [],
     isLoading: false,
     page: 1,
+    show: false,
   };
 
+  showModal = (id) => {
+    const item = this.state.photos.map((photo) => photo.id === id);
+    if (item) {
+      this.setState({ selectedPhoto: item, show: true });
+    }
+  };
+  hideModal = () => {
+    this.setState({ show: false });
+  };
   componentDidMount = () => {
     this.fetchPhotos();
   };
@@ -60,7 +70,7 @@ export default class PhotoList extends Component {
   };
 
   render() {
-    const { photos, isLoading } = this.state;
+    const { photos, isLoading, show } = this.state;
     return (
       <>
         {isLoading ? (
@@ -91,17 +101,19 @@ export default class PhotoList extends Component {
               breakpointCols={breakpointColumns}
               columnClassName='masonry-grid_column'
             >
-              {this.state.photos.map((photo) => (
+              {this.state.photos.map((photo, index) => (
                 <GalleryItem key={photo.id}>
-                  <Link to={`/photos/${photo.id}`}>
-                    <GalleryImage
-                      src={photo.urls.small}
-                      alt={photo.description}
-                    />
-                  </Link>
+                  <GalleryImage
+                    onClick={() => this.showModal(photo.id)}
+                    src={photo.urls.small}
+                    alt={photo.description}
+                  />
                 </GalleryItem>
               ))}
             </StyledMasonry>
+            {show && (
+              <Modal photos={photos} hideModal={this.hideModal} show={show} />
+            )}
           </InfiniteScroll>
         )}
       </>

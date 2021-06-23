@@ -58,7 +58,6 @@ export default class Photo extends Component {
 
   render() {
     const { isLoading, photo } = this.state;
-    console.log(photo);
     return (
       <Wrapper>
         <Collection>
@@ -99,6 +98,7 @@ export default class Photo extends Component {
               </PhotoHeader>
             )}
             <Description>{photo.description}</Description>
+
             {photo.urls && (
               <PhotoImageWrapper>
                 <PhotoImage src={photo.urls.small} alt={photo.description} />
