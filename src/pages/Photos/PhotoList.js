@@ -27,14 +27,13 @@ export default class PhotoList extends Component {
     isLoading: false,
     page: 1,
     show: false,
+    index: null,
   };
 
-  showModal = (id) => {
-    const item = this.state.photos.map((photo) => photo.id === id);
-    if (item) {
-      this.setState({ selectedPhoto: item, show: true });
-    }
+  showModal = (index) => {
+    this.setState({ show: true, index });
   };
+
   hideModal = () => {
     this.setState({ show: false });
   };
@@ -70,7 +69,7 @@ export default class PhotoList extends Component {
   };
 
   render() {
-    const { photos, isLoading, show } = this.state;
+    const { photos, isLoading, show, index } = this.state;
     return (
       <>
         {isLoading ? (
@@ -102,17 +101,23 @@ export default class PhotoList extends Component {
               columnClassName='masonry-grid_column'
             >
               {this.state.photos.map((photo, index) => (
+               
                 <GalleryItem key={photo.id}>
                   <GalleryImage
-                    onClick={() => this.showModal(photo.id)}
                     src={photo.urls.small}
                     alt={photo.description}
+                    onClick={() => this.showModal(index)}
                   />
                 </GalleryItem>
               ))}
             </StyledMasonry>
             {show && (
-              <Modal photos={photos} hideModal={this.hideModal} show={show} />
+              <Modal
+                photos={photos}
+                index={index}
+                hideModal={this.hideModal}
+                show={show}
+              />
             )}
           </InfiniteScroll>
         )}

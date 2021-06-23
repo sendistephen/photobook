@@ -20,9 +20,10 @@ import starIcon from 'assets/icons/star.svg';
 import closeIcon from 'assets/icons/cross.svg';
 import MagicSliderDots from 'react-magic-slider-dots';
 import 'react-magic-slider-dots/dist/magic-dots.css';
+import moment from 'moment'
 import { Link } from 'react-router-dom';
 
-export default function Modal({ photos, show, hideModal }) {
+export default function Modal({photos,index, show, hideModal }) {
   const showHideModal = show
     ? 'SliderContainer display-block'
     : 'SliderContainer display-none';
@@ -33,6 +34,7 @@ export default function Modal({ photos, show, hideModal }) {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+    initialSlide:index,
     appendDots: (dots) => {
       return <MagicSliderDots dots={dots} numDotsToShow={3} dotWidth={30} />;
     },
@@ -42,7 +44,7 @@ export default function Modal({ photos, show, hideModal }) {
     <SliderContainer className={showHideModal}>
       <StyledSlider {...settings}>
         {photos &&
-          photos.map((photo) => (
+          photos.map((photo, index) => (
             <div key={photo.id}>
               <PhotoHeader>
                 <Avatar>
@@ -52,7 +54,7 @@ export default function Modal({ photos, show, hideModal }) {
                   />
                   <TextWrapper>
                     <Title>{photo.user.username}</Title>
-                    <Subtitle>12 hours ago</Subtitle>
+                    <Subtitle>{moment(photo.updated_at).fromNow()}</Subtitle>
                   </TextWrapper>
                 </Avatar>
                 <CloseModal>
@@ -62,7 +64,10 @@ export default function Modal({ photos, show, hideModal }) {
 
               <PhotoImageWrapper>
                 <Link to={`/photos/${photo.id}`} key={photo.id}>
-                  <PhotoImage src={photo.urls.small} alt={photo.description} />
+                  <PhotoImage
+                    src={photo.urls.small}
+                    alt={photo.description}
+                  />
                 </Link>
               </PhotoImageWrapper>
 
