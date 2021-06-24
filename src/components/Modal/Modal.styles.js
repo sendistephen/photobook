@@ -6,25 +6,28 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
 export const SliderContainer = styled.div`
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgba(0, 0, 0, 0.6);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-   z-index: 1000;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
   
-  .display-block {
+  &.show-hide-modal {
+    display: ${(props) => (props.show ? 'block' : 'none')};
+  }
+  /* .display-block {
     display: block;
   }
 
   .display-none {
     display: none;
-  }
+  } */
 `;
 export const StyledSlider = styled(Slider)`
   width: 580px;

@@ -3,7 +3,6 @@ import Modal from 'components/Modal';
 import { Component } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Loader from 'react-loader-spinner';
-import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import { getURL } from 'utils/api';
 import {
   GalleryImage,
@@ -72,14 +71,11 @@ export default class PhotoList extends Component {
     const { photos, isLoading, show, index } = this.state;
     return (
       <>
-        {isLoading ? (
+        {isLoading && (
           <LoadingSpinner>
             <Loader type='ThreeDots' color='#32D3AC' />
           </LoadingSpinner>
-        ) : (
-          ''
         )}
-
         {photos.length > 0 && (
           <InfiniteScroll
             dataLength={photos.length}
@@ -101,7 +97,6 @@ export default class PhotoList extends Component {
               columnClassName='masonry-grid_column'
             >
               {this.state.photos.map((photo, index) => (
-               
                 <GalleryItem key={photo.id}>
                   <GalleryImage
                     src={photo.urls.small}

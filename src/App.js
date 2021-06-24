@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { Photos, Photo} from 'pages';
-import Navbar from 'components/Navbar/Navbar';
+import { Photos, Photo } from 'pages';
+import { Navbar } from 'components';
 
 function App() {
   return (

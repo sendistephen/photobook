@@ -2,7 +2,6 @@ import axios from 'axios';
 import moment from 'moment';
 import { Component } from 'react';
 import Loader from 'react-loader-spinner';
-import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import { Wrapper } from 'styles';
 import {
   AddCollection,
@@ -71,52 +70,47 @@ export default class Photo extends Component {
           </CollectionCards>
         </Collection>
 
-        {/* photo details */}
-        {isLoading ? (
+        {isLoading && (
           <LoadingSpinner>
             <Loader type='ThreeDots' color='#32D3AC' />
           </LoadingSpinner>
-        ) : (
-          ''
         )}
-        {photo && (
-          <PhotoWrapper>
-            {photo.user && (
-              <PhotoHeader>
-                <Avatar>
-                  <AvatarImg
-                    src={photo.user.profile_image.medium}
-                    alt={photo.user.username}
-                  />
-                  <TextWrapper>
-                    <Title>{photo.user.username}</Title>
-                    <Subtitle>{moment(photo.updated_at).fromNow()}</Subtitle>
-                  </TextWrapper>
-                </Avatar>
-                <OptionsMenu>
-                  <Icon src={optionIcon} alt='Options menu' />
-                </OptionsMenu>
-              </PhotoHeader>
-            )}
-            <Description>{photo.description}</Description>
+        <PhotoWrapper>
+          {photo.user && (
+            <PhotoHeader>
+              <Avatar>
+                <AvatarImg
+                  src={photo.user.profile_image.medium}
+                  alt={photo.user.username}
+                />
+                <TextWrapper>
+                  <Title>{photo.user.username}</Title>
+                  <Subtitle>{moment(photo.updated_at).fromNow()}</Subtitle>
+                </TextWrapper>
+              </Avatar>
+              <OptionsMenu>
+                <Icon src={optionIcon} alt='Options menu' />
+              </OptionsMenu>
+            </PhotoHeader>
+          )}
+          <Description>{photo.description}</Description>
 
-            {photo.urls && (
-              <PhotoImageWrapper>
-                <PhotoImage src={photo.urls.small} alt={photo.description} />
-              </PhotoImageWrapper>
-            )}
-            <PhotoFooter>
-              <IconWrapper>
-                <Icon src={heartIcon} alt='heart icon' />
-                <span>{photo.likes}</span>
-              </IconWrapper>
-              <div></div>
-              <FavIcon>
-                <Icon src={starIcon} alt='Fav icon' />
-              </FavIcon>
-            </PhotoFooter>
-          </PhotoWrapper>
-        )}
+          {photo.urls && (
+            <PhotoImageWrapper>
+              <PhotoImage src={photo.urls.small} alt={photo.description} />
+            </PhotoImageWrapper>
+          )}
+          <PhotoFooter>
+            <IconWrapper>
+              <Icon src={heartIcon} alt='heart icon' />
+              <span>{photo.likes}</span>
+            </IconWrapper>
+            <div></div>
+            <FavIcon>
+              <Icon src={starIcon} alt='Fav icon' />
+            </FavIcon>
+          </PhotoFooter>
+        </PhotoWrapper>
       </Wrapper>
     );
   }
