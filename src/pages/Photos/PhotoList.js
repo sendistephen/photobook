@@ -54,7 +54,7 @@ export default class PhotoList extends Component {
         per_page: 50,
       });
       const response = await axios(url);
-      const data = await response.data;
+      const data = response.data;
 
       // update state with data
       this.setState({

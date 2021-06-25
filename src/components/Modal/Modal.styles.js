@@ -17,17 +17,10 @@ export const SliderContainer = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  
+
   &.show-hide-modal {
     display: ${(props) => (props.show ? 'block' : 'none')};
   }
-  /* .display-block {
-    display: block;
-  }
-
-  .display-none {
-    display: none;
-  } */
 `;
 export const StyledSlider = styled(Slider)`
   width: 580px;

@@ -46,7 +46,7 @@ export default class Photo extends Component {
 
       const url = getPhotoUrl(id);
       const res = await axios(url);
-      const data = await res.data;
+      const data = res.data;
       this.setState({
         photo: data,
         isLoading: false,
