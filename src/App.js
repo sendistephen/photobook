@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import PhotoList from 'pages/PhotoList';
-import Navbar from 'components/Navbar/Navbar';
+import { Photos, Photo } from 'pages';
+import { Navbar } from 'components';
 
 function App() {
   return (
@@ -8,7 +8,8 @@ function App() {
       <Router>
         <Navbar />
         <Switch>
-          <Route exact path='/' component={PhotoList} />
+          <Route exact path='/' component={Photos} />
+          <Route path='/photos/:id' component={Photo} />
         </Switch>
       </Router>
     </>

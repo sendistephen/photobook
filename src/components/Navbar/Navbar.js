@@ -1,4 +1,3 @@
-import MenuButton from 'components/Buttons/MenuButton';
 import { menu } from 'data/menu';
 import { Component } from 'react';
 import {
@@ -11,6 +10,7 @@ import {
   SearchIcon,
 } from './Navbar.styles';
 import searchIcon from 'assets/icons/search.svg';
+import MenuButton from 'components/Buttons';
 
 export default class Navbar extends Component {
   render() {

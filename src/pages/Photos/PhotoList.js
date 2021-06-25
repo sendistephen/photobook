@@ -1,9 +1,9 @@
 import axios from 'axios';
+import Modal from 'components/Modal';
 import { Component } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Loader from 'react-loader-spinner';
-import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
-import getURL from 'utils/api';
+import { getURL } from 'utils/api';
 import {
   GalleryImage,
   GalleryItem,
@@ -25,8 +25,17 @@ export default class PhotoList extends Component {
     photos: [],
     isLoading: false,
     page: 1,
+    show: false,
+    index: null,
   };
 
+  showModal = (index) => {
+    this.setState({ show: true, index });
+  };
+
+  hideModal = () => {
+    this.setState({ show: false });
+  };
   componentDidMount = () => {
     this.fetchPhotos();
   };
@@ -45,7 +54,7 @@ export default class PhotoList extends Component {
         per_page: 50,
       });
       const response = await axios(url);
-      const data = await response.data;
+      const data = response.data;
 
       // update state with data
       this.setState({
@@ -59,17 +68,14 @@ export default class PhotoList extends Component {
   };
 
   render() {
-    const { photos, isLoading } = this.state;
+    const { photos, isLoading, show, index } = this.state;
     return (
       <>
-        {isLoading ? (
+        {isLoading && (
           <LoadingSpinner>
             <Loader type='ThreeDots' color='#32D3AC' />
           </LoadingSpinner>
-        ) : (
-          ''
         )}
-
         {photos.length > 0 && (
           <InfiniteScroll
             dataLength={photos.length}
@@ -90,15 +96,24 @@ export default class PhotoList extends Component {
               breakpointCols={breakpointColumns}
               columnClassName='masonry-grid_column'
             >
-              {this.state.photos.map((photo) => (
+              {this.state.photos.map((photo, index) => (
                 <GalleryItem key={photo.id}>
                   <GalleryImage
                     src={photo.urls.small}
                     alt={photo.description}
+                    onClick={() => this.showModal(index)}
                   />
                 </GalleryItem>
               ))}
             </StyledMasonry>
+            {show && (
+              <Modal
+                photos={photos}
+                index={index}
+                hideModal={this.hideModal}
+                show={show}
+              />
+            )}
           </InfiniteScroll>
         )}
       </>

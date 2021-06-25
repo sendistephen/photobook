@@ -8,6 +8,7 @@ export const GalleryItem = styled.div`
 export const GalleryImage = styled.img`
   width: 100%;
   border-radius: 10px;
+  cursor: pointer;
 `;
 export const Message = styled.p`
   text-align: center;
