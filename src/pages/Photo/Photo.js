@@ -1,5 +1,6 @@
 import axios from 'axios';
 import moment from 'moment';
+import { Link } from 'react-router-dom';
 import { Component } from 'react';
 import Loader from 'react-loader-spinner';
 import { Wrapper } from 'styles';
@@ -78,16 +79,18 @@ export default class Photo extends Component {
         <PhotoWrapper>
           {photo.user && (
             <PhotoHeader>
-              <Avatar>
-                <AvatarImg
-                  src={photo.user.profile_image.medium}
-                  alt={photo.user.username}
-                />
-                <TextWrapper>
-                  <Title>{photo.user.username}</Title>
-                  <Subtitle>{moment(photo.updated_at).fromNow()}</Subtitle>
-                </TextWrapper>
-              </Avatar>
+              <Link to={`/users/${photo.user.username}`}>
+                <Avatar>
+                  <AvatarImg
+                    src={photo.user.profile_image.medium}
+                    alt={photo.user.username}
+                  />
+                  <TextWrapper>
+                    <Title>{photo.user.username}</Title>
+                    <Subtitle>{moment(photo.updated_at).fromNow()}</Subtitle>
+                  </TextWrapper>
+                </Avatar>
+              </Link>
               <OptionsMenu>
                 <Icon src={optionIcon} alt='Options menu' />
               </OptionsMenu>

@@ -2,16 +2,15 @@ import styled from 'styled-components';
 
 export const Header = styled.header`
   background: #fcfcfd;
-  border-top-left-radius: 50px;
-  border-top-right-radius: 50px;
 `;
 export const HeaderContainer = styled.div`
-  max-width: 60%;
+  max-width: 57%;
   margin: auto;
   display: grid;
   justify-content: center;
+  align-content: center;
   align-items: center;
-  grid-template-columns: auto auto;
+  grid-template-columns: 1fr auto;
   gap: 50px;
   padding: 20px 0px 30px;
 `;
@@ -35,11 +34,10 @@ export const Input = styled.input`
 export const Wrapper = styled.div`
   display: grid;
   grid-template-columns: auto auto auto;
-  gap: 14px;
 `;
 export const MenuWrapper = styled.div`
   display: grid;
-  grid-template-columns: auto auto auto;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 20px;
 `;
 export const SearchIcon = styled.img`

@@ -18,3 +18,16 @@ export const getPhotoUrl = (photoId) => {
   const id = photoId ? `${photoId}` : null;
   return `${base}photos/${id}?client_id=${key}`;
 };
+
+export const getUserUrl = (username) => {
+  const user = username ? `${username}` : null;
+  return `${base}users/${user}?client_id=${key}`;
+};
+
+export const getUserPhotosUrl = ({ username, page, per_page }) => {
+  return `${base}users/${username}/photos?page=${page}&per_page=${per_page}&client_id=${key}`;
+};
+
+export const getUserCollections = ({ username, page, per_page }) => {
+  return `${base}users/${username}/collections?page=${page}&per_page=${per_page}&client_id=${key}`;
+};
