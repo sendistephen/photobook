@@ -39,19 +39,21 @@ export default function Modal({ photos, index, show, hideModal }) {
   return (
     <SliderContainer>
       <StyledSlider {...settings}>
-        {photos.map((photo, index) => (
+        {photos.map((photo) => (
           <div key={photo.id}>
             <PhotoHeader>
-              <Avatar>
-                <AvatarImg
-                  src={photo.user.profile_image.medium}
-                  alt={photo.user.username}
-                />
-                <TextWrapper>
-                  <Title>{photo.user.username}</Title>
-                  <Subtitle>{moment(photo.updated_at).fromNow()}</Subtitle>
-                </TextWrapper>
-              </Avatar>
+              <Link to={`/users/${photo.user.username}`}>
+                <Avatar>
+                  <AvatarImg
+                    src={photo.user.profile_image.medium}
+                    alt={photo.user.username}
+                  />
+                  <TextWrapper>
+                    <Title>{photo.user.username}</Title>
+                    <Subtitle>{moment(photo.updated_at).fromNow()}</Subtitle>
+                  </TextWrapper>
+                </Avatar>
+              </Link>
               <CloseModal>
                 <Icon src={closeIcon} alt='close' onClick={hideModal} />
               </CloseModal>

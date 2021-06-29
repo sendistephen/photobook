@@ -51,7 +51,7 @@ export default class PhotoList extends Component {
       // make a fetch request to the api GET/photos end point
       const url = getURL({
         page: this.state.page,
-        per_page: 50,
+        perPage: 50,
       });
       const response = await axios(url);
       const data = response.data;

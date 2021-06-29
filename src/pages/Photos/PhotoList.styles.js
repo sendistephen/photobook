@@ -21,7 +21,7 @@ export const StyledMasonry = styled(Masonry)`
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  max-width: 60%;
+  max-width: 80%;
   margin: 50px auto;
 
   @media (max-width: 568px) {
