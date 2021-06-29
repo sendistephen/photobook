@@ -1,26 +1,25 @@
 import axios from 'axios';
 import React, { Component } from 'react';
-import truncateZero from 'truncate-zero';
 import Loader from 'react-loader-spinner';
 import { LoadingSpinner } from 'pages/Photo/Photo.styles';
 import { Wrapper } from 'styles';
-import {  getUserUrl } from 'utils/api';
+import { getUserUrl } from 'utils/api';
 
 import {
   UserAvatar,
   Avatar,
   Title,
-  StyledLink,
   Stats,
   Posts,
   Followers,
-  Followering,
+  Following,
   Number,
   SmallText,
 } from './User.styles';
 
 import UserPhotos from 'pages/UserPhotos';
 import UserCollection from 'components/UserCollection';
+import { shortenNumber } from 'utils/helper';
 
 class User extends Component {
   state = {
@@ -65,25 +64,22 @@ class User extends Component {
           <UserAvatar>
             <Avatar src={user.profile_image.large} alt={user.first_name} />
             <Title>{user.name}</Title>
-            <StyledLink
-              to={{ pathname: `${user.portfolio_url}` }}
-              target='_blank'
-            >
+            <a href={user.portfolio_url} target='blank'>
               {user.portfolio_url}{' '}
-            </StyledLink>
+            </a>
             <Stats>
               <Posts>
-                <Number>{truncateZero(user.downloads)}</Number>
+                <Number>{shortenNumber(user.downloads)}</Number>
                 <SmallText>Total Downloads</SmallText>
               </Posts>
               <Followers>
-                <Number>{truncateZero(user.followers_count)}</Number>
+                <Number>{shortenNumber(user.followers_count)}</Number>
                 <SmallText>Followers</SmallText>
               </Followers>
-              <Followering>
-                <Number>{truncateZero(user.following_count)}</Number>
+              <Following>
+                <Number>{shortenNumber(user.following_count)}</Number>
                 <SmallText>Following</SmallText>
-              </Followering>
+              </Following>
             </Stats>
           </UserAvatar>
         )}

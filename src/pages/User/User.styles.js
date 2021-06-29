@@ -1,14 +1,16 @@
-import { Link } from 'react-router-dom';
 import { theme } from 'styles/ColorStyles';
 import { MediumText, NormalText } from 'styles/TextStyles';
-
-const { default: styled } = require('styled-components');
+import styled from 'styled-components';
 
 export const UserAvatar = styled.div`
   margin-top: 30px;
   display: grid;
   justify-content: center;
   gap: 15px;
+  a {
+    color: ${theme.light.text2};
+    justify-self: center;
+  }
 `;
 export const Avatar = styled.img`
   width: 150px;
@@ -21,10 +23,7 @@ export const Title = styled(MediumText)`
   color: ${theme.light.text};
   justify-self: center;
 `;
-export const StyledLink = styled(Link)`
-  color: ${theme.light.text2};
-  justify-self: center;
-`;
+
 export const Stats = styled.div`
   display: grid;
   justify-content: center;
@@ -48,7 +47,7 @@ export const Followers = styled.div`
   justify-items: center;
   gap: 10px;
 `;
-export const Followering = styled.div`
+export const Following = styled.div`
   display: grid;
   grid-template-rows: auto auto;
   justify-items: center;

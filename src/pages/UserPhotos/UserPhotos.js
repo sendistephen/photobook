@@ -45,7 +45,7 @@ class UserPhotos extends Component {
       const url = getUserPhotosUrl({
         username: this.props.name,
         page: this.state.page,
-        per_page: 10,
+        perPage: 10,
       });
       const res = await axios(url);
       const data = res.data;

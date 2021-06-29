@@ -24,10 +24,10 @@ export const getUserUrl = (username) => {
   return `${base}users/${user}?client_id=${key}`;
 };
 
-export const getUserPhotosUrl = ({ username, page, per_page }) => {
-  return `${base}users/${username}/photos?page=${page}&per_page=${per_page}&client_id=${key}`;
+export const getUserPhotosUrl = ({ username, page, perPage }) => {
+  return `${base}users/${username}/photos?page=${page}&per_page=${perPage}&client_id=${key}`;
 };
 
-export const getUserCollections = ({ username, page, per_page }) => {
-  return `${base}users/${username}/collections?page=${page}&per_page=${per_page}&client_id=${key}`;
+export const getUserCollections = ({ username, page, perPage }) => {
+  return `${base}users/${username}/collections?page=${page}&per_page=${perPage}&client_id=${key}`;
 };

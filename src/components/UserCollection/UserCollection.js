@@ -14,7 +14,7 @@ class UserCollection extends Component {
   state = {
     collections: [],
     page: 1,
-    per_page: 20,
+    perPage: 20,
     isLoading: false,
   };
 
@@ -29,7 +29,7 @@ class UserCollection extends Component {
       const url = getUserCollections({
         username: username,
         page: this.state.page,
-        per_page: this.state.per_page,
+        perPage: this.state.perPage,
       });
       const res = await axios(url);
       const data = res.data;
@@ -40,7 +40,6 @@ class UserCollection extends Component {
   };
 
   render() {
-    console.log(this.state.collections);
     const settings = {
       dots: true,
       infinite: true,

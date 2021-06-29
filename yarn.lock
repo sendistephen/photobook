@@ -11103,11 +11103,6 @@
   dependencies:
     "punycode" "^2.1.1"
 
-"truncate-zero@^1.0.0":
-  "integrity" "sha512-1vg4mX1nFlKoSclXXTgrsu5yo4MfDWpAOZ4X59AoxNR9gKuupo1bX38ZgEKls4HuSpE2Jln/0Gb7P1fQlgW4cw=="
-  "resolved" "https://registry.npmjs.org/truncate-zero/-/truncate-zero-1.0.0.tgz"
-  "version" "1.0.0"
-
 "tryer@^1.0.1":
   "integrity" "sha512-c3zayb8/kWWpycWYg87P71E1S1ZL6b6IJxfb5fvsUgsf0S2MVGaDhDXXjDMpdCpfWXqptc+4mXwmiy1ypXqRAA=="
   "resolved" "https://registry.npmjs.org/tryer/-/tryer-1.0.1.tgz"
