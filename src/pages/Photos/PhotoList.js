@@ -19,17 +19,17 @@ export default class PhotoList extends Component {
     photos: [],
     isLoading: false,
     page: 1,
-    show: false,
-    index: null,
+    // show: false,
+    index: -1,
     error: null,
   };
 
   showModal = (index) => {
-    this.setState({ show: true, index });
+    this.setState({ index });
   };
 
   hideModal = () => {
-    this.setState({ show: false });
+    this.setState({ index: -1 });
   };
   componentDidMount = () => {
     this.fetchPhotos();
@@ -64,7 +64,8 @@ export default class PhotoList extends Component {
   };
 
   render() {
-    const { photos, hasMore, isLoading, show, index } = this.state;
+    const { photos, hasMore, isLoading, index } = this.state;
+    const showModal = index > -1;
     return (
       <Wrapper>
         {isLoading && (
@@ -102,13 +103,8 @@ export default class PhotoList extends Component {
                 </GalleryItem>
               ))}
             </StyledMasonry>
-            {show && (
-              <Modal
-                photos={photos}
-                index={index}
-                hideModal={this.hideModal}
-                show={show}
-              />
+            {showModal && (
+              <Modal photos={photos} index={index} hideModal={this.hideModal} />
             )}
           </InfiniteScroll>
         )}

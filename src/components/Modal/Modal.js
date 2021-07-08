@@ -23,7 +23,7 @@ import 'react-magic-slider-dots/dist/magic-dots.css';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 
-export default function Modal({ photos, index, show, hideModal }) {
+export default function Modal({ photos, index, hideModal }) {
   const settings = {
     dots: true,
     infinite: true,
