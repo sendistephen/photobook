@@ -3,7 +3,9 @@ import Modal from 'components/Modal';
 import { Component } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Loader from 'react-loader-spinner';
+import { Wrapper } from 'styles';
 import { getURL } from 'utils/api';
+import { breakpointColumns } from 'utils/helper';
 import {
   GalleryImage,
   GalleryItem,
@@ -12,14 +14,6 @@ import {
   StyledMasonry,
 } from './PhotoList.styles';
 
-const breakpointColumns = {
-  default: 3,
-  1200: 3,
-  992: 3,
-  768: 2,
-  576: 1,
-};
-
 export default class PhotoList extends Component {
   state = {
     photos: [],
@@ -27,6 +21,7 @@ export default class PhotoList extends Component {
     page: 1,
     show: false,
     index: null,
+    error: null,
   };
 
   showModal = (index) => {
@@ -60,17 +55,18 @@ export default class PhotoList extends Component {
       this.setState({
         photos: [...this.state.photos, ...data],
         page: this.state.page + 1,
+        hasMore: data.length >= this.state.perPage,
         isLoading: false,
       });
     } catch (err) {
-      console.log('Ooops!', err);
+      this.setState({ error: err.message });
     }
   };
 
   render() {
-    const { photos, isLoading, show, index } = this.state;
+    const { photos, hasMore, isLoading, show, index } = this.state;
     return (
-      <>
+      <Wrapper>
         {isLoading && (
           <LoadingSpinner>
             <Loader type='ThreeDots' color='#32D3AC' />
@@ -80,7 +76,7 @@ export default class PhotoList extends Component {
           <InfiniteScroll
             dataLength={photos.length}
             next={this.fetchPhotos}
-            hasMore={true}
+            hasMore={hasMore}
             loader={
               <LoadingSpinner>
                 <Loader type='ThreeDots' color='#32D3AC' />
@@ -116,7 +112,7 @@ export default class PhotoList extends Component {
             )}
           </InfiniteScroll>
         )}
-      </>
+      </Wrapper>
     );
   }
 }

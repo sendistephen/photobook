@@ -26,4 +26,13 @@ export const StyledLink = styled(NavLink)`
 
   display: grid;
   justify-items: center;
+
+  &.main-nav-active {
+    &:first-child {
+      background: #a2c8fa 0% 0% no-repeat padding-box;
+    }
+    &:nth-child(2) {
+      background: #ffb4bc 0% 0% no-repeat padding-box;
+    }
+  }
 `;

@@ -1,3 +1,4 @@
+import { withRouter } from 'react-router-dom';
 import { menu } from 'data/menu';
 import { Component } from 'react';
 import {
@@ -11,18 +12,35 @@ import {
 } from './Navbar.styles';
 import searchIcon from 'assets/icons/search.svg';
 import MenuButton from 'components/Buttons';
+class Navbar extends Component {
+  state = {
+    query: '',
+  };
+  handleSearch = (e) => {
+    this.setState({ query: e.target.value });
+  };
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.props.history.push(`/search/photos/${this.state.query}`);
+    this.setState({ query: '' });
+  };
 
-export default class Navbar extends Component {
   render() {
     return (
       <Header>
         <HeaderContainer>
-          <form>
+          <form onSubmit={this.handleSubmit}>
             <FormGroup>
               <SearchIcon src={searchIcon} alt='Search Icon' />
-              <Input type='text' placeholder='Search...' />
+              <Input
+                value={this.state.query}
+                onChange={this.handleSearch}
+                type='text'
+                placeholder='Search...'
+              />
             </FormGroup>
           </form>
+
           <Wrapper>
             <MenuWrapper>
               {menu.map((item, index) => (
@@ -35,3 +53,4 @@ export default class Navbar extends Component {
     );
   }
 }
+export default withRouter(Navbar);

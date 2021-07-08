@@ -16,6 +16,7 @@ class UserCollection extends Component {
     page: 1,
     perPage: 20,
     isLoading: false,
+    error: null,
   };
 
   componentDidMount = () => {
@@ -34,8 +35,8 @@ class UserCollection extends Component {
       const res = await axios(url);
       const data = res.data;
       this.setState({ collections: [...this.state.collections, ...data] });
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      this.setState({ error: err.message });
     }
   };
 

@@ -39,12 +39,4 @@ body{
   margin: 15px auto;
 }
 
-  &.main-nav-active {
-    &:first-child{
-      background: #A2C8FA 0% 0% no-repeat padding-box;
-    }
-    &:nth-child(2){
-    background: #ffb4bc 0% 0% no-repeat padding-box;
-    }
-  }
 `;

@@ -26,6 +26,7 @@ class UserPhotos extends Component {
     page: 1,
     show: false,
     index: null,
+    error: '',
   };
   showModal = (index) => {
     this.setState({ show: true, index });
@@ -54,8 +55,8 @@ class UserPhotos extends Component {
         isLoading: false,
         page: this.state.page + 1,
       });
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      this.setState({ error: err.message });
     }
   };
 
