@@ -17,19 +17,19 @@ import {
 export default class PhotoList extends Component {
   state = {
     photos: [],
+    show: false,
     isLoading: false,
     page: 1,
-    // show: false,
-    index: -1,
+    perPage: 50,
+    hasMore: true,
+    index: null,
     error: null,
   };
 
-  showModal = (index) => {
-    this.setState({ index });
-  };
+  showModal = (index) => this.setState({ show: true, index });
 
   hideModal = () => {
-    this.setState({ index: -1 });
+    this.setState({ show: false, index: null });
   };
   componentDidMount = () => {
     this.fetchPhotos();
@@ -46,8 +46,9 @@ export default class PhotoList extends Component {
       // make a fetch request to the api GET/photos end point
       const url = getURL({
         page: this.state.page,
-        perPage: 50,
+        per_page: this.state.perPage,
       });
+
       const response = await axios(url);
       const data = response.data;
 
@@ -55,7 +56,7 @@ export default class PhotoList extends Component {
       this.setState({
         photos: [...this.state.photos, ...data],
         page: this.state.page + 1,
-        hasMore: data.length >= this.state.perPage,
+        hasMore: this.state.perPage > 0,
         isLoading: false,
       });
     } catch (err) {
@@ -64,8 +65,7 @@ export default class PhotoList extends Component {
   };
 
   render() {
-    const { photos, hasMore, isLoading, index } = this.state;
-    const showModal = index > -1;
+    const { photos, hasMore, show, isLoading, index } = this.state;
     return (
       <Wrapper>
         {isLoading && (
@@ -103,7 +103,8 @@ export default class PhotoList extends Component {
                 </GalleryItem>
               ))}
             </StyledMasonry>
-            {showModal && (
+
+            {show && (
               <Modal photos={photos} index={index} hideModal={this.hideModal} />
             )}
           </InfiniteScroll>

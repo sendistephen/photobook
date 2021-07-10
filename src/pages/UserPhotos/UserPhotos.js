@@ -24,16 +24,14 @@ class UserPhotos extends Component {
   state = {
     photos: [],
     page: 1,
-    index: -1,
+    index: null,
+    show: false,
     error: '',
   };
-  showModal = (index) => {
-    this.setState({ index });
-  };
+  showModal = (index) => this.setState({ show: true, index });
 
-  hideModal = () => {
-    this.setState({ index: -1 });
-  };
+  hideModal = () => this.setState({ show: false, index: null });
+
   componentDidMount = () => {
     this.fetchUserPhotos();
   };
@@ -60,8 +58,7 @@ class UserPhotos extends Component {
   };
 
   render() {
-    const { photos, isLoading, index } = this.state;
-    const showModal = index > -1;
+    const { photos, show, isLoading, index } = this.state;
     return (
       <>
         {isLoading && (
@@ -98,12 +95,8 @@ class UserPhotos extends Component {
               </GalleryItem>
             ))}
           </StyledMasonry>
-          {showModal && (
-            <Modal
-              photos={photos}
-              index={index}
-              hideModal={this.hideModal}
-            />
+          {show && (
+            <Modal photos={photos} index={index} hideModal={this.hideModal} />
           )}
         </InfiniteScroll>
       </>
