@@ -25,6 +25,7 @@ class User extends Component {
   state = {
     user: {},
     isLoading: false,
+    error: null,
   };
 
   getUsername = () => {
@@ -45,8 +46,8 @@ class User extends Component {
         user: data,
         isLoading: false,
       });
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      this.setState({ error: err.message });
     }
   };
 

@@ -1,67 +1,74 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
+import axios from 'axios';
 import Loader from 'react-loader-spinner';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { getUserPhotosUrl } from 'utils/api';
+import { getSearchResults } from 'utils/api';
 import Modal from 'components/Modal';
-import axios from 'axios';
 import {
   GalleryImage,
   GalleryItem,
-  Message,
   LoadingSpinner,
-  StyledMasonry,
+  Message,
 } from 'pages/Photos/PhotoList.styles';
+import { Gallery } from './SearchPhotos.styles';
 import { breakpointColumns } from 'utils/helper';
 
-class UserPhotos extends Component {
+export class SearchPhotos extends Component {
   state = {
     photos: [],
     page: 1,
-    perPage: 10,
-    hasMore: true,
+    perPage: 25,
     index: -1,
-    error: '',
+    isLoading: false,
+    hasMore: true,
+    error: null,
   };
   handleModal = (index) => this.setState({ index });
 
   componentDidMount = () => {
-    this.fetchUserPhotos();
+    this.fetchPhotos();
   };
 
-  fetchUserPhotos = async () => {
+  fetchPhotos = async () => {
+    const { perPage, page } = this.state;
     try {
       this.setState({ isLoading: true });
 
-      const url = getUserPhotosUrl({
-        username: this.props.name,
-        page: this.state.page,
-        perPage: this.state.perPage,
+      const url = getSearchResults({
+        query: this.props.match.params.searchWord,
+        page,
+        perPage,
       });
       const res = await axios(url);
-      const data = res.data;
+      const data = res.data.results;
+
       this.setState({
         photos: [...this.state.photos, ...data],
         isLoading: false,
+        page: page + 1,
         hasMore: !!data.length,
-        page: this.state.page + 1,
+        error: null,
       });
     } catch (err) {
       this.setState({ error: err.message });
     }
   };
-
+  componentDidUpdate = (prevProps, prevState) => {
+    if (
+      prevProps.match.params.searchWord !== this.props.match.params.searchWord
+    ) {
+      this.setState({ photos: [] });
+      this.fetchPhotos();
+    }
+  };
   render() {
-    const { photos, hasMore, isLoading, index } = this.state;
+    const { index, photos, hasMore } = this.state;
     return (
       <>
-        {isLoading && (
-          <LoadingSpinner>
-            <Loader type='ThreeDots' color='#32D3AC' />
-          </LoadingSpinner>
-        )}
         <InfiniteScroll
           dataLength={photos.length}
-          next={this.fetchUserPhotos}
+          next={this.fetchPhotos}
           hasMore={hasMore}
           loader={
             <LoadingSpinner>
@@ -74,7 +81,7 @@ class UserPhotos extends Component {
             </Message>
           }
         >
-          <StyledMasonry
+          <Gallery
             breakpointCols={breakpointColumns}
             columnClassName='masonry-grid_column'
           >
@@ -87,7 +94,7 @@ class UserPhotos extends Component {
                 />
               </GalleryItem>
             ))}
-          </StyledMasonry>
+          </Gallery>
           {index > -1 && (
             <Modal
               photos={photos}
@@ -101,4 +108,4 @@ class UserPhotos extends Component {
   }
 }
 
-export default UserPhotos;
+export default withRouter(SearchPhotos);

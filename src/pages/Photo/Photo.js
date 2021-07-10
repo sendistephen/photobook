@@ -35,6 +35,7 @@ export default class Photo extends Component {
   state = {
     photo: {},
     isLoading: false,
+    error: '',
   };
   componentDidMount = () => {
     const { id } = this.props.match.params;
@@ -52,8 +53,8 @@ export default class Photo extends Component {
         photo: data,
         isLoading: false,
       });
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      this.setState({ error: err.message });
     }
   };
 

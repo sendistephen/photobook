@@ -14,3 +14,10 @@ export const shortenNumber = (number) => {
 
   return `${truncatedNumber}${divisor.symbol}`;
 };
+export const breakpointColumns = {
+  default: 3,
+  1200: 3,
+  992: 3,
+  768: 2,
+  576: 1,
+};
