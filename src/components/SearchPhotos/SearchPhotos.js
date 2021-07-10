@@ -19,15 +19,12 @@ export class SearchPhotos extends Component {
     photos: [],
     page: 1,
     perPage: 25,
-    index: null,
+    index: -1,
     isLoading: false,
     hasMore: true,
-    show: false,
     error: null,
   };
-  showModal = (index) => this.setState({ show: true, index });
-
-  hideModal = () => this.setState({ show: false, index: null });
+  handleModal = (index) => this.setState({ index });
 
   componentDidMount = () => {
     this.fetchPhotos();
@@ -50,7 +47,7 @@ export class SearchPhotos extends Component {
         photos: [...this.state.photos, ...data],
         isLoading: false,
         page: page + 1,
-        hasMore: data.length >= perPage,
+        hasMore: !!data.length,
         error: null,
       });
     } catch (err) {
@@ -93,13 +90,17 @@ export class SearchPhotos extends Component {
                 <GalleryImage
                   src={photo.urls.small}
                   alt={photo.description}
-                  onClick={() => this.showModal(index)}
+                  onClick={() => this.handleModal(index)}
                 />
               </GalleryItem>
             ))}
           </Gallery>
-          {show && (
-            <Modal photos={photos} index={index} hideModal={this.hideModal} />
+          {index > -1 && (
+            <Modal
+              photos={photos}
+              index={index}
+              hideModal={() => this.handleModal(-1)}
+            />
           )}
         </InfiniteScroll>
       </>

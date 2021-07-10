@@ -41,7 +41,7 @@ class SearchCollections extends Component {
         collections: [...this.state.collections, ...data],
         isLoading: false,
         page: page + 1,
-        hasMore: data.length >= perPage,
+        hasMore: !!data.length,
       });
     } catch (err) {
       this.setState({ error: err.message });

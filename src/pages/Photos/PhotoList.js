@@ -17,20 +17,16 @@ import {
 export default class PhotoList extends Component {
   state = {
     photos: [],
-    show: false,
     isLoading: false,
     page: 1,
     perPage: 50,
     hasMore: true,
-    index: null,
+    index: -1,
     error: null,
   };
 
-  showModal = (index) => this.setState({ show: true, index });
+  handleModal = (index) => this.setState({ index });
 
-  hideModal = () => {
-    this.setState({ show: false, index: null });
-  };
   componentDidMount = () => {
     this.fetchPhotos();
   };
@@ -56,7 +52,7 @@ export default class PhotoList extends Component {
       this.setState({
         photos: [...this.state.photos, ...data],
         page: this.state.page + 1,
-        hasMore: this.state.perPage > 0,
+        hasMore: !!data.length,
         isLoading: false,
       });
     } catch (err) {
@@ -65,7 +61,7 @@ export default class PhotoList extends Component {
   };
 
   render() {
-    const { photos, hasMore, show, isLoading, index } = this.state;
+    const { photos, hasMore, isLoading, index } = this.state;
     return (
       <Wrapper>
         {isLoading && (
@@ -98,14 +94,18 @@ export default class PhotoList extends Component {
                   <GalleryImage
                     src={photo.urls.small}
                     alt={photo.description}
-                    onClick={() => this.showModal(index)}
+                    onClick={() => this.handleModal(index)}
                   />
                 </GalleryItem>
               ))}
             </StyledMasonry>
 
-            {show && (
-              <Modal photos={photos} index={index} hideModal={this.hideModal} />
+            {index > -1 && (
+              <Modal
+                photos={photos}
+                index={index}
+                hideModal={() => this.handleModal(-1)}
+              />
             )}
           </InfiniteScroll>
         )}

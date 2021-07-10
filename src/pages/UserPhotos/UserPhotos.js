@@ -11,26 +11,18 @@ import {
   LoadingSpinner,
   StyledMasonry,
 } from 'pages/Photos/PhotoList.styles';
-
-const breakpointColumns = {
-  default: 3,
-  1200: 3,
-  992: 3,
-  768: 2,
-  576: 1,
-};
+import { breakpointColumns } from 'utils/helper';
 
 class UserPhotos extends Component {
   state = {
     photos: [],
     page: 1,
-    index: null,
-    show: false,
+    perPage: 10,
+    hasMore: true,
+    index: -1,
     error: '',
   };
-  showModal = (index) => this.setState({ show: true, index });
-
-  hideModal = () => this.setState({ show: false, index: null });
+  handleModal = (index) => this.setState({ index });
 
   componentDidMount = () => {
     this.fetchUserPhotos();
@@ -43,13 +35,14 @@ class UserPhotos extends Component {
       const url = getUserPhotosUrl({
         username: this.props.name,
         page: this.state.page,
-        perPage: 10,
+        perPage: this.state.perPage,
       });
       const res = await axios(url);
       const data = res.data;
       this.setState({
         photos: [...this.state.photos, ...data],
         isLoading: false,
+        hasMore: !!data.length,
         page: this.state.page + 1,
       });
     } catch (err) {
@@ -58,7 +51,7 @@ class UserPhotos extends Component {
   };
 
   render() {
-    const { photos, show, isLoading, index } = this.state;
+    const { photos, hasMore, isLoading, index } = this.state;
     return (
       <>
         {isLoading && (
@@ -69,7 +62,7 @@ class UserPhotos extends Component {
         <InfiniteScroll
           dataLength={photos.length}
           next={this.fetchUserPhotos}
-          hasMore={this.state.page > 0}
+          hasMore={hasMore}
           loader={
             <LoadingSpinner>
               <Loader type='ThreeDots' color='#32D3AC' />
@@ -90,13 +83,17 @@ class UserPhotos extends Component {
                 <GalleryImage
                   src={photo.urls.small}
                   alt={photo.description}
-                  onClick={() => this.showModal(index)}
+                  onClick={() => this.handleModal(index)}
                 />
               </GalleryItem>
             ))}
           </StyledMasonry>
-          {show && (
-            <Modal photos={photos} index={index} hideModal={this.hideModal} />
+          {index > -1 && (
+            <Modal
+              photos={photos}
+              index={index}
+              hideModal={() => this.handleModal(-1)}
+            />
           )}
         </InfiniteScroll>
       </>
