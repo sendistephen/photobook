@@ -63,7 +63,7 @@ export class SearchPhotos extends Component {
     }
   };
   render() {
-    const { index, photos, show, hasMore } = this.state;
+    const { index, photos, hasMore } = this.state;
     return (
       <>
         <InfiniteScroll
