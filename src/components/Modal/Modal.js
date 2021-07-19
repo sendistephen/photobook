@@ -53,8 +53,7 @@ export default class Modal extends Component {
   };
 
   render() {
-    const favorites = JSON.parse(localStorage.getItem('favorites') || '{}');
-
+    const { favorites } = this.state;
     const { photos, index, hideModal } = this.props;
     const settings = {
       dots: true,
