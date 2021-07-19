@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Loader from 'react-loader-spinner';
 import { getCollections } from 'utils/api';
@@ -11,7 +11,7 @@ import {
   TotalPhotos,
 } from './SearchCollections.styles';
 import { breakpointColumns } from 'utils/helper';
-import { LoadingSpinner, Message } from 'pages/Photos/PhotoList.styles';
+import { Container, LoadingSpinner, Message } from 'styles';
 
 class SearchCollections extends Component {
   state = {
@@ -60,10 +60,10 @@ class SearchCollections extends Component {
   render() {
     const { collections, hasMore } = this.state;
     return (
-      <>
+      <Container>
         <InfiniteScroll
           dataLength={collections.length}
-          next={this.fetchSearched}
+          next={this.fetchCollections}
           hasMore={hasMore}
           loader={
             <LoadingSpinner>
@@ -81,17 +81,22 @@ class SearchCollections extends Component {
             columnClassName='masonry-grid_column'
           >
             {collections.map((collection) => (
-              <CollectionItem key={collection.id}>
-                <CollectionImage
-                  src={collection.cover_photo.urls.small}
-                  alt={collection.description}
-                />
-                <TotalPhotos>{collection.total_photos} photos</TotalPhotos>
-              </CollectionItem>
+              <Link
+                key={collection.id}
+                to={`/collections/${collection.id}/photos`}
+              >
+                <CollectionItem>
+                  <CollectionImage
+                    src={collection.cover_photo.urls.small}
+                    alt={collection.description}
+                  />
+                  <TotalPhotos>{collection.total_photos} photos</TotalPhotos>
+                </CollectionItem>
+              </Link>
             ))}
           </Gallery>
         </InfiniteScroll>
-      </>
+      </Container>
     );
   }
 }

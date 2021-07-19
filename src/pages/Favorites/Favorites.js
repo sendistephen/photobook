@@ -1,67 +1,63 @@
-import React, { Component } from 'react';
 import Loader from 'react-loader-spinner';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { getUserPhotosUrl } from 'utils/api';
-import Modal from 'components/Modal';
-import axios from 'axios';
+import { Modal } from 'components';
+import React, { Component } from 'react';
 import { breakpointColumns } from 'utils/helper';
+
 import {
+  Container,
   GalleryImage,
   GalleryItem,
   LoadingSpinner,
   Message,
-  StyledMasonry,
 } from 'styles';
+import { Gallery } from 'components/SearchCollections/SearchCollections.styles';
 
-class UserPhotos extends Component {
+export default class Favorites extends Component {
   state = {
     photos: [],
-    page: 1,
-    perPage: 10,
     hasMore: true,
+    isLoading: false,
     index: -1,
-    error: '',
+    error: null,
   };
-  handleModal = (index) => this.setState({ index });
 
   componentDidMount = () => {
-    this.fetchUserPhotos();
+    this.fetchFavoriteFromLS();
   };
-
-  fetchUserPhotos = async () => {
+  fetchFavoriteFromLS = () => {
     try {
       this.setState({ isLoading: true });
 
-      const url = getUserPhotosUrl({
-        username: this.props.name,
-        page: this.state.page,
-        perPage: this.state.perPage,
-      });
-      const res = await axios(url);
-      const data = res.data;
+      const data = Object.values(
+        JSON.parse(localStorage.getItem('favorites') || '{}')
+      );
+
       this.setState({
-        photos: [...this.state.photos, ...data],
-        isLoading: false,
+        photos: [...data],
         hasMore: !!data.length,
-        page: this.state.page + 1,
+        isLoading: false,
       });
     } catch (err) {
-      this.setState({ error: err.message });
+      this.setState({ error: err });
     }
   };
+  handleModal = (index) => this.setState({ index });
 
   render() {
-    const { photos, hasMore, isLoading, index } = this.state;
+    const { index, isLoading, photos, hasMore } = this.state;
     return (
-      <>
+      <Container>
+        {photos.length === 0 && <p>You currently have no saved photos</p>}
         {isLoading && (
           <LoadingSpinner>
             <Loader type='ThreeDots' color='#32D3AC' />
           </LoadingSpinner>
         )}
+
         <InfiniteScroll
           dataLength={photos.length}
-          next={this.fetchUserPhotos}
+          next={this.fetchFavoriteFromLS}
           hasMore={hasMore}
           loader={
             <LoadingSpinner>
@@ -74,7 +70,7 @@ class UserPhotos extends Component {
             </Message>
           }
         >
-          <StyledMasonry
+          <Gallery
             breakpointCols={breakpointColumns}
             columnClassName='masonry-grid_column'
           >
@@ -87,7 +83,7 @@ class UserPhotos extends Component {
                 />
               </GalleryItem>
             ))}
-          </StyledMasonry>
+          </Gallery>
           {index > -1 && (
             <Modal
               photos={photos}
@@ -96,9 +92,7 @@ class UserPhotos extends Component {
             />
           )}
         </InfiniteScroll>
-      </>
+      </Container>
     );
   }
 }
-
-export default UserPhotos;

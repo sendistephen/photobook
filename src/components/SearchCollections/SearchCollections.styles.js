@@ -1,9 +1,5 @@
 import styled from 'styled-components';
-import {
-  GalleryImage,
-  GalleryItem,
-  StyledMasonry,
-} from 'pages/Photos/PhotoList.styles';
+import { GalleryImage, GalleryItem, StyledMasonry } from 'styles';
 
 export const CollectionItem = styled(GalleryItem)`
   position: relative;
@@ -30,5 +26,5 @@ export const TotalPhotos = styled.span`
   align-items: center;
 `;
 export const Gallery = styled(StyledMasonry)`
-  max-width: 60%;
+  /* max-width: 60%; */
 `;

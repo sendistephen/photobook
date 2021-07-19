@@ -12,6 +12,7 @@ import {
 } from './Navbar.styles';
 import searchIcon from 'assets/icons/search.svg';
 import MenuButton from 'components/Buttons';
+import { Container } from 'styles';
 class Navbar extends Component {
   state = {
     query: '',
@@ -28,27 +29,29 @@ class Navbar extends Component {
   render() {
     return (
       <Header>
-        <HeaderContainer>
-          <form onSubmit={this.handleSubmit}>
-            <FormGroup>
-              <SearchIcon src={searchIcon} alt='Search Icon' />
-              <Input
-                value={this.state.query}
-                onChange={this.handleSearch}
-                type='text'
-                placeholder='Search...'
-              />
-            </FormGroup>
-          </form>
+        <Container>
+          <HeaderContainer>
+            <form onSubmit={this.handleSubmit}>
+              <FormGroup>
+                <SearchIcon src={searchIcon} alt='Search Icon' />
+                <Input
+                  value={this.state.query}
+                  onChange={this.handleSearch}
+                  type='text'
+                  placeholder='Search...'
+                />
+              </FormGroup>
+            </form>
 
-          <Wrapper>
-            <MenuWrapper>
-              {menu.map((item, index) => (
-                <MenuButton key={index} item={item} />
-              ))}
-            </MenuWrapper>
-          </Wrapper>
-        </HeaderContainer>
+            <Wrapper>
+              <MenuWrapper>
+                {menu.map((item, index) => (
+                  <MenuButton key={index} item={item} />
+                ))}
+              </MenuWrapper>
+            </Wrapper>
+          </HeaderContainer>
+        </Container>
       </Header>
     );
   }

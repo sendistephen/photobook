@@ -3,16 +3,16 @@ import Modal from 'components/Modal';
 import { Component } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Loader from 'react-loader-spinner';
-import { Wrapper } from 'styles';
-import { getURL } from 'utils/api';
-import { breakpointColumns } from 'utils/helper';
 import {
   GalleryImage,
   GalleryItem,
-  Message,
   LoadingSpinner,
+  Message,
   StyledMasonry,
-} from './PhotoList.styles';
+  Container,
+} from 'styles';
+import { getURL } from 'utils/api';
+import { breakpointColumns } from 'utils/helper';
 
 export default class PhotoList extends Component {
   state = {
@@ -63,7 +63,7 @@ export default class PhotoList extends Component {
   render() {
     const { photos, hasMore, isLoading, index } = this.state;
     return (
-      <Wrapper>
+      <Container>
         {isLoading && (
           <LoadingSpinner>
             <Loader type='ThreeDots' color='#32D3AC' />
@@ -109,7 +109,7 @@ export default class PhotoList extends Component {
             )}
           </InfiniteScroll>
         )}
-      </Wrapper>
+      </Container>
     );
   }
 }

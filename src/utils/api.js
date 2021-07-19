@@ -40,6 +40,14 @@ export const getCollections = ({ query, page, perPage }) => {
   return `${base}search/collections?page=${page}&query=${query}&per_page=${perPage}&client_id=${key}`;
 };
 
-export const getSingleTopic = ({slug}) => {
+export const getSingleTopic = ({ slug }) => {
   return `${base}topics/${slug}?client_id=${key}`;
+};
+
+export const getCollection = ({ collectionId, page, perPage }) => {
+  return `${base}collections/${collectionId}/photos?page=${page}&per_page=${perPage}&client_id=${key}`;
+};
+
+export const getSingleCollection = ({ collectionId }) => {
+  return `${base}collections/${collectionId}?client_id=${key}`;
 };

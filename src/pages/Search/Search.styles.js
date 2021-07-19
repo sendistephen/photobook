@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { StyledMasonry } from 'pages/Photos/PhotoList.styles';
 import { NavLink } from 'react-router-dom';
+import { StyledMasonry } from 'styles';
 
 export const Gallery = styled(StyledMasonry)``;
 

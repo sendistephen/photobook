@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { Photos, Photo, User, Search } from 'pages';
+import { Photos, Photo, User, Search, Collection } from 'pages';
 import { Navbar } from 'components';
+import Favorites from 'pages/Favorites';
 
 function App() {
   return (
@@ -17,6 +18,12 @@ function App() {
             path='/search/collections/:searchWord'
             component={Search}
           />
+          <Route
+            exact
+            path='/collections/:collectionId/photos'
+            component={Collection}
+          />
+          <Route exact path='/favorites' component={Favorites} />
         </Switch>
       </Router>
     </>

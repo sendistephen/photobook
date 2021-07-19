@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { StyledMasonry } from 'pages/Photos/PhotoList.styles';
+import { StyledMasonry } from 'styles';
 
 export const Gallery = styled(StyledMasonry)`
-  max-width: 60%;
+  /* max-width: 60%; */
 `;

@@ -54,7 +54,9 @@ class UserCollection extends Component {
           {this.state.collections.map((collection) => (
             <CollectionBox key={collection.id}>
               <Cover
-                src={collection.cover_photo.urls.small}
+                src={
+                  collection.cover_photo && collection.cover_photo.urls.small
+                }
                 alt={collection.title}
               />
               <Title>{collection.title}</Title>
