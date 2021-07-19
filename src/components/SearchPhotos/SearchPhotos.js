@@ -5,14 +5,15 @@ import Loader from 'react-loader-spinner';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { getSearchResults } from 'utils/api';
 import Modal from 'components/Modal';
+import { Gallery } from './SearchPhotos.styles';
+import { breakpointColumns } from 'utils/helper';
 import {
+  Container,
   GalleryImage,
   GalleryItem,
   LoadingSpinner,
   Message,
-} from 'pages/Photos/PhotoList.styles';
-import { Gallery } from './SearchPhotos.styles';
-import { breakpointColumns } from 'utils/helper';
+} from 'styles';
 
 export class SearchPhotos extends Component {
   state = {
@@ -65,7 +66,7 @@ export class SearchPhotos extends Component {
   render() {
     const { index, photos, hasMore } = this.state;
     return (
-      <>
+      <Container>
         <InfiniteScroll
           dataLength={photos.length}
           next={this.fetchPhotos}
@@ -103,7 +104,7 @@ export class SearchPhotos extends Component {
             />
           )}
         </InfiniteScroll>
-      </>
+      </Container>
     );
   }
 }

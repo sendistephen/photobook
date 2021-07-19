@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { Wrapper } from 'styles';
+import { Container } from 'styles';
 import { getSingleTopic } from 'utils/api';
 import {
   Image,
@@ -43,7 +43,7 @@ class PhotoTopic extends Component {
     return (
       <>
         {topic.slug && (
-          <Wrapper>
+          <Container>
             <ContentWrapper>
               <Image src={topic.cover_photo.urls.small} alt={topic.slug} />
               <Content>
@@ -53,7 +53,7 @@ class PhotoTopic extends Component {
                 <StyledLink to='/'>Follow</StyledLink>
               </Content>
             </ContentWrapper>
-          </Wrapper>
+          </Container>
         )}
       </>
     );

@@ -4,14 +4,14 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { getUserPhotosUrl } from 'utils/api';
 import Modal from 'components/Modal';
 import axios from 'axios';
+import { breakpointColumns } from 'utils/helper';
 import {
   GalleryImage,
   GalleryItem,
-  Message,
   LoadingSpinner,
+  Message,
   StyledMasonry,
-} from 'pages/Photos/PhotoList.styles';
-import { breakpointColumns } from 'utils/helper';
+} from 'styles';
 
 class UserPhotos extends Component {
   state = {

@@ -84,6 +84,7 @@ class User extends Component {
             </Stats>
           </UserAvatar>
         )}
+        
         <UserCollection username={this.getUsername()} />
 
         <UserPhotos name={username} />

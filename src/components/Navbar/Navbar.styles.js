@@ -4,8 +4,7 @@ export const Header = styled.header`
   background: #fcfcfd;
 `;
 export const HeaderContainer = styled.div`
-  max-width: 57%;
-  margin: auto;
+  margin-left: 15px;
   display: grid;
   justify-content: center;
   align-content: center;

@@ -4,6 +4,6 @@ import ThemeIcon from 'assets/icons/theme.svg';
 
 export const menu = [
   { title: 'Photos', icon: CameraIcon, link: '/' },
-  { title: 'Saved', icon: FavoriteIcon, link: '/favourites' },
+  { title: 'Saved', icon: FavoriteIcon, link: '/favorites' },
   { title: 'Theme', icon: ThemeIcon, link: '/#' },
 ];

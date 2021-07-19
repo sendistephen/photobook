@@ -15,6 +15,7 @@ export const Image = styled.img`
   border-radius: 8px;
 `;
 export const ContentWrapper = styled.div`
+  margin-left: 15px;
   padding-top: 50px;
   display: grid;
   grid-template-columns: auto 1fr;
