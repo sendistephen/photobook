@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { theme } from 'styles/ColorStyles';
 import { BodyMain, SmallText, SmallText2 } from 'styles/TextStyles';
 
 export const Collection = styled.div`

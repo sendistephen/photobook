@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { StyledMasonry } from 'styles';
-import { theme } from 'styles/ColorStyles';
 import { MediumText, NormalText } from 'styles/TextStyles';
 
 export const Gallery = styled(StyledMasonry)``;
