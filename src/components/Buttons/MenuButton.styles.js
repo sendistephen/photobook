@@ -19,7 +19,7 @@ export const MenuItem = styled.div`
 export const StyledLink = styled(NavLink)`
   width: 49px;
   height: 49px;
-  background: #fff;
+  background: ${props => props.theme.activeLink};
   border-radius: 8px;
   color: #999999;
   font-size: 13px;

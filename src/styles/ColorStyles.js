@@ -2,12 +2,21 @@ export const theme = {
   dark: {
     main: '#181A1A',
     secondary: '#242626',
-    text1: '#fff',
+    neutral: '#F5F7FA',
+    text: '#fff',
+    text2: '#7B8794)',
+    borderColor: '#32D3AC',
+    linkColor: '#65D6AD',
+    activeLink: '#F5F7FA',
   },
   light: {
     main: 'transparent linear-gradient(126deg, #f8fafb 0%, #f8fafb 100%) 0% 0% no-repeat padding-box;',
     secondary: '#F8FAFB 0% 0% no-repeat padding-box;',
+    neutral: '#7B8794',
     text: '#000',
     text2: '#707070',
+    borderColor: '#eee',
+    linkColor: '#7B8794',
+    activeLink: '#fff',
   },
 };

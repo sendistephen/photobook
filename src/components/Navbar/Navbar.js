@@ -1,5 +1,4 @@
 import { withRouter } from 'react-router-dom';
-import { menu } from 'data/menu';
 import { Component } from 'react';
 import {
   FormGroup,
@@ -7,16 +6,23 @@ import {
   HeaderContainer,
   Input,
   MenuWrapper,
-  Wrapper,
   SearchIcon,
+  Image,
+  Theme,
+  Label,
+  MenuThemeItem,
 } from './Navbar.styles';
 import searchIcon from 'assets/icons/search.svg';
-import MenuButton from 'components/Buttons';
 import { Container } from 'styles';
+import ThemeIcon from 'assets/icons/theme.svg';
+import { menu } from 'data/menu';
+import MenuButton from 'components/Buttons';
+
 class Navbar extends Component {
   state = {
     query: '',
   };
+
   handleSearch = (e) => {
     this.setState({ query: e.target.value });
   };
@@ -43,13 +49,18 @@ class Navbar extends Component {
               </FormGroup>
             </form>
 
-            <Wrapper>
-              <MenuWrapper>
-                {menu.map((item, index) => (
-                  <MenuButton key={index} item={item} />
-                ))}
-              </MenuWrapper>
-            </Wrapper>
+            <MenuWrapper>
+              {menu.map((item, index) => (
+                <MenuButton key={index} item={item} />
+              ))}
+
+              <MenuThemeItem onClick={this.props.toggleTheme}>
+                <Theme>
+                  <Image src={ThemeIcon} alt='Theme Icon' />
+                </Theme>
+                <Label>Theme</Label>
+              </MenuThemeItem>
+            </MenuWrapper>
           </HeaderContainer>
         </Container>
       </Header>

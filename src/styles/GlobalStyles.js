@@ -1,5 +1,4 @@
 import { createGlobalStyle } from 'styled-components';
-import { theme } from './ColorStyles';
 
 export const GlobalStyles = createGlobalStyle`
 
@@ -20,9 +19,10 @@ html{
     box-sizing: border-box;
 }
 body{
-    background: ${theme.light.main};
+    background: ${(props) => props.theme.main};
     height:100%;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    transition: all 0.50s linear;
 }
 /* Masonry Grid */
 .masonry-grid_column {

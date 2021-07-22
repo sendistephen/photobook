@@ -1,4 +1,3 @@
-import { theme } from 'styles/ColorStyles';
 import { MediumText, NormalText } from 'styles/TextStyles';
 import styled from 'styled-components';
 
@@ -8,7 +7,7 @@ export const UserAvatar = styled.div`
   justify-content: center;
   gap: 15px;
   a {
-    color: ${theme.light.text2};
+    color: ${(props) => props.theme.linkColor};
     justify-self: center;
   }
 `;
@@ -20,7 +19,7 @@ export const Avatar = styled.img`
   justify-self: center;
 `;
 export const Title = styled(MediumText)`
-  color: ${theme.light.text};
+  color: ${(props) => props.theme.text};
   justify-self: center;
 `;
 
@@ -36,10 +35,12 @@ export const Posts = styled.div`
   justify-items: center;
   gap: 10px;
 `;
-export const Number = styled(MediumText)``;
+export const Number = styled(MediumText)`
+  color: ${(props) => props.theme.text};
+`;
 export const SmallText = styled(NormalText)`
   font-weight: 200;
-  color: ${theme.light.text2};
+  color: ${(props) => props.theme.neutral};
 `;
 export const Followers = styled.div`
   display: grid;
