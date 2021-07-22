@@ -45,4 +45,5 @@ export const Title = styled(SmallText2)`
   padding-top: 20px;
   text-align: center;
   text-transform: capitalize;
+  color: ${(props) => props.theme.text};
 `;

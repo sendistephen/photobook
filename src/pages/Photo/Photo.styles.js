@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { theme } from 'styles/ColorStyles';
 import { BodyMain, SmallText, SmallText2 } from 'styles/TextStyles';
 
 export const Collection = styled.div`
@@ -33,7 +32,7 @@ export const PhotoWrapper = styled.div`
   width: 680px;
   height: 800px;
   margin-top: 30px;
-  background: #ffffff 0% 0% no-repeat padding-box;
+  background: ${(props) => props.theme.main} 0% 0% no-repeat padding-box;
   box-shadow: 3px 3px 50px #8181811a;
   border-radius: 8px;
   display: grid;
@@ -62,13 +61,13 @@ export const TextWrapper = styled.div`
   align-items: center;
 `;
 export const Title = styled(SmallText2)`
-  color: ${theme.light.text};
+  color: ${props => props.theme.text};
 `;
 export const Subtitle = styled(SmallText)`
-  color: ${theme.light.text2};
+  color: ${(props) => props.theme.text};
 `;
 export const Description = styled(BodyMain)`
-  color: ${theme.light.text2};
+  color: ${(props) => props.theme.neutral};
 `;
 export const PhotoImageWrapper = styled.div`
   width: 100%;

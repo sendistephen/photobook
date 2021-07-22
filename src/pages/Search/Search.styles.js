@@ -14,7 +14,7 @@ export const StyledLink = styled(NavLink)`
 
   &.main-nav-active {
     background: transparent;
-    color: black;
+    color: ${(props) => props.theme.text};
     font-weight: 500;
   }
 `;

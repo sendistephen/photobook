@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import Slider from 'react-slick';
-import { theme } from 'styles/ColorStyles';
 import { SmallText, SmallText2 } from 'styles/TextStyles';
 
 export const SliderContainer = styled.div`
@@ -24,7 +23,7 @@ export const StyledSlider = styled(Slider)`
   width: 580px;
   height: 600px;
   margin: 130px auto;
-  background: #ffffff 0% 0% no-repeat padding-box;
+  background: ${(props) => props.theme.main} 0% 0% no-repeat padding-box;
   box-shadow: 3px 3px 50px #8181811a;
   border-radius: 8px;
   padding: 30px;
@@ -53,10 +52,10 @@ export const TextWrapper = styled.div`
   align-items: center;
 `;
 export const Title = styled(SmallText2)`
-  color: ${theme.light.text};
+  color: ${props => props.theme.text};
 `;
 export const Subtitle = styled(SmallText)`
-  color: ${theme.light.text2};
+  color: ${(props) => props.theme.text2};
 `;
 
 export const PhotoImageWrapper = styled.div`

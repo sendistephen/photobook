@@ -1,8 +1,7 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { StyledMasonry } from 'styles';
-import { theme } from 'styles/ColorStyles';
-import { MediumText, NormalText,  } from 'styles/TextStyles';
+import { MediumText, NormalText } from 'styles/TextStyles';
 
 export const Gallery = styled(StyledMasonry)``;
 export const Wrapper = styled.div`
@@ -19,17 +18,20 @@ export const ImageWrapper = styled.div`
 export const Image = styled.img`
   border-radius: 50%;
   margin-right: 10px;
+  box-shadow: 0 15px 35px hsla(0, 0%, 0%, 0.2);
 `;
 export const StyledLink = styled(Link)`
-  color: ${theme.light.text2};
+  color: ${(props) => props.theme.linkColor};
   text-decoration: underline;
 
   &:hover {
-    color: ${theme.light.text};
+    color: ${(props) => props.theme.linkColor};
+    opacity: 0.8;
   }
 `;
 export const Title = styled(MediumText)`
   margin-bottom: 10px;
+  color: ${(props) => props.theme.text};
 `;
 export const TagsWrapper = styled.div`
   padding-left: -10px;
@@ -37,15 +39,15 @@ export const TagsWrapper = styled.div`
 `;
 export const Tag = styled.span`
   margin-right: 10px;
-  padding: 8px;
-  background-color: #eee;
-  border-radius: 8px;
+  padding: 8px 16px;
+  background-color: ${(props) => props.theme.borderColor};
+  border-radius: 5px;
   font-size: 12px;
   font-weight: bold;
   display: -moz-inline-grid;
 `;
 export const Stats = styled(NormalText)`
   margin-top: 20px;
-  color: ${theme.light.text2};
-  font-weight: 200;
+  color: ${(props) => props.theme.neutral};
+  font-weight: 300;
 `;
