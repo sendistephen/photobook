@@ -1,4 +1,3 @@
-import axios from 'axios';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 import { Component } from 'react';
@@ -29,37 +28,17 @@ import {
 import heartIcon from 'assets/icons/heart.svg';
 import starIcon from 'assets/icons/star.svg';
 import optionIcon from 'assets/icons/option.svg';
-import { getPhotoUrl } from 'utils/api';
+import { connect } from 'react-redux';
+import { fetchPhoto } from 'store/photo/photoActions';
 
-export default class Photo extends Component {
-  state = {
-    photo: {},
-    isLoading: false,
-    error: '',
-  };
+class Photo extends Component {
   componentDidMount = () => {
     const { id } = this.props.match.params;
-    this.fetchPhoto(id);
-  };
-
-  fetchPhoto = async (id) => {
-    try {
-      this.setState({ isLoading: true });
-
-      const url = getPhotoUrl(id);
-      const res = await axios(url);
-      const data = res.data;
-      this.setState({
-        photo: data,
-        isLoading: false,
-      });
-    } catch (err) {
-      this.setState({ error: err.message });
-    }
+    this.props.fetchPhoto(id);
   };
 
   render() {
-    const { isLoading, photo } = this.state;
+    const { isLoading, photo } = this.props.photo;
     return (
       <Wrapper>
         <Collection>
@@ -119,3 +98,10 @@ export default class Photo extends Component {
     );
   }
 }
+const mapStateToProps = (state) => ({
+  photo: state.photo,
+});
+const mapDispatchToProps = {
+  fetchPhoto,
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Photo);
