@@ -4,10 +4,12 @@ import reduxThunk from 'redux-thunk';
 
 import photos from './photos/photosReducer';
 import photo from './photo/photoReducer';
+import user from './user/userReducer';
 
 const reducers = combineReducers({
   photos,
   photo,
+  user,
 });
 
 const middleware = [reduxThunk];

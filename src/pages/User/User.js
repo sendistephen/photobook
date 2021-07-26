@@ -1,9 +1,8 @@
-import axios from 'axios';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Loader from 'react-loader-spinner';
 import { LoadingSpinner } from 'pages/Photo/Photo.styles';
 import { Wrapper } from 'styles';
-import { getUserUrl } from 'utils/api';
 
 import {
   UserAvatar,
@@ -20,39 +19,18 @@ import {
 import UserPhotos from 'pages/UserPhotos';
 import UserCollection from 'components/UserCollection';
 import { shortenNumber } from 'utils/helper';
+import { fetchUser } from '../../store/user/userActions';
 
 class User extends Component {
-  state = {
-    user: {},
-    isLoading: false,
-    error: null,
-  };
-
   getUsername = () => {
     return this.props.match.params.username;
   };
   componentDidMount = () => {
-    this.fetchUser(this.getUsername());
-  };
-
-  fetchUser = async (username) => {
-    try {
-      this.setState({ isLoading: true });
-
-      const url = getUserUrl(username);
-      const res = await axios(url);
-      const data = res.data;
-      this.setState({
-        user: data,
-        isLoading: false,
-      });
-    } catch (err) {
-      this.setState({ error: err.message });
-    }
+    this.props.fetchUser(this.getUsername());
   };
 
   render() {
-    const { user, isLoading } = this.state;
+    const { user, isLoading } = this.props.user;
     const { username } = this.props.match.params;
     return (
       <Wrapper>
@@ -84,7 +62,7 @@ class User extends Component {
             </Stats>
           </UserAvatar>
         )}
-        
+
         <UserCollection username={this.getUsername()} />
 
         <UserPhotos name={username} />
@@ -92,5 +70,10 @@ class User extends Component {
     );
   }
 }
-
-export default User;
+const mapStateToProps = (state) => ({
+  user: state.user,
+});
+const mapDispatchToProps = {
+  fetchUser,
+};
+export default connect(mapStateToProps, mapDispatchToProps)(User);
