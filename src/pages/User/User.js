@@ -31,7 +31,6 @@ class User extends Component {
 
   render() {
     const { user, isLoading } = this.props.user;
-    const { username } = this.props.match.params;
     return (
       <Wrapper>
         {isLoading && (
@@ -65,7 +64,7 @@ class User extends Component {
 
         <UserCollection username={this.getUsername()} />
 
-        <UserPhotos name={username} />
+        <UserPhotos name={this.getUsername()} />
       </Wrapper>
     );
   }
