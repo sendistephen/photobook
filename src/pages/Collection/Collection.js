@@ -39,7 +39,6 @@ class Collection extends Component {
     const { index, isLoading, photoCollection, hasMore } =
       this.props.photoCollection;
     const { collection } = this.props.collection;
-    console.log(collection);
     return (
       <Container>
         {collection.user && (
