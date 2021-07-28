@@ -6,12 +6,16 @@ import photos from './photos/photosReducer';
 import photo from './photo/photoReducer';
 import user from './user/userReducer';
 import userPhotos from './userPhotos/userPhotosReducer';
+import photoCollection from './collections/collectionsReducer';
+import collection from './collection/collectionReducer';
 
 const reducers = combineReducers({
   photos,
   photo,
   user,
   userPhotos,
+  photoCollection,
+  collection,
 });
 const middleware = [reduxThunk];
 

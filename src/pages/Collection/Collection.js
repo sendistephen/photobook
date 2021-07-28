@@ -1,11 +1,13 @@
-import axios from 'axios';
 import Loader from 'react-loader-spinner';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Modal } from 'components';
 import React, { Component } from 'react';
-import { getCollection, getSingleCollection } from 'utils/api';
 import { breakpointColumns } from 'utils/helper';
-
+import {
+  fetchCollection,
+  handleModal,
+} from 'store/collections/collectionsActions';
+import { fetechSingleCollection } from 'store/collection/collectionActions';
 import {
   Gallery,
   Wrapper,
@@ -24,62 +26,20 @@ import {
   LoadingSpinner,
   Message,
 } from 'styles';
+import { connect } from 'react-redux';
 
-export default class Collection extends Component {
-  state = {
-    photoCollection: [],
-    collection: {},
-    hasMore: true,
-    isLoading: false,
-    index: -1,
-    page: 1,
-    perPage: 30,
-    error: null,
-  };
-
+class Collection extends Component {
   componentDidMount = () => {
-    this.fetchCollection();
-    this.fetechSingleCollection();
+    const { collectionId } = this.props.match.params;
+    this.props.fetchCollection(collectionId);
+    this.props.fetechSingleCollection(collectionId);
   };
-  handleModal = (index) => this.setState({ index });
 
-  fetchCollection = async () => {
-    const { page, perPage } = this.state;
-    try {
-      this.setState({ isLoading: true });
-      const url = getCollection({
-        collectionId: this.props.match.params.collectionId,
-        page,
-        perPage,
-      });
-      const res = await axios(url);
-      const data = res.data;
-      this.setState({
-        photoCollection: [...this.state.photoCollection, ...data],
-        page: page + 1,
-        hasMore: !!data.length,
-        isLoading: false,
-        error: null,
-      });
-    } catch (err) {
-      this.setState({ error: err.message });
-    }
-  };
-  fetechSingleCollection = async () => {
-    try {
-      const url = getSingleCollection({
-        collectionId: this.props.match.params.collectionId,
-      });
-      const res = await axios(url);
-      const data = res.data;
-      this.setState({ collection: data });
-    } catch (err) {
-      this.setState({ error: err.message });
-    }
-  };
   render() {
-    const { index, isLoading, collection, photoCollection, hasMore } =
-      this.state;
+    const { index, isLoading, photoCollection, hasMore } =
+      this.props.photoCollection;
+    const { collection } = this.props.collection;
+    console.log(collection);
     return (
       <Container>
         {collection.user && (
@@ -111,7 +71,7 @@ export default class Collection extends Component {
 
         <InfiniteScroll
           dataLength={photoCollection.length}
-          next={this.fetchCollection}
+          next={this.props.fetchCollection}
           hasMore={hasMore}
           loader={
             <LoadingSpinner>
@@ -133,7 +93,7 @@ export default class Collection extends Component {
                 <GalleryImage
                   src={photo.urls.small}
                   alt={photo.description}
-                  onClick={() => this.handleModal(index)}
+                  onClick={() => this.props.handleModal(index)}
                 />
               </GalleryItem>
             ))}
@@ -142,7 +102,7 @@ export default class Collection extends Component {
             <Modal
               photos={photoCollection}
               index={index}
-              hideModal={() => this.handleModal(-1)}
+              hideModal={() => this.props.handleModal(-1)}
             />
           )}
         </InfiniteScroll>
@@ -150,3 +110,13 @@ export default class Collection extends Component {
     );
   }
 }
+const mapStateToProps = (state) => ({
+  photoCollection: state.photoCollection,
+  collection: state.collection,
+});
+const mapDispatchToProps = {
+  fetchCollection,
+  fetechSingleCollection,
+  handleModal,
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Collection);
