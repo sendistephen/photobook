@@ -8,6 +8,7 @@ import user from './user/userReducer';
 import userPhotos from './userPhotos/userPhotosReducer';
 import photoCollection from './collections/collectionsReducer';
 import collection from './collection/collectionReducer';
+import searchCollections from './searchCollections/searchCollectionsReducer';
 
 const reducers = combineReducers({
   photos,
@@ -16,6 +17,7 @@ const reducers = combineReducers({
   userPhotos,
   photoCollection,
   collection,
+  searchCollections,
 });
 const middleware = [reduxThunk];
 

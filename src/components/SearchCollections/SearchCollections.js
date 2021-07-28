@@ -1,9 +1,8 @@
-import axios from 'axios';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Loader from 'react-loader-spinner';
-import { getCollections } from 'utils/api';
 import {
   Gallery,
   CollectionItem,
@@ -12,58 +11,34 @@ import {
 } from './SearchCollections.styles';
 import { breakpointColumns } from 'utils/helper';
 import { Container, LoadingSpinner, Message } from 'styles';
+import { fetchCollections } from '../../store/searchCollections/searchCollectionActions';
 
 class SearchCollections extends Component {
-  state = {
-    collections: [],
-    page: 1,
-    perPage: 25,
-    isLoading: false,
-    error: null,
-    hasMore: true,
-  };
   componentDidMount = () => {
-    this.fetchCollections();
+    const { searchWord } = this.props.match.params;
+    this.props.fetchCollections(searchWord);
   };
 
-  fetchCollections = async () => {
-    const { perPage, page } = this.state;
-    try {
-      this.setState({ isLoading: true });
-      const url = getCollections({
-        query: this.props.match.params.searchWord,
-        page,
-        perPage,
-      });
-      const res = await axios(url);
-      const data = res.data.results;
-      this.setState({
-        collections: [...this.state.collections, ...data],
-        isLoading: false,
-        page: page + 1,
-        hasMore: !!data.length,
-      });
-    } catch (err) {
-      this.setState({ error: err.message });
-    }
-  };
   componentDidUpdate = (prevProps, prevState) => {
+    const { searchWord } = this.props.match.params;
+
     if (
       prevProps.match.params.searchWord !== this.props.match.params.searchWord
     ) {
-      this.setState({ collections: [] });
+      // empty collections array first...
+      this.props.collections.collections.length = 0;
 
-      this.fetchCollections();
+      this.props.fetchCollections(searchWord);
     }
   };
 
   render() {
-    const { collections, hasMore } = this.state;
+    const { collections, hasMore } = this.props.collections;
     return (
       <Container>
         <InfiniteScroll
           dataLength={collections.length}
-          next={this.fetchCollections}
+          next={this.props.fetchCollections}
           hasMore={hasMore}
           loader={
             <LoadingSpinner>
@@ -100,5 +75,13 @@ class SearchCollections extends Component {
     );
   }
 }
-
-export default withRouter(SearchCollections);
+const mapStateToProps = (state) => ({
+  collections: state.searchCollections,
+});
+const mapDispatchToProps = {
+  fetchCollections,
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(SearchCollections));
