@@ -26,11 +26,12 @@ import {
   Title,
 } from './Photo.styles';
 import heartIcon from 'assets/icons/heart.svg';
+import favIcon from 'assets/icons/star2.svg';
 import starIcon from 'assets/icons/star.svg';
 import optionIcon from 'assets/icons/option.svg';
 import { connect } from 'react-redux';
 import { fetchPhoto } from 'store/photo/photoActions';
-
+import { addPhotoToFavorites } from 'store/favorites/favoritesActions';
 class Photo extends Component {
   componentDidMount = () => {
     const { id } = this.props.match.params;
@@ -39,6 +40,8 @@ class Photo extends Component {
 
   render() {
     const { isLoading, photo } = this.props.photo;
+    const favorited = !!this.props.favorites[photo.id];
+
     return (
       <Wrapper>
         <Collection>
@@ -90,7 +93,11 @@ class Photo extends Component {
             </IconWrapper>
             <div></div>
             <FavIcon>
-              <Icon src={starIcon} alt='Fav icon' />
+              <Icon
+                src={favorited ? favIcon : starIcon}
+                onClick={() => this.props.addPhotoToFavorites(photo)}
+                alt='Fav icon'
+              />
             </FavIcon>
           </PhotoFooter>
         </PhotoWrapper>
@@ -100,8 +107,10 @@ class Photo extends Component {
 }
 const mapStateToProps = (state) => ({
   photo: state.photo,
+  favorites: state.favorites.photos,
 });
 const mapDispatchToProps = {
   fetchPhoto,
+  addPhotoToFavorites,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Photo);

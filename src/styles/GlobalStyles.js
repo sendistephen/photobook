@@ -27,6 +27,7 @@ body{
 /* Masonry Grid */
 .masonry-grid_column {
   padding-left: 15px; 
+  padding-right: 15px;
   background-clip: padding-box;
 
 @media (max-width: 568px) {

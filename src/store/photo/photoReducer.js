@@ -2,12 +2,14 @@ const {
   PHOTO_FETCH_PHOTO_PENDING,
   PHOTO_FETCH_PHOTO_SUCCESS,
   PHOTO_FETCH_PHOTO_ERROR,
+  SHOW_MODAL,
 } = require('./photoTypes');
 
 const initialState = {
   photo: {},
   isLoading: false,
   error: '',
+  index: -1,
 };
 
 const photoReducer = (state = initialState, action) => {
@@ -29,6 +31,11 @@ const photoReducer = (state = initialState, action) => {
         ...state,
         isLoading: false,
         error: action.payload,
+      };
+    case SHOW_MODAL:
+      return {
+        ...state,
+        index: action.payload,
       };
     default:
       return state;

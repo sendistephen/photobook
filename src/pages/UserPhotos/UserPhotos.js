@@ -11,10 +11,7 @@ import {
   Message,
   StyledMasonry,
 } from 'styles';
-import {
-  fetchUserPhotos,
-  handleModal,
-} from '../../store/userPhotos/userPhotosActions';
+import { fetchUserPhotos, handleModal } from 'store/user/userActions';
 
 class UserPhotos extends Component {
   componentDidMount = () => {
@@ -22,7 +19,7 @@ class UserPhotos extends Component {
   };
 
   render() {
-    const { photos, hasMore, isLoading, index } = this.props.userPhotos;
+    const { photos, hasMore, isLoading, index } = this.props.user;
     return (
       <>
         {isLoading && (
@@ -72,7 +69,7 @@ class UserPhotos extends Component {
   }
 }
 const mapStateToProps = (state) => ({
-  userPhotos: state.userPhotos,
+  user: state.user,
 });
 const mapDispatchToProps = {
   fetchUserPhotos,

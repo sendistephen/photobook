@@ -1,0 +1,2 @@
+export const ADD_PHOTO_TO_FAVORITES = 'ADD_PHOTO_TO_FAVORITES';
+export const SHOW_MODAL = 'SHOW_MODAL';

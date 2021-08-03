@@ -4,6 +4,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import Loader from 'react-loader-spinner';
 import { connect } from 'react-redux';
 import { fetchPhotos, handleModal } from 'store/photos/photosActions';
+
 import {
   GalleryImage,
   GalleryItem,

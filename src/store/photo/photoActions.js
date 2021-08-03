@@ -4,6 +4,7 @@ import {
   PHOTO_FETCH_PHOTO_PENDING,
   PHOTO_FETCH_PHOTO_SUCCESS,
   PHOTO_FETCH_PHOTO_ERROR,
+  SHOW_MODAL,
 } from './photoTypes';
 
 export const fetchPhoto = (id) => async (dispatch, getState) => {
@@ -24,4 +25,10 @@ export const fetchPhoto = (id) => async (dispatch, getState) => {
       payload: error,
     });
   }
+};
+export const handleModal = (index) => (dispatch) => {
+  dispatch({
+    type: SHOW_MODAL,
+    payload: index,
+  });
 };
