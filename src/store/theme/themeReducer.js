@@ -7,7 +7,6 @@ const initialState = {
 const togglDarkThemeReducer = (state = initialState, action) => {
   switch (action.type) {
     case TOGGLE_THEME_CHANGE:
-      console.log('yes');
       return {
         ...state,
         darkThemeEnabled: !state.darkThemeEnabled,

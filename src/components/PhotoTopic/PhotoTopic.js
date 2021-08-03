@@ -1,8 +1,8 @@
-import axios from 'axios';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { fetchPhotoTopic } from 'store/photo/photoActions';
 import { Container } from 'styles';
-import { getSingleTopic } from 'utils/api';
 import {
   Image,
   Content,
@@ -14,32 +14,20 @@ import {
 } from './PhotoTopic.styles';
 
 class PhotoTopic extends Component {
-  state = {
-    topic: {},
-    error: null,
-  };
   componentDidMount = () => {
-    this.fetchSingleTopic();
+    this.props.fetchPhotoTopic({ slug: this.props.match.params.searchWord });
   };
   componentDidUpdate = (prevProps, prevState) => {
+    const { searchWord } = this.props.match.params;
     if (
       prevProps.match.params.searchWord !== this.props.match.params.searchWord
     ) {
-      this.fetchSingleTopic();
+      this.props.fetchPhotoTopic({ slug: searchWord });
     }
   };
-  fetchSingleTopic = async () => {
-    try {
-      const url = getSingleTopic({ slug: this.props.match.params.searchWord });
-      const res = await axios(url);
-      const data = res.data;
-      this.setState({ topic: data });
-    } catch (err) {
-      this.setState({ error: err.message });
-    }
-  };
+
   render() {
-    const { topic } = this.state;
+    const { topic } = this.props.photo;
     return (
       <>
         {topic.slug && (
@@ -59,4 +47,13 @@ class PhotoTopic extends Component {
     );
   }
 }
-export default withRouter(PhotoTopic);
+const mapStateToProps = (state) => ({
+  photo: state.photo,
+});
+const mapDispatchToProps = {
+  fetchPhotoTopic,
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(PhotoTopic));
