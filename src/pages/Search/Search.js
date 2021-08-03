@@ -1,23 +1,18 @@
 import { PhotoTopic, SearchCollections, SearchPhotos } from 'components';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { StyledLink, NavWrapper } from './Search.styles';
+import { handleTabClick } from '../../store/search/searchActions';
 
-export default class Search extends Component {
-  state = {
-    activeTab: '',
-  };
-
+class Search extends Component {
   toggleTabs = () => {
-    switch (this.state.activeTab) {
-      case 'collections':
-        return <SearchCollections />;
-      default:
-        return <SearchPhotos />;
+    if (this.props.location.pathname.includes('photos')) {
+      return <SearchPhotos />;
+    } else {
+      return <SearchCollections />;
     }
   };
-  handleClick = (selectedChoice) => {
-    this.setState({ activeTab: selectedChoice });
-  };
+
   render() {
     return (
       <>
@@ -26,14 +21,14 @@ export default class Search extends Component {
           <StyledLink
             to={`/search/photos/${this.props.match.params.searchWord}`}
             activeClassName='main-nav-active'
-            onClick={() => this.handleClick('photos')}
+            onClick={() => this.props.handleTabClick('photos')}
           >
             Photos
           </StyledLink>
           <StyledLink
             to={`/search/collections/${this.props.match.params.searchWord}`}
             activeClassName='main-nav-active'
-            onClick={() => this.handleClick('collections')}
+            onClick={() => this.props.handleTabClick('collections')}
           >
             Collections
           </StyledLink>
@@ -43,3 +38,11 @@ export default class Search extends Component {
     );
   }
 }
+const mapStateToProps = (state) => ({
+  search: state.search,
+});
+const mapDispatchToProps = {
+  handleTabClick,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Search);

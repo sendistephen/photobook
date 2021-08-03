@@ -11,7 +11,10 @@ import {
 } from './SearchCollections.styles';
 import { breakpointColumns } from 'utils/helper';
 import { Container, LoadingSpinner, Message } from 'styles';
-import { fetchCollections } from '../../store/searchCollections/searchCollectionActions';
+import {
+  fetchCollections,
+  clearCollection,
+} from '../../store/search/searchActions';
 
 class SearchCollections extends Component {
   componentDidMount = () => {
@@ -21,17 +24,15 @@ class SearchCollections extends Component {
 
   componentDidUpdate = (prevProps, prevState) => {
     const { searchWord } = this.props.match.params;
-
     if (
       prevProps.match.params.searchWord !== this.props.match.params.searchWord
     ) {
-      // empty collections array first...
-      this.props.collections.collections.length = 0;
-
       this.props.fetchCollections(searchWord);
     }
   };
-
+  componentWillUnmount() {
+    this.props.clearCollection();
+  }
   render() {
     const { collections, hasMore } = this.props.collections;
     return (
@@ -76,10 +77,11 @@ class SearchCollections extends Component {
   }
 }
 const mapStateToProps = (state) => ({
-  collections: state.searchCollections,
+  collections: state.search,
 });
 const mapDispatchToProps = {
   fetchCollections,
+  clearCollection,
 };
 export default connect(
   mapStateToProps,
