@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Loader from 'react-loader-spinner';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { getUserPhotosUrl } from 'utils/api';
 import Modal from 'components/Modal';
-import axios from 'axios';
 import { breakpointColumns } from 'utils/helper';
 import {
   GalleryImage,
@@ -12,46 +11,15 @@ import {
   Message,
   StyledMasonry,
 } from 'styles';
+import { fetchUserPhotos, handleModal } from 'store/user/userActions';
 
 class UserPhotos extends Component {
-  state = {
-    photos: [],
-    page: 1,
-    perPage: 10,
-    hasMore: true,
-    index: -1,
-    error: '',
-  };
-  handleModal = (index) => this.setState({ index });
-
   componentDidMount = () => {
-    this.fetchUserPhotos();
-  };
-
-  fetchUserPhotos = async () => {
-    try {
-      this.setState({ isLoading: true });
-
-      const url = getUserPhotosUrl({
-        username: this.props.name,
-        page: this.state.page,
-        perPage: this.state.perPage,
-      });
-      const res = await axios(url);
-      const data = res.data;
-      this.setState({
-        photos: [...this.state.photos, ...data],
-        isLoading: false,
-        hasMore: !!data.length,
-        page: this.state.page + 1,
-      });
-    } catch (err) {
-      this.setState({ error: err.message });
-    }
+    this.props.fetchUserPhotos(this.props.name);
   };
 
   render() {
-    const { photos, hasMore, isLoading, index } = this.state;
+    const { photos, hasMore, isLoading, index } = this.props.user;
     return (
       <>
         {isLoading && (
@@ -61,7 +29,7 @@ class UserPhotos extends Component {
         )}
         <InfiniteScroll
           dataLength={photos.length}
-          next={this.fetchUserPhotos}
+          next={this.props.fetchUserPhotos}
           hasMore={hasMore}
           loader={
             <LoadingSpinner>
@@ -83,7 +51,7 @@ class UserPhotos extends Component {
                 <GalleryImage
                   src={photo.urls.small}
                   alt={photo.description}
-                  onClick={() => this.handleModal(index)}
+                  onClick={() => this.props.handleModal(index)}
                 />
               </GalleryItem>
             ))}
@@ -92,7 +60,7 @@ class UserPhotos extends Component {
             <Modal
               photos={photos}
               index={index}
-              hideModal={() => this.handleModal(-1)}
+              hideModal={() => this.props.handleModal(-1)}
             />
           )}
         </InfiniteScroll>
@@ -100,5 +68,11 @@ class UserPhotos extends Component {
     );
   }
 }
-
-export default UserPhotos;
+const mapStateToProps = (state) => ({
+  user: state.user,
+});
+const mapDispatchToProps = {
+  fetchUserPhotos,
+  handleModal,
+};
+export default connect(mapStateToProps, mapDispatchToProps)(UserPhotos);

@@ -1,8 +1,10 @@
-import axios from 'axios';
 import Modal from 'components/Modal';
 import { Component } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Loader from 'react-loader-spinner';
+import { connect } from 'react-redux';
+import { fetchPhotos, handleModal } from 'store/photos/photosActions';
+
 import {
   GalleryImage,
   GalleryItem,
@@ -11,57 +13,15 @@ import {
   StyledMasonry,
   Container,
 } from 'styles';
-import { getURL } from 'utils/api';
 import { breakpointColumns } from 'utils/helper';
 
-export default class PhotoList extends Component {
-  state = {
-    photos: [],
-    isLoading: false,
-    page: 1,
-    perPage: 50,
-    hasMore: true,
-    index: -1,
-    error: null,
-  };
-
-  handleModal = (index) => this.setState({ index });
-
+class PhotoList extends Component {
   componentDidMount = () => {
-    this.fetchPhotos();
-  };
-
-  /**
-   * This method returns a list of photos from the api
-   */
-  fetchPhotos = async () => {
-    try {
-      // set isLoading to true
-      this.setState({ isLoading: true });
-
-      // make a fetch request to the api GET/photos end point
-      const url = getURL({
-        page: this.state.page,
-        per_page: this.state.perPage,
-      });
-
-      const response = await axios(url);
-      const data = response.data;
-
-      // update state with data
-      this.setState({
-        photos: [...this.state.photos, ...data],
-        page: this.state.page + 1,
-        hasMore: !!data.length,
-        isLoading: false,
-      });
-    } catch (err) {
-      this.setState({ error: err.message });
-    }
+    this.props.fetchPhotos();
   };
 
   render() {
-    const { photos, hasMore, isLoading, index } = this.state;
+    const { photos, hasMore, isLoading, index } = this.props.photos;
     return (
       <Container>
         {isLoading && (
@@ -72,7 +32,7 @@ export default class PhotoList extends Component {
         {photos.length > 0 && (
           <InfiniteScroll
             dataLength={photos.length}
-            next={this.fetchPhotos}
+            next={this.props.fetchPhotos}
             hasMore={hasMore}
             loader={
               <LoadingSpinner>
@@ -89,12 +49,12 @@ export default class PhotoList extends Component {
               breakpointCols={breakpointColumns}
               columnClassName='masonry-grid_column'
             >
-              {this.state.photos.map((photo, index) => (
+              {photos.map((photo, index) => (
                 <GalleryItem key={photo.id}>
                   <GalleryImage
                     src={photo.urls.small}
                     alt={photo.description}
-                    onClick={() => this.handleModal(index)}
+                    onClick={() => this.props.handleModal(index)}
                   />
                 </GalleryItem>
               ))}
@@ -104,7 +64,7 @@ export default class PhotoList extends Component {
               <Modal
                 photos={photos}
                 index={index}
-                hideModal={() => this.handleModal(-1)}
+                hideModal={() => this.props.handleModal(-1)}
               />
             )}
           </InfiniteScroll>
@@ -113,3 +73,13 @@ export default class PhotoList extends Component {
     );
   }
 }
+const mapStateToProps = (state) => ({
+  photos: state.photos,
+});
+
+const mapDispatchToProps = {
+  fetchPhotos,
+  handleModal,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(PhotoList);

@@ -1,4 +1,3 @@
-import axios from 'axios';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 import { Component } from 'react';
@@ -27,39 +26,22 @@ import {
   Title,
 } from './Photo.styles';
 import heartIcon from 'assets/icons/heart.svg';
+import favIcon from 'assets/icons/star2.svg';
 import starIcon from 'assets/icons/star.svg';
 import optionIcon from 'assets/icons/option.svg';
-import { getPhotoUrl } from 'utils/api';
-
-export default class Photo extends Component {
-  state = {
-    photo: {},
-    isLoading: false,
-    error: '',
-  };
+import { connect } from 'react-redux';
+import { fetchPhoto } from 'store/photo/photoActions';
+import { addPhotoToFavorites } from 'store/favorites/favoritesActions';
+class Photo extends Component {
   componentDidMount = () => {
     const { id } = this.props.match.params;
-    this.fetchPhoto(id);
-  };
-
-  fetchPhoto = async (id) => {
-    try {
-      this.setState({ isLoading: true });
-
-      const url = getPhotoUrl(id);
-      const res = await axios(url);
-      const data = res.data;
-      this.setState({
-        photo: data,
-        isLoading: false,
-      });
-    } catch (err) {
-      this.setState({ error: err.message });
-    }
+    this.props.fetchPhoto(id);
   };
 
   render() {
-    const { isLoading, photo } = this.state;
+    const { isLoading, photo } = this.props.photo;
+    const favorited = !!this.props.favorites[photo.id];
+
     return (
       <Wrapper>
         <Collection>
@@ -111,7 +93,11 @@ export default class Photo extends Component {
             </IconWrapper>
             <div></div>
             <FavIcon>
-              <Icon src={starIcon} alt='Fav icon' />
+              <Icon
+                src={favorited ? favIcon : starIcon}
+                onClick={() => this.props.addPhotoToFavorites(photo)}
+                alt='Fav icon'
+              />
             </FavIcon>
           </PhotoFooter>
         </PhotoWrapper>
@@ -119,3 +105,12 @@ export default class Photo extends Component {
     );
   }
 }
+const mapStateToProps = (state) => ({
+  photo: state.photo,
+  favorites: state.favorites.photos,
+});
+const mapDispatchToProps = {
+  fetchPhoto,
+  addPhotoToFavorites,
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Photo);

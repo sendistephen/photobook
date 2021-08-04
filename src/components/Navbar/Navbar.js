@@ -17,6 +17,8 @@ import { Container } from 'styles';
 import ThemeIcon from 'assets/icons/theme.svg';
 import { menu } from 'data/menu';
 import MenuButton from 'components/Buttons';
+import { handleToggleThemeChange } from 'store/theme/themeActions';
+import { connect } from 'react-redux';
 
 class Navbar extends Component {
   state = {
@@ -54,7 +56,9 @@ class Navbar extends Component {
                 <MenuButton key={index} item={item} />
               ))}
 
-              <MenuThemeItem onClick={this.props.toggleTheme}>
+              <MenuThemeItem
+                onClick={() => this.props.handleToggleThemeChange()}
+              >
                 <Theme>
                   <Image src={ThemeIcon} alt='Theme Icon' />
                 </Theme>
@@ -67,4 +71,8 @@ class Navbar extends Component {
     );
   }
 }
-export default withRouter(Navbar);
+const mapStateToProps = (state) => ({});
+const mapDispatchToProps = {
+  handleToggleThemeChange,
+};
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Navbar));

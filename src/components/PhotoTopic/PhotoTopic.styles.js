@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { theme } from 'styles/ColorStyles';
 import { BodyMain, MediumText } from 'styles/TextStyles';
 
 export const Wrapper = styled.div`
@@ -40,10 +39,13 @@ export const StyledLink = styled(Link)`
 `;
 export const Subtitle = styled(MediumText)`
   text-transform: capitalize;
+  color: ${(props) => props.theme.linkColor};
 `;
 
-export const Description = styled(BodyMain)``;
+export const Description = styled(BodyMain)`
+  color: ${(props) => props.theme.text};
+`;
 
 export const TopicStats = styled(BodyMain)`
-  color: ${(props) => theme.light.text2};
+  color: ${(props) => props.theme.neutral};
 `;
