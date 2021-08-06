@@ -1,33 +1,6 @@
 import styled from 'styled-components';
 import { BodyMain, SmallText, SmallText2 } from 'styles/TextStyles';
 
-export const Collection = styled.div`
-  padding-top: 20px;
-
-  display: grid;
-  grid-template-columns: 120px auto;
-  justify-content: center;
-  gap: 20px;
-`;
-export const AddCollection = styled.div`
-  width: 120px;
-  height: 180px;
-  background-color: green;
-  border-radius: 5px;
-`;
-
-export const CollectionCards = styled.div`
-  display: grid;
-  grid-template-columns: repeat(4, 120px);
-  justify-content: center;
-  gap: 20px;
-`;
-export const CollectionItems = styled.div`
-  height: 180px;
-  background-color: yellow;
-  border-radius: 5px;
-`;
-
 export const PhotoWrapper = styled.div`
   width: 680px;
   height: 800px;
@@ -61,7 +34,7 @@ export const TextWrapper = styled.div`
   align-items: center;
 `;
 export const Title = styled(SmallText2)`
-  color: ${props => props.theme.text};
+  color: ${(props) => props.theme.text};
 `;
 export const Subtitle = styled(SmallText)`
   color: ${(props) => props.theme.text};

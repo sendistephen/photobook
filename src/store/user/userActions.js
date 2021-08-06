@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getUserUrl } from 'utils/api';
+import { getUserCollections, getUserUrl } from 'utils/api';
 import {
   USER_FETCH_USER_PENDING,
   USER_FETCH_USER_SUCCESS,
@@ -8,6 +8,9 @@ import {
   USER_FETCH_USER_PHOTOS_PENDING,
   USER_FETCH_USER_PHOTOS_SUCCESS,
   OPEN_MODAL,
+  USER_FETCH_USER_COLLECTIONS_PENDING,
+  USER_FETCH_USER_COLLECTIONS_SUCCESS,
+  USER_FETCH_USER_COLLECTIONS_ERROR,
 } from './userTypes';
 import { getUserPhotosUrl } from 'utils/api';
 import { getPage, getPerPage } from './userReducer';
@@ -52,6 +55,31 @@ export const fetchUserPhotos = (username) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: USER_FETCH_USER_PHOTOS_ERROR,
+      payload: error.message,
+    });
+  }
+};
+
+export const getUserCollection = (username) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: USER_FETCH_USER_COLLECTIONS_PENDING,
+    });
+    this.setState({ isLoading: false });
+    const url = getUserCollections({
+      username,
+      page: getPage(getState()),
+      perPage: getPerPage(getState()),
+    });
+    const res = await axios(url);
+    const data = res.data;
+    dispatch({
+      type: USER_FETCH_USER_COLLECTIONS_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: USER_FETCH_USER_COLLECTIONS_ERROR,
       payload: error.message,
     });
   }

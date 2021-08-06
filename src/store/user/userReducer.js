@@ -5,12 +5,16 @@ import {
   USER_FETCH_USER_PHOTOS_ERROR,
   USER_FETCH_USER_PHOTOS_PENDING,
   USER_FETCH_USER_PHOTOS_SUCCESS,
+  USER_FETCH_USER_COLLECTIONS_SUCCESS,
+  USER_FETCH_USER_COLLECTIONS_PENDING,
+  USER_FETCH_USER_COLLECTIONS_ERROR,
   OPEN_MODAL,
 } from './userTypes';
 
 const initialState = {
   user: {},
   photos: [],
+  collections: [],
   isLoading: false,
   page: 1,
   perPage: 10,
@@ -61,6 +65,23 @@ const userReducer = (state = initialState, action) => {
         isLoading: false,
         error: action.payload,
       };
+    case USER_FETCH_USER_COLLECTIONS_PENDING:
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case USER_FETCH_USER_COLLECTIONS_SUCCESS:
+      return {
+        ...state,
+        collections: [...state.collections, ...action.payload],
+      };
+    case USER_FETCH_USER_COLLECTIONS_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload,
+      };
+
     case OPEN_MODAL:
       return {
         ...state,
