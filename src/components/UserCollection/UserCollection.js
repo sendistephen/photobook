@@ -1,7 +1,7 @@
-import axios from 'axios';
 import { Component } from 'react';
+import { connect } from 'react-redux';
+import { getUserCollection } from 'store/user/userActions';
 
-import { getUserCollections } from 'utils/api';
 import {
   Collection,
   StyledSlider,
@@ -11,36 +11,13 @@ import {
 } from './UserCollection.styles';
 
 class UserCollection extends Component {
-  state = {
-    collections: [],
-    page: 1,
-    perPage: 20,
-    isLoading: false,
-    error: null,
-  };
-
   componentDidMount = () => {
     const { username } = this.props;
-    this.getCollection(username);
-  };
-
-  getCollection = async (username) => {
-    try {
-      this.setState({ isLoading: false });
-      const url = getUserCollections({
-        username: username,
-        page: this.state.page,
-        perPage: this.state.perPage,
-      });
-      const res = await axios(url);
-      const data = res.data;
-      this.setState({ collections: [...this.state.collections, ...data] });
-    } catch (err) {
-      this.setState({ error: err.message });
-    }
+    this.props.getUserCollection(username);
   };
 
   render() {
+    const { collections } = this.props.collections;
     const settings = {
       dots: true,
       infinite: true,
@@ -51,7 +28,7 @@ class UserCollection extends Component {
     return (
       <Collection>
         <StyledSlider {...settings}>
-          {this.state.collections.map((collection) => (
+          {collections.map((collection) => (
             <CollectionBox key={collection.id}>
               <Cover
                 src={
@@ -67,5 +44,10 @@ class UserCollection extends Component {
     );
   }
 }
-
-export default UserCollection;
+const mapStateToProps = (state) => ({
+  collections: state.user,
+});
+const mapDispatchToProps = {
+  getUserCollection,
+};
+export default connect(mapStateToProps, mapDispatchToProps)(UserCollection);

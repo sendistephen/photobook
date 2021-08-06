@@ -6,8 +6,7 @@ import storage from 'redux-persist/lib/storage'; // defaults to localStorage for
 import photos from './photos/photosReducer';
 import photo from './photo/photoReducer';
 import user from './user/userReducer';
-import photoCollection from './collections/collectionsReducer';
-import collection from './collection/collectionReducer';
+import collections from './collections/collectionsReducer';
 import search from './search/searchReducer';
 import favorites from './favorites/favoritesReducer';
 import theme from './theme/themeReducer';
@@ -16,8 +15,7 @@ const reducers = combineReducers({
   photos,
   photo,
   user,
-  photoCollection,
-  collection,
+  collections,
   search,
   favorites,
   theme,

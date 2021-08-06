@@ -4,12 +4,8 @@ import { Component } from 'react';
 import Loader from 'react-loader-spinner';
 import { Wrapper } from 'styles';
 import {
-  AddCollection,
   Avatar,
   AvatarImg,
-  Collection,
-  CollectionCards,
-  CollectionItems,
   Description,
   FavIcon,
   Icon,
@@ -32,6 +28,7 @@ import optionIcon from 'assets/icons/option.svg';
 import { connect } from 'react-redux';
 import { fetchPhoto } from 'store/photo/photoActions';
 import { addPhotoToFavorites } from 'store/favorites/favoritesActions';
+import { Collections } from 'components';
 class Photo extends Component {
   componentDidMount = () => {
     const { id } = this.props.match.params;
@@ -39,28 +36,15 @@ class Photo extends Component {
   };
 
   render() {
-    const { isLoading, photo } = this.props.photo;
+    const { photo } = this.props.photo;
     const favorited = !!this.props.favorites[photo.id];
 
     return (
       <Wrapper>
-        <Collection>
-          <AddCollection></AddCollection>
-          <CollectionCards>
-            <CollectionItems></CollectionItems>
-            <CollectionItems></CollectionItems>
-            <CollectionItems></CollectionItems>
-            <CollectionItems></CollectionItems>
-          </CollectionCards>
-        </Collection>
+        <Collections />
 
-        {isLoading && (
-          <LoadingSpinner>
-            <Loader type='ThreeDots' color='#32D3AC' />
-          </LoadingSpinner>
-        )}
-        <PhotoWrapper>
-          {photo.user && (
+        {photo.user && (
+          <PhotoWrapper>
             <PhotoHeader>
               <Link to={`/users/${photo.user.username}`}>
                 <Avatar>
@@ -78,29 +62,30 @@ class Photo extends Component {
                 <Icon src={optionIcon} alt='Options menu' />
               </OptionsMenu>
             </PhotoHeader>
-          )}
-          <Description>{photo.description}</Description>
 
-          {photo.urls && (
-            <PhotoImageWrapper>
-              <PhotoImage src={photo.urls.small} alt={photo.description} />
-            </PhotoImageWrapper>
-          )}
-          <PhotoFooter>
-            <IconWrapper>
-              <Icon src={heartIcon} alt='heart icon' />
-              <span>{photo.likes}</span>
-            </IconWrapper>
-            <div></div>
-            <FavIcon>
-              <Icon
-                src={favorited ? favIcon : starIcon}
-                onClick={() => this.props.addPhotoToFavorites(photo)}
-                alt='Fav icon'
-              />
-            </FavIcon>
-          </PhotoFooter>
-        </PhotoWrapper>
+            <Description>{photo.description}</Description>
+
+            {photo.urls && (
+              <PhotoImageWrapper>
+                <PhotoImage src={photo.urls.small} alt={photo.description} />
+              </PhotoImageWrapper>
+            )}
+            <PhotoFooter>
+              <IconWrapper>
+                <Icon src={heartIcon} alt='heart icon' />
+                <span>{photo.likes}</span>
+              </IconWrapper>
+              <div></div>
+              <FavIcon>
+                <Icon
+                  src={favorited ? favIcon : starIcon}
+                  onClick={() => this.props.addPhotoToFavorites(photo)}
+                  alt='Fav icon'
+                />
+              </FavIcon>
+            </PhotoFooter>
+          </PhotoWrapper>
+        )}
       </Wrapper>
     );
   }

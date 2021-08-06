@@ -5,9 +5,9 @@ import React, { Component } from 'react';
 import { breakpointColumns } from 'utils/helper';
 import {
   fetchCollection,
+  fetechSingleCollection,
   handleModal,
 } from 'store/collections/collectionsActions';
-import { fetechSingleCollection } from 'store/collection/collectionActions';
 import {
   Gallery,
   Wrapper,
@@ -36,9 +36,9 @@ class Collection extends Component {
   };
 
   render() {
-    const { index, isLoading, photoCollection, hasMore } =
-      this.props.photoCollection;
-    const { collection } = this.props.collection;
+    const { userPhotoCollection, collection, index, isLoading, hasMore } =
+      this.props.collections;
+
     return (
       <Container>
         {collection.user && (
@@ -69,7 +69,7 @@ class Collection extends Component {
         )}
 
         <InfiniteScroll
-          dataLength={photoCollection.length}
+          dataLength={userPhotoCollection.length}
           next={this.props.fetchCollection}
           hasMore={hasMore}
           loader={
@@ -87,7 +87,7 @@ class Collection extends Component {
             breakpointCols={breakpointColumns}
             columnClassName='masonry-grid_column'
           >
-            {photoCollection.map((photo, index) => (
+            {userPhotoCollection.map((photo, index) => (
               <GalleryItem key={photo.id}>
                 <GalleryImage
                   src={photo.urls.small}
@@ -99,7 +99,7 @@ class Collection extends Component {
           </Gallery>
           {index > -1 && (
             <Modal
-              photos={photoCollection}
+              photos={userPhotoCollection}
               index={index}
               hideModal={() => this.props.handleModal(-1)}
             />
@@ -110,8 +110,7 @@ class Collection extends Component {
   }
 }
 const mapStateToProps = (state) => ({
-  photoCollection: state.photoCollection,
-  collection: state.collection,
+  collections: state.collections,
 });
 const mapDispatchToProps = {
   fetchCollection,
