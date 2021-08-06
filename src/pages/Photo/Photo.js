@@ -1,7 +1,6 @@
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 import { Component } from 'react';
-import Loader from 'react-loader-spinner';
 import { Wrapper } from 'styles';
 import {
   Avatar,
@@ -10,7 +9,6 @@ import {
   FavIcon,
   Icon,
   IconWrapper,
-  LoadingSpinner,
   OptionsMenu,
   PhotoFooter,
   PhotoHeader,
