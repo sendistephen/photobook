@@ -7,6 +7,7 @@ import {
 } from 'components/Collections/Collections.styles';
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { fetchCollections } from 'store/collections/collectionsActions';
 
 const Collections = (props) => {
@@ -18,15 +19,17 @@ const Collections = (props) => {
   return (
     <Collection>
       {collections.map((collection) => (
-        <CollectionItem key={collection.id}>
-          <ImageHolder>
-            <Image
-              src={collection.cover_photo.urls.small}
-              alt={collection.title}
-            />
-          </ImageHolder>
-          <Title>{collection.title}</Title>
-        </CollectionItem>
+        <Link key={collection.id} to={`/collections/${collection.id}/photos`}>
+          <CollectionItem>
+            <ImageHolder>
+              <Image
+                src={collection.cover_photo.urls.small}
+                alt={collection.title}
+              />
+            </ImageHolder>
+            <Title>{collection.title}</Title>
+          </CollectionItem>
+        </Link>
       ))}
     </Collection>
   );

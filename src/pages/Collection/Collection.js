@@ -7,6 +7,7 @@ import {
   fetchCollection,
   fetechSingleCollection,
   handleModal,
+  clearCollection,
 } from 'store/collections/collectionsActions';
 import {
   Gallery,
@@ -34,7 +35,20 @@ class Collection extends Component {
     this.props.fetchCollection(collectionId);
     this.props.fetechSingleCollection(collectionId);
   };
+  // TODO: update state whenever props a component updates->clear prevState and update
+  componentDidUpdate = (prevProps, prevState) => {
+    const { collectionId } = this.props.match.params;
 
+    if (
+      prevProps.match.params.collectionId !==
+      this.props.match.params.collectionId
+    ) {
+      this.props.fetchPhotos(collectionId);
+    }
+  };
+  componentWillUnmount() {
+    this.props.clearCollection();
+  }
   render() {
     const { userPhotoCollection, collection, index, isLoading, hasMore } =
       this.props.collections;
@@ -116,5 +130,6 @@ const mapDispatchToProps = {
   fetchCollection,
   fetechSingleCollection,
   handleModal,
+  clearCollection,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Collection);

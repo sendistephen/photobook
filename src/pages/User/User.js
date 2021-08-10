@@ -19,7 +19,7 @@ import {
 import UserPhotos from 'pages/UserPhotos';
 import UserCollection from 'components/UserCollection';
 import { shortenNumber } from 'utils/helper';
-import { fetchUser } from '../../store/user/userActions';
+import { fetchUser, clearPhotos } from '../../store/user/userActions';
 
 class User extends Component {
   getUsername = () => {
@@ -29,6 +29,14 @@ class User extends Component {
     this.props.fetchUser(this.getUsername());
   };
 
+  componentDidUpdate = (prevProps, prevState) => {
+    if (prevProps.match.params.username !== this.props.match.params.username) {
+      this.props.fetchUser(this.getUsername());
+    }
+  };
+  componentWillUnmount() {
+    this.props.clearPhotos();
+  }
   render() {
     const { user, isLoading } = this.props.user;
     return (
@@ -74,5 +82,6 @@ const mapStateToProps = (state) => ({
 });
 const mapDispatchToProps = {
   fetchUser,
+  clearPhotos,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(User);

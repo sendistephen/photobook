@@ -8,6 +8,7 @@ import {
   USER_FETCH_USER_COLLECTIONS_SUCCESS,
   USER_FETCH_USER_COLLECTIONS_PENDING,
   USER_FETCH_USER_COLLECTIONS_ERROR,
+  USER_CLEAR_USER_PHOTOS,
   OPEN_MODAL,
 } from './userTypes';
 
@@ -81,7 +82,11 @@ const userReducer = (state = initialState, action) => {
         isLoading: false,
         error: action.payload,
       };
-
+    case USER_CLEAR_USER_PHOTOS:
+      return {
+        ...state,
+        photos: [],
+      };
     case OPEN_MODAL:
       return {
         ...state,
