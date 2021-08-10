@@ -15,6 +15,7 @@ import {
   COLLECTIONS_FETCH_PHOTO_COLLECTIONS_SUCCESS,
   COLLECTIONS_FETCH_PHOTO_COLLECTIONS_PENDING,
   COLLECTIONS_FETCH_PHOTO_COLLECTIONS_ERROR,
+  COLLECTION_CLEAR_USER_COLLECTION,
   SHOW_MODAL,
 } from './collectionsTypes';
 
@@ -85,7 +86,11 @@ export const fetchCollections = () => async (dispatch, getState) => {
     });
   }
 };
-
+export const clearCollection = () => (dispatch) => {
+  dispatch({
+    type: COLLECTION_CLEAR_USER_COLLECTION,
+  });
+};
 export const handleModal = (index) => (dispatch) => {
   dispatch({
     type: SHOW_MODAL,

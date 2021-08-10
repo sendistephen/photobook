@@ -8,6 +8,7 @@ const {
   COLLECTIONS_FETCH_PHOTO_COLLECTIONS_SUCCESS,
   COLLECTIONS_FETCH_PHOTO_COLLECTIONS_PENDING,
   COLLECTIONS_FETCH_PHOTO_COLLECTIONS_ERROR,
+  COLLECTION_CLEAR_USER_COLLECTION,
   SHOW_MODAL,
 } = require('./collectionsTypes');
 
@@ -79,6 +80,11 @@ const collectionsReducer = (state = initialState, action) => {
         ...state,
         isLoading: false,
         error: action.payload,
+      };
+    case COLLECTION_CLEAR_USER_COLLECTION:
+      return {
+        ...state,
+        userPhotoCollection: [],
       };
     case SHOW_MODAL:
       return {

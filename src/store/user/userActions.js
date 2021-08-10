@@ -11,6 +11,7 @@ import {
   USER_FETCH_USER_COLLECTIONS_PENDING,
   USER_FETCH_USER_COLLECTIONS_SUCCESS,
   USER_FETCH_USER_COLLECTIONS_ERROR,
+  USER_CLEAR_USER_PHOTOS,
 } from './userTypes';
 import { getUserPhotosUrl } from 'utils/api';
 import { getPage, getPerPage } from './userReducer';
@@ -84,7 +85,11 @@ export const getUserCollection = (username) => async (dispatch, getState) => {
     });
   }
 };
-
+export const clearPhotos = () => (dispatch) => {
+  dispatch({
+    type: USER_CLEAR_USER_PHOTOS,
+  });
+};
 export const handleModal = (index) => (dispatch) => {
   dispatch({
     type: OPEN_MODAL,
