@@ -1,24 +1,23 @@
 import { withRouter } from 'react-router-dom';
 import { Component } from 'react';
+import { connect } from 'react-redux';
 import {
   FormGroup,
   Header,
   HeaderContainer,
   Input,
   MenuWrapper,
-  SearchIcon,
   Image,
+  SearchIcon,
   Theme,
   Label,
   MenuThemeItem,
 } from './Navbar.styles';
-import searchIcon from 'assets/icons/search.svg';
 import { Container } from 'styles';
 import ThemeIcon from 'assets/icons/theme.svg';
 import { menu } from 'data/menu';
 import MenuButton from 'components/Buttons';
 import { handleToggleThemeChange } from 'store/theme/themeActions';
-import { connect } from 'react-redux';
 
 class Navbar extends Component {
   state = {
@@ -41,7 +40,7 @@ class Navbar extends Component {
           <HeaderContainer>
             <form onSubmit={this.handleSubmit}>
               <FormGroup>
-                <SearchIcon src={searchIcon} alt='Search Icon' />
+                <SearchIcon />
                 <Input
                   value={this.state.query}
                   onChange={this.handleSearch}

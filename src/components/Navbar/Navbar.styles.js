@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
+import { BiSearch } from 'react-icons/bi';
 
 export const Header = styled.header`
   border-bottom: 2px solid ${(props) => props.theme.secondary};
@@ -45,10 +46,11 @@ export const MenuWrapper = styled.div`
   grid-template-columns: 1fr 1fr 1fr;
   gap: 20px;
 `;
-export const SearchIcon = styled.img`
+export const SearchIcon = styled(BiSearch)`
   position: absolute;
   width: 19px;
   height: 19px;
+  transform: scale(1.5);
   margin-left: 16px;
   fill: ${(props) => props.theme.borderColor};
 `;
