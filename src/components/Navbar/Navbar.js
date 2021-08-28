@@ -1,6 +1,7 @@
 import { withRouter } from 'react-router-dom';
-import { Component } from 'react';
+import { useState } from 'react';
 import { connect } from 'react-redux';
+import { useAuth0 } from '@auth0/auth0-react';
 import {
   FormGroup,
   Header,
@@ -9,6 +10,9 @@ import {
   MenuWrapper,
   Image,
   SearchIcon,
+  Login,
+  Logout,
+  Title,
   Theme,
   Label,
   MenuThemeItem,
@@ -19,57 +23,65 @@ import { menu } from 'data/menu';
 import MenuButton from 'components/Buttons';
 import { handleToggleThemeChange } from 'store/theme/themeActions';
 
-class Navbar extends Component {
-  state = {
-    query: '',
-  };
+const Navbar = (props) => {
+  const [query, setQuery] = useState('');
 
-  handleSearch = (e) => {
-    this.setState({ query: e.target.value });
+  const { loginWithRedirect, isAuthenticated, logout } = useAuth0();
+
+  const handleSearch = (e) => {
+    setQuery(e.target.value);
   };
-  handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    this.props.history.push(`/search/photos/${this.state.query}`);
-    this.setState({ query: '' });
+    props.history.push(`/search/photos/${query}`);
+    setQuery('');
   };
 
-  render() {
-    return (
-      <Header>
-        <Container>
-          <HeaderContainer>
-            <form onSubmit={this.handleSubmit}>
-              <FormGroup>
-                <SearchIcon />
-                <Input
-                  value={this.state.query}
-                  onChange={this.handleSearch}
-                  type='text'
-                  placeholder='Search...'
-                />
-              </FormGroup>
-            </form>
+  return (
+    <Header>
+      <Container>
+        <HeaderContainer>
+          <form onSubmit={handleSubmit}>
+            <FormGroup>
+              <SearchIcon />
+              <Input
+                value={query}
+                onChange={handleSearch}
+                type='text'
+                placeholder='Search...'
+              />
+            </FormGroup>
+          </form>
 
-            <MenuWrapper>
-              {menu.map((item, index) => (
-                <MenuButton key={index} item={item} />
-              ))}
-
-              <MenuThemeItem
-                onClick={() => this.props.handleToggleThemeChange()}
+          <MenuWrapper>
+            {menu.map((item, index) => (
+              <MenuButton key={index} item={item} />
+            ))}
+            <MenuThemeItem onClick={() => props.handleToggleThemeChange()}>
+              <Theme>
+                <Image src={ThemeIcon} alt='Theme Icon' />
+              </Theme>
+              <Label>Theme</Label>
+            </MenuThemeItem>
+            {!isAuthenticated && (
+              <Login onClick={() => loginWithRedirect()}>
+                <Title>Login</Title>
+              </Login>
+            )}
+            {isAuthenticated && (
+              <Logout
+                onClick={() => logout({ returnTo: window.location.origin })}
               >
-                <Theme>
-                  <Image src={ThemeIcon} alt='Theme Icon' />
-                </Theme>
-                <Label>Theme</Label>
-              </MenuThemeItem>
-            </MenuWrapper>
-          </HeaderContainer>
-        </Container>
-      </Header>
-    );
-  }
-}
+                <Title>Log out</Title>
+              </Logout>
+            )}
+          </MenuWrapper>
+        </HeaderContainer>
+      </Container>
+    </Header>
+  );
+};
+
 const mapStateToProps = (state) => ({});
 const mapDispatchToProps = {
   handleToggleThemeChange,

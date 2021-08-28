@@ -43,7 +43,7 @@ export const Input = styled.input`
 `;
 export const MenuWrapper = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 20px;
 `;
 export const SearchIcon = styled(BiSearch)`
@@ -89,7 +89,6 @@ export const Theme = styled.div`
   background: ${(props) => props.theme.activeLink};
   border-radius: 8px;
 `;
-
 export const Image = styled.img`
   width: 30px;
   height: 30px;
@@ -100,4 +99,36 @@ export const Label = styled.span`
   margin-top: 2px;
   font-size: 13px;
   color: #999999;
+`;
+export const Login = styled.div`
+  width: 54px;
+  height: 49px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: ${(props) => props.theme.activeLink};
+  border-radius: 8px;
+  cursor: pointer;
+  :hover {
+    background-color: #e6ccff;
+    color: black;
+  }
+`;
+export const Logout = styled.div`
+  width: 54px;
+  height: 49px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: ${(props) => props.theme.activeLink};
+  border-radius: 8px;
+  cursor: pointer;
+  :hover {
+    background-color: #e6ccff;
+    color: black;
+  }
+`;
+export const Title = styled.h4`
+  font-weight: 500;
+  font-size: 13px;
 `;

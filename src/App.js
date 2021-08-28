@@ -7,6 +7,7 @@ import { theme } from 'styles/ColorStyles';
 import { GlobalStyles } from 'styles/GlobalStyles';
 import { getThemePreference } from 'store/theme/themeReducer';
 import { useSelector } from 'react-redux';
+import ProtectedRoute from 'components/ProtectedRoute';
 
 const App = () => {
   const { darkThemeEnabled } = useSelector(getThemePreference);
@@ -31,7 +32,7 @@ const App = () => {
             path='/collections/:collectionId/photos'
             component={Collection}
           />
-          <Route exact path='/favorites' component={Favorites} />
+          <ProtectedRoute exact path='/favorites' component={Favorites} />
         </Switch>
       </Router>
     </ThemeProvider>

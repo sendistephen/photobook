@@ -22,86 +22,82 @@ import closeIcon from 'assets/icons/cross.svg';
 import MagicSliderDots from 'react-magic-slider-dots';
 import 'react-magic-slider-dots/dist/magic-dots.css';
 import moment from 'moment';
-import { Link } from 'react-router-dom';
-import { Component } from 'react';
+import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { addPhotoToFavorites } from 'store/favorites/favoritesActions';
-class Modal extends Component {
-  render() {
-    const { photos, index } = this.props;
-    const settings = {
-      dots: true,
-      infinite: true,
-      speed: 500,
-      slidesToShow: 1,
-      slidesToScroll: 1,
-      initialSlide: index,
-      appendDots: (dots) => {
-        return <MagicSliderDots dots={dots} numDotsToShow={3} dotWidth={30} />;
-      },
-    };
+import { useAuth0 } from '@auth0/auth0-react';
 
-    return (
-      <SliderContainer>
-        <StyledSlider {...settings}>
-          {photos.map((photo) => {
-            const favorited = !!this.props.favorites[photo.id];
-            return (
-              <div key={photo.id}>
-                <PhotoHeader>
-                  <Link to={`/users/${photo.user.username}`}>
-                    <Avatar>
-                      <AvatarImg
-                        src={photo.user.profile_image.medium}
-                        alt={photo.user.username}
-                      />
-                      <TextWrapper>
-                        <Title>{photo.user.username}</Title>
-                        <Subtitle>
-                          {moment(photo.created_at).fromNow()}
-                        </Subtitle>
-                      </TextWrapper>
-                    </Avatar>
-                  </Link>
-                  <CloseModal>
-                    <Icon
-                      src={closeIcon}
-                      alt='close'
-                      onClick={this.props.hideModal}
-                    />
-                  </CloseModal>
-                </PhotoHeader>
+const Modal = ({ photos, index, ...props }) => {
+  const { isAuthenticated, loginWithRedirect } = useAuth0();
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    initialSlide: index,
+    appendDots: (dots) => {
+      return <MagicSliderDots dots={dots} numDotsToShow={3} dotWidth={30} />;
+    },
+  };
 
-                <PhotoImageWrapper>
-                  <Link to={`/photos/${photo.id}`} key={photo.id}>
-                    <PhotoImage
-                      src={photo.urls.small}
-                      alt={photo.description}
+  return (
+    <SliderContainer>
+      <StyledSlider {...settings}>
+        {photos.map((photo) => {
+          const favorited = !!props.favorites[photo.id];
+          return (
+            <div key={photo.id}>
+              <PhotoHeader>
+                <Link to={`/users/${photo.user.username}`}>
+                  <Avatar>
+                    <AvatarImg
+                      src={photo.user.profile_image.medium}
+                      alt={photo.user.username}
                     />
-                  </Link>
-                </PhotoImageWrapper>
+                    <TextWrapper>
+                      <Title>{photo.user.username}</Title>
+                      <Subtitle>{moment(photo.created_at).fromNow()}</Subtitle>
+                    </TextWrapper>
+                  </Avatar>
+                </Link>
+                <CloseModal>
+                  <Icon src={closeIcon} alt='close' onClick={props.hideModal} />
+                </CloseModal>
+              </PhotoHeader>
 
-                <PhotoFooter>
-                  <IconWrapper>
-                    <Icon src={heartIcon} alt='heart icon' />
-                    <span>{photo.likes}</span>
-                  </IconWrapper>
-                  <FavIcon>
-                    <Icon
-                      onClick={() => this.props.addPhotoToFavorites(photo)}
-                      src={favorited ? favIcon : starIcon}
-                      alt='Fav icon'
-                    />
-                  </FavIcon>
-                </PhotoFooter>
-              </div>
-            );
-          })}
-        </StyledSlider>
-      </SliderContainer>
-    );
-  }
-}
+              <PhotoImageWrapper>
+                <Link to={`/photos/${photo.id}`} key={photo.id}>
+                  <PhotoImage src={photo.urls.small} alt={photo.description} />
+                </Link>
+              </PhotoImageWrapper>
+
+              <PhotoFooter>
+                <IconWrapper>
+                  <Icon src={heartIcon} alt='heart icon' />
+                  <span>{photo.likes}</span>
+                </IconWrapper>
+
+                <FavIcon>
+                  <Icon
+                    onClick={() => {
+                      isAuthenticated
+                        ? props.addPhotoToFavorites(photo)
+                        : loginWithRedirect();
+                    }}
+                    src={favorited ? favIcon : starIcon}
+                    alt='Fav icon'
+                  />
+                </FavIcon>
+              </PhotoFooter>
+            </div>
+          );
+        })}
+      </StyledSlider>
+    </SliderContainer>
+  );
+};
+
 const mapStateToProps = (state) => ({
   favorites: state.favorites.photos,
 });
