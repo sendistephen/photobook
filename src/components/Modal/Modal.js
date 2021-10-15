@@ -39,7 +39,7 @@ const Modal = ({ photos, index, ...props }) => {
   const auth = useSelector((state) => state.auth);
   const favourites = useSelector((state) => state.favorites.photos);
   const { loginWithRedirect, isAuthenticated } = useAuth0();
-  const { addToast, removeToast } = useToasts();
+  const { addToast } = useToasts();
 
   const settings = {
     dots: true,
