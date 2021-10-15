@@ -1,4 +1,6 @@
-import { connect, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { connect, useSelector, useDispatch } from 'react-redux';
+import { useAuth0 } from '@auth0/auth0-react';
 import Loader from 'react-loader-spinner';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Modal } from 'components';
@@ -8,31 +10,53 @@ import {
   GalleryImage,
   GalleryItem,
   LoadingSpinner,
+  MessageBox,
   Message,
 } from 'styles';
 import { Gallery } from 'components/SearchCollections/SearchCollections.styles';
 import { getFavoritedPhotos } from 'store/favorites/favoritesReducer';
 import { handleModal } from 'store/favorites/favoritesActions';
+import { getFavorites } from 'store/favorites/favoritesActions';
 
 const Favorites = (props) => {
-  const { index, isLoading, hasMore, photos } = useSelector(getFavoritedPhotos);
+  const { index, loading, hasMore, photos } = useSelector(getFavoritedPhotos);
+  const favorites = useSelector((state) => state.favorites.photos);
+  const dispatch = useDispatch();
+  const { isLoading, isAuthenticated } = useAuth0();
+
   const fetchPhotos = () => {
     const favoritePhotos = Object.values(photos);
-
     return favoritePhotos;
   };
+  useEffect(() => {
+    if (isLoading && isAuthenticated) {
+      dispatch(getFavorites());
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [favorites]);
+
+  useEffect(() => {
+    if (fetchPhotos.length !== favorites.length) {
+      dispatch(getFavorites());
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fetchPhotos.length, favorites.length]);
 
   return (
     <Container>
-      {fetchPhotos().length === 0 && <p>You currently have no saved photos</p>}
-      {isLoading && (
+      {favorites.length === 0 && (
+        <MessageBox>
+          <Message>You currently have no saved photos</Message>
+        </MessageBox>
+      )}
+      {loading && (
         <LoadingSpinner>
           <Loader type='ThreeDots' color='#32D3AC' />
         </LoadingSpinner>
       )}
 
       <InfiniteScroll
-        dataLength={fetchPhotos().length}
+        dataLength={Object.entries(photos).length}
         next={fetchPhotos}
         hasMore={hasMore}
         loader={
@@ -51,7 +75,7 @@ const Favorites = (props) => {
           columnClassName='masonry-grid_column'
         >
           {fetchPhotos().map((photo, index) => (
-            <GalleryItem key={photo.id}>
+            <GalleryItem key={index}>
               <GalleryImage
                 src={photo.urls.small}
                 alt={photo.description}

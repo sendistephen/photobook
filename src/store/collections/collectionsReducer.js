@@ -57,6 +57,7 @@ const collectionsReducer = (state = initialState, action) => {
       return {
         ...state,
         collection: action.payload,
+        hasMore: !!action.payload.length,
         error: null,
       };
     case COLLECTION_FETCH_SINGLE_COLLECTION_ERROR:
@@ -74,6 +75,7 @@ const collectionsReducer = (state = initialState, action) => {
         ...state,
         isLoading: false,
         collections: [...state.collections, ...action.payload],
+        hasMore: !!action.payload.length,
       };
     case COLLECTIONS_FETCH_PHOTO_COLLECTIONS_ERROR:
       return {

@@ -1,3 +1,4 @@
+import { useToasts } from 'react-toast-notifications';
 import {
   FavIcon,
   Icon,
@@ -22,13 +23,24 @@ import closeIcon from 'assets/icons/cross.svg';
 import MagicSliderDots from 'react-magic-slider-dots';
 import 'react-magic-slider-dots/dist/magic-dots.css';
 import moment from 'moment';
-import { Link, Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { addPhotoToFavorites } from 'store/favorites/favoritesActions';
+import { Link } from 'react-router-dom';
+import { connect, useDispatch } from 'react-redux';
 import { useAuth0 } from '@auth0/auth0-react';
+import { useSelector } from 'react-redux';
+import {
+  addFavoritePhoto,
+  getFavorites,
+  removeFavoritePhoto,
+} from 'store/favorites/favoritesActions';
+import { useEffect } from 'react';
 
 const Modal = ({ photos, index, ...props }) => {
-  const { isAuthenticated, loginWithRedirect } = useAuth0();
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
+  const favourites = useSelector((state) => state.favorites.photos);
+  const { loginWithRedirect, isAuthenticated } = useAuth0();
+  const { addToast, removeToast } = useToasts();
+
   const settings = {
     dots: true,
     infinite: true,
@@ -40,12 +52,20 @@ const Modal = ({ photos, index, ...props }) => {
       return <MagicSliderDots dots={dots} numDotsToShow={3} dotWidth={30} />;
     },
   };
+  useEffect(() => {
+    // load user favorites if user is authenticated
+    if (isAuthenticated) {
+      dispatch(getFavorites());
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [favourites]);
 
   return (
     <SliderContainer>
       <StyledSlider {...settings}>
         {photos.map((photo) => {
-          const favorited = !!props.favorites[photo.id];
+          const favorited = !!favourites[photo.id];
+
           return (
             <div key={photo.id}>
               <PhotoHeader>
@@ -77,12 +97,16 @@ const Modal = ({ photos, index, ...props }) => {
                   <Icon src={heartIcon} alt='heart icon' />
                   <span>{photo.likes}</span>
                 </IconWrapper>
-
                 <FavIcon>
                   <Icon
                     onClick={() => {
-                      isAuthenticated
-                        ? props.addPhotoToFavorites(photo)
+                      auth.isAuthenticated
+                        ? favorited
+                          ? dispatch(removeFavoritePhoto(photo.id))
+                          : dispatch(addFavoritePhoto(photo)) &&
+                            addToast('Saved Successfully', {
+                              appearance: 'success',
+                            })
                         : loginWithRedirect();
                     }}
                     src={favorited ? favIcon : starIcon}
@@ -98,10 +122,6 @@ const Modal = ({ photos, index, ...props }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  favorites: state.favorites.photos,
-});
-const mapDispatchToProps = {
-  addPhotoToFavorites,
-};
+const mapStateToProps = (state) => ({});
+const mapDispatchToProps = {};
 export default connect(mapStateToProps, mapDispatchToProps)(Modal);

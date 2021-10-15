@@ -1,5 +1,6 @@
 const base = process.env.REACT_APP_UNSPLASH_API_URL;
 const key = process.env.REACT_APP_UNSPLASH_ACCESS_KEY;
+const server = process.env.REACT_APP_PHOTO_SERVER_API;
 
 export const getURL = (config) => {
   const query = Object.entries(config).reduce(
@@ -52,4 +53,10 @@ export const getCollection = ({ collectionId, page, perPage }) => {
 
 export const getSingleCollection = ({ collectionId }) => {
   return `${base}collections/${collectionId}?client_id=${key}`;
+};
+export const getFavorites = () => {
+  return `${server}photos/favorites`;
+};
+export const savePhoto = () => {
+  return `${server}photos/favorites`;
 };

@@ -36,6 +36,7 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         user: action.payload,
+        hasMore:!!action.payload.length,
         isLoading: false,
         error: null,
       };
@@ -75,6 +76,8 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         collections: [...state.collections, ...action.payload],
+        isLoading:false,
+        hasMore: !!action.payload.length,
       };
     case USER_FETCH_USER_COLLECTIONS_ERROR:
       return {

@@ -1,6 +1,6 @@
 import { withRouter } from 'react-router-dom';
 import { useState } from 'react';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { useAuth0 } from '@auth0/auth0-react';
 import {
   FormGroup,
@@ -26,8 +26,8 @@ import { handleToggleThemeChange } from 'store/theme/themeActions';
 const Navbar = (props) => {
   const [query, setQuery] = useState('');
 
-  const { loginWithRedirect, isAuthenticated, logout } = useAuth0();
-
+  const { loginWithRedirect, logout } = useAuth0();
+  const auth = useSelector((state) => state.auth);
   const handleSearch = (e) => {
     setQuery(e.target.value);
   };
@@ -63,12 +63,12 @@ const Navbar = (props) => {
               </Theme>
               <Label>Theme</Label>
             </MenuThemeItem>
-            {!isAuthenticated && (
+            {!auth.isAuthenticated && (
               <Login onClick={() => loginWithRedirect()}>
                 <Title>Login</Title>
               </Login>
             )}
-            {isAuthenticated && (
+            {auth.isAuthenticated && (
               <Logout
                 onClick={() => logout({ returnTo: window.location.origin })}
               >
