@@ -11,7 +11,7 @@ import {
   FAVORITES_ADD_PHOTO_TO_FAVORITES_ERROR,
 } from './favoritesTypes';
 
-const API_URL = 'https://photobook-server.herokuapp.com/api/v1';
+const API_URL = process.env.REACT_APP_PHOTO_SERVER_API;
 
 export const handleModal = (index) => (dispatch) => {
   dispatch({
