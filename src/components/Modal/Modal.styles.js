@@ -55,7 +55,7 @@ export const Title = styled(SmallText2)`
   color: ${props => props.theme.text};
 `;
 export const Subtitle = styled(SmallText)`
-  color: ${(props) => props.theme.text2};
+  color: ${(props) => props.theme.linkColor};
 `;
 
 export const PhotoImageWrapper = styled.div`

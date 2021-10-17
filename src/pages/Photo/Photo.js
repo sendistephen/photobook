@@ -25,7 +25,6 @@ import starIcon from 'assets/icons/star.svg';
 import optionIcon from 'assets/icons/option.svg';
 import { connect } from 'react-redux';
 import { fetchPhoto } from 'store/photo/photoActions';
-import { addPhotoToFavorites } from 'store/favorites/favoritesActions';
 import { Collections } from 'components';
 class Photo extends Component {
   componentDidMount = () => {
@@ -77,7 +76,7 @@ class Photo extends Component {
               <FavIcon>
                 <Icon
                   src={favorited ? favIcon : starIcon}
-                  onClick={() => this.props.addPhotoToFavorites(photo)}
+                  onClick={() => console.log(photo)}
                   alt='Fav icon'
                 />
               </FavIcon>
@@ -94,6 +93,5 @@ const mapStateToProps = (state) => ({
 });
 const mapDispatchToProps = {
   fetchPhoto,
-  addPhotoToFavorites,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Photo);

@@ -26,12 +26,25 @@ export const GalleryImage = styled.img`
   border-radius: 10px;
   cursor: pointer;
 `;
+export const MessageBox = styled.div`
+  min-height: 40vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const Message = styled.p`
+  width: 50%;
+  height: 10%;
   text-align: center;
   font-weight: bold;
+  color: ${(props) => props.theme.linkColor};
 `;
 export const LoadingSpinner = styled.div`
-  text-align: center;
+  min-height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 export const StyledMasonry = styled(Masonry)`
   display: -webkit-box;

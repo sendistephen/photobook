@@ -10,6 +10,7 @@ import collections from './collections/collectionsReducer';
 import search from './search/searchReducer';
 import favorites from './favorites/favoritesReducer';
 import theme from './theme/themeReducer';
+import auth from './Auth/authReducer';
 
 const reducers = combineReducers({
   photos,
@@ -19,11 +20,12 @@ const reducers = combineReducers({
   search,
   favorites,
   theme,
+  auth,
 });
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['favorites', 'theme'],
+  whitelist: ['theme'],
 };
 
 const middleware = [reduxThunk];

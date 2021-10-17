@@ -69,7 +69,13 @@ class SearchPhotos extends Component {
               </GalleryItem>
             ))}
           </Gallery>
-          {index > -1 && <Modal photos={photos} index={index} />}
+          {index > -1 && (
+            <Modal
+              photos={photos}
+              index={index}
+              hideModal={() => this.props.handleModal(-1)}
+            />
+          )}
         </InfiniteScroll>
       </Container>
     );
