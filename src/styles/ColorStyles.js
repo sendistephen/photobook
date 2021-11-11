@@ -10,8 +10,8 @@ export const theme = {
     activeLink: '#F5F7FA',
   },
   light: {
-    main: 'transparent linear-gradient(126deg, #f8fafb 0%, #f8fafb 100%) 0% 0% no-repeat padding-box;',
-    secondary: '#F8FAFB 0% 0% no-repeat padding-box;',
+    main: '#f7f7f7;',
+    secondary: '#FFF 0% 0% no-repeat padding-box;',
     neutral: '#7B8794',
     text: '#000',
     text2: '#707070',

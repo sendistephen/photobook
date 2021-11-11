@@ -29,6 +29,10 @@ export const StyledSlider = styled(Slider)`
   padding: 30px;
   z-index: 1001;
   position: fixed;
+  @media (max-width: 786px) {
+    width:275px;
+    height:100%;
+  }
 `;
 
 export const PhotoHeader = styled.div`
@@ -47,12 +51,15 @@ export const AvatarImg = styled.img`
   width: 57px;
   height: 57px;
   border-radius: 5px;
+  @media(max-width:786px){
+    
+  }
 `;
 export const TextWrapper = styled.div`
   align-items: center;
 `;
 export const Title = styled(SmallText2)`
-  color: ${props => props.theme.text};
+  color: ${(props) => props.theme.text};
 `;
 export const Subtitle = styled(SmallText)`
   color: ${(props) => props.theme.linkColor};

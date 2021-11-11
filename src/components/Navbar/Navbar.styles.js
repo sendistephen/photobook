@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { BiSearch } from 'react-icons/bi';
+import { MenuIcon, XIcon } from '@heroicons/react/solid';
 
 export const Header = styled.header`
   border-bottom: 2px solid ${(props) => props.theme.secondary};
@@ -44,7 +45,27 @@ export const Input = styled.input`
 export const MenuWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
+  justify-content: center;
+  align-items: center;
   gap: 20px;
+  transition: 0.5s ease-in-out;
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+    gap: 30px;
+    padding-top: 20px;
+    padding-left: 20px;
+    background-color: black;
+    height: 100vh;
+    width: 200px;
+    position: fixed;
+    top: 0;
+    right: 0;
+    transform: translateX(5px);
+    display: ${({ isOpen }) => (isOpen ? 'flex' : 'none')};
+  }
 `;
 export const SearchIcon = styled(BiSearch)`
   position: absolute;
@@ -79,19 +100,21 @@ export const MenuThemeItem = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  @media (max-width: 768px) {
+    flex-direction: row;
+  }
 `;
 export const Theme = styled.div`
-  width: 49px;
-  height: 49px;
   display: flex;
+  padding: 6px;
   justify-content: center;
   align-items: center;
   background: ${(props) => props.theme.activeLink};
-  border-radius: 8px;
+  border-radius: 5px;
 `;
 export const Image = styled.img`
-  width: 30px;
-  height: 30px;
+  width: 24px;
+  height: 24px;
   cursor: pointer;
   opacity: 1;
 `;
@@ -99,15 +122,19 @@ export const Label = styled.span`
   margin-top: 2px;
   font-size: 13px;
   color: #999999;
+  @media (max-width: 768px) {
+    margin-left: 12px;
+  }
 `;
 export const Login = styled.div`
-  width: 54px;
-  height: 49px;
+  padding: 8px;
+  margin-top: -17px;
   display: flex;
   justify-content: center;
+  color: black;
   align-items: center;
   background: ${(props) => props.theme.activeLink};
-  border-radius: 8px;
+  border-radius: 5px;
   cursor: pointer;
   :hover {
     background-color: #e6ccff;
@@ -115,13 +142,13 @@ export const Login = styled.div`
   }
 `;
 export const Logout = styled.div`
-  width: 54px;
-  height: 49px;
+  padding: 5px;
+  margin-top: -17px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: ${(props) => props.theme.activeLink};
-  border-radius: 8px;
+  background: #e1b1ff;
+  border-radius: 5px;
   cursor: pointer;
   :hover {
     background-color: #e6ccff;
@@ -131,4 +158,28 @@ export const Logout = styled.div`
 export const Title = styled.h4`
   font-weight: 500;
   font-size: 13px;
+`;
+export const StyledMenuIcon = styled(MenuIcon)`
+  width: 24px;
+  height: 24px;
+  z-index: 10000;
+  color: ${(props) => props.theme.linkColor};
+`;
+export const StyledXIcon = styled(XIcon)`
+  width: 24px;
+  height: 24px;
+  z-index: 10000;
+  color: ${(props) => props.theme.linkColor};
+  display: none;
+  @media (max-width: 786px) {
+    display: flex;
+  }
+`;
+export const BuggerIcon = styled.div`
+  z-index: 1000;
+  color: ${(props) => props.theme.linkColor};
+  display: none;
+  @media (max-width: 786px) {
+    display: flex;
+  }
 `;

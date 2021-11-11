@@ -16,6 +16,9 @@ import {
   Theme,
   Label,
   MenuThemeItem,
+  StyledMenuIcon,
+  BuggerIcon,
+  StyledXIcon,
 } from './Navbar.styles';
 import { Container } from 'styles';
 import ThemeIcon from 'assets/icons/theme.svg';
@@ -25,6 +28,7 @@ import { handleToggleThemeChange } from 'store/theme/themeActions';
 
 const Navbar = (props) => {
   const [query, setQuery] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
 
   const { loginWithRedirect, logout } = useAuth0();
   const auth = useSelector((state) => state.auth);
@@ -53,28 +57,37 @@ const Navbar = (props) => {
             </FormGroup>
           </form>
 
-          <MenuWrapper>
-            {menu.map((item, index) => (
-              <MenuButton key={index} item={item} />
-            ))}
-            <MenuThemeItem onClick={() => props.handleToggleThemeChange()}>
-              <Theme>
-                <Image src={ThemeIcon} alt='Theme Icon' />
-              </Theme>
-              <Label>Theme</Label>
-            </MenuThemeItem>
-            {!auth.isAuthenticated && (
-              <Login onClick={() => loginWithRedirect()}>
-                <Title>Login</Title>
-              </Login>
+          <BuggerIcon>
+            {isOpen ? (
+              <StyledXIcon onClick={() => setIsOpen(!isOpen)} />
+            ) : (
+              <StyledMenuIcon onClick={() => setIsOpen(!isOpen)} />
             )}
-            {auth.isAuthenticated && (
-              <Logout
-                onClick={() => logout({ returnTo: window.location.origin })}
-              >
-                <Title>Log out</Title>
-              </Logout>
-            )}
+          </BuggerIcon>
+          <MenuWrapper isOpen={isOpen}>
+            <>
+              {menu.map((item, index) => (
+                <MenuButton key={index} item={item} />
+              ))}
+              <MenuThemeItem onClick={() => props.handleToggleThemeChange()}>
+                <Theme>
+                  <Image src={ThemeIcon} alt='Theme Icon' />
+                </Theme>
+                <Label>Theme</Label>
+              </MenuThemeItem>
+              {!auth.isAuthenticated && (
+                <Login onClick={() => loginWithRedirect()}>
+                  <Title>Login</Title>
+                </Login>
+              )}
+              {auth.isAuthenticated && (
+                <Logout
+                  onClick={() => logout({ returnTo: window.location.origin })}
+                >
+                  <Title>Log out</Title>
+                </Logout>
+              )}
+            </>
           </MenuWrapper>
         </HeaderContainer>
       </Container>

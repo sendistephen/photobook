@@ -2,30 +2,39 @@ import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const Icon = styled.img`
-  width: 30px;
-  height: 30px;
+  width: 24px;
+  height: 24px;
   cursor: pointer;
   opacity: 1;
 `;
 export const MenuItem = styled.div`
-  width: 40px;
-  height: 50px;
-
-  display: grid;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  span {
+    margin-top: 2px;
+    font-size: 13px;
+    color: #999999;
+  }
+  @media (max-width: 768px) {
+    flex-direction: row;
+    span {
+      margin-left: 12px;
+    }
+  }
 `;
 
 export const StyledLink = styled(NavLink)`
-  width: 49px;
-  height: 49px;
-  background: ${props => props.theme.activeLink};
-  border-radius: 8px;
-  color: #999999;
-  font-size: 13px;
-
-  display: grid;
-  justify-items: center;
+  background: ${(props) => props.theme.activeLink};
+  border-radius: 5px;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  height: fit-content;
 
   &.main-nav-active {
     &:first-child {
