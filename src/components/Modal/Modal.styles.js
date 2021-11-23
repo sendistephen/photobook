@@ -30,8 +30,8 @@ export const StyledSlider = styled(Slider)`
   z-index: 1001;
   position: fixed;
   @media (max-width: 786px) {
-    width:275px;
-    height:100%;
+    width: 90%;
+    padding: 20px;
   }
 `;
 
@@ -51,8 +51,9 @@ export const AvatarImg = styled.img`
   width: 57px;
   height: 57px;
   border-radius: 5px;
-  @media(max-width:786px){
-    
+  @media (max-width: 786px) {
+    width: 40px;
+    height: 40px;
   }
 `;
 export const TextWrapper = styled.div`
@@ -76,6 +77,9 @@ export const PhotoImage = styled.img`
   height: 100%;
   object-fit: contain;
   border-radius: 8px;
+  @media (max-width: 786px) {
+    object-fit: cover;
+  }
 `;
 export const PhotoFooter = styled.div`
   display: grid;
@@ -97,6 +101,10 @@ export const Icon = styled.img`
   width: 24px;
   height: 24px;
   cursor: pointer;
+  @media (max-width: 786px) {
+    width: 18px;
+    height: 18px;
+  }
 `;
 export const FavIcon = styled.div`
   fill: #f6cf58;
