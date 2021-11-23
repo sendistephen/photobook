@@ -1,5 +1,5 @@
+import { useEffect } from 'react';
 import Modal from 'components/Modal';
-import { Component } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Loader from 'react-loader-spinner';
 import { connect } from 'react-redux';
@@ -15,68 +15,68 @@ import {
 } from 'styles';
 import { breakpointColumns } from 'utils/helper';
 
-class PhotoList extends Component {
-  componentDidMount = () => {
-    this.props.fetchPhotos();
-  };
+const PhotoList = (props) => {
+  useEffect(() => {
+    props.fetchPhotos();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  render() {
-    const { photos, hasMore, isLoading, index } = this.props.photos;
-    return (
-      <Container>
-        {isLoading ? (
-          <LoadingSpinner>
-            <Loader type='ThreeDots' color='#32D3AC' />
-          </LoadingSpinner>
-        ) : (
-          <>
-            {' '}
-            {photos.length > 0 && (
-              <InfiniteScroll
-                dataLength={photos.length}
-                next={this.props.fetchPhotos}
-                hasMore={hasMore}
-                loader={
-                  <LoadingSpinner>
-                    <Loader type='ThreeDots' color='#32D3AC' />
-                  </LoadingSpinner>
-                }
-                endMessage={
-                  <Message>
-                    <b>There are no more photos</b>
-                  </Message>
-                }
+  const { photos, hasMore, isLoading, index } = props.photos;
+  return (
+    <Container>
+      {isLoading ? (
+        <LoadingSpinner>
+          <Loader type='ThreeDots' color='#32D3AC' />
+        </LoadingSpinner>
+      ) : (
+        <>
+          {' '}
+          {photos.length > 0 && (
+            <InfiniteScroll
+              dataLength={photos.length}
+              next={props.fetchPhotos}
+              hasMore={hasMore}
+              loader={
+                <LoadingSpinner>
+                  <Loader type='ThreeDots' color='#32D3AC' />
+                </LoadingSpinner>
+              }
+              endMessage={
+                <Message>
+                  <b>There are no more photos</b>
+                </Message>
+              }
+            >
+              <StyledMasonry
+                breakpointCols={breakpointColumns}
+                columnClassName='masonry-grid_column'
               >
-                <StyledMasonry
-                  breakpointCols={breakpointColumns}
-                  columnClassName='masonry-grid_column'
-                >
-                  {photos.map((photo, index) => (
-                    <GalleryItem key={index}>
-                      <GalleryImage
-                        src={photo.urls.small}
-                        alt={photo.description}
-                        onClick={() => this.props.handleModal(index)}
-                      />
-                    </GalleryItem>
-                  ))}
-                </StyledMasonry>
+                {photos.map((photo, index) => (
+                  <GalleryItem key={index}>
+                    <GalleryImage
+                      src={photo.urls.small}
+                      alt={photo.description}
+                      onClick={() => props.handleModal(index)}
+                    />
+                  </GalleryItem>
+                ))}
+              </StyledMasonry>
 
-                {index > -1 && (
-                  <Modal
-                    photos={photos}
-                    index={index}
-                    hideModal={() => this.props.handleModal(-1)}
-                  />
-                )}
-              </InfiniteScroll>
-            )}
-          </>
-        )}
-      </Container>
-    );
-  }
-}
+              {index > -1 && (
+                <Modal
+                  photos={photos}
+                  index={index}
+                  hideModal={() => props.handleModal(-1)}
+                />
+              )}
+            </InfiniteScroll>
+          )}
+        </>
+      )}
+    </Container>
+  );
+};
+
 const mapStateToProps = (state) => ({
   photos: state.photos,
 });
