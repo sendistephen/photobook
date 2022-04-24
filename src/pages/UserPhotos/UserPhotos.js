@@ -29,7 +29,6 @@ const UserPhotos = (props) => {
 	}, [username]);
 
 	const { photos, hasMore, isLoading, index } = props.user;
-	console.log(props);
 
 	return (
 		<>
