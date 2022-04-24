@@ -1,4 +1,5 @@
-import React, { Component, useEffect } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
