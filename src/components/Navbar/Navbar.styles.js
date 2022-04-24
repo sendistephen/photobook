@@ -138,9 +138,8 @@ export const Login = styled.div`
 	border-radius: 5px;
 	cursor: pointer;
 	:hover {
-		background-color: #e6ccff;
+		background-color: black;
 		color: white;
-		border: 1px solid #e6ccff;
 	}
 `;
 export const Logout = styled.div`
@@ -149,12 +148,12 @@ export const Logout = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background: #e1b1ff;
+	background: #c36060;
 	border-radius: 5px;
 	cursor: pointer;
 	:hover {
-		background-color: #e6ccff;
-		color: black;
+		background-color: #c36060;
+		color: white;
 	}
 `;
 export const Title = styled.h4`
