@@ -14,7 +14,7 @@ export const getURL = (config) => {
   );
   return `${base}photos?${query}&client_id=${key}`;
 };
-
+ 
 export const getPhotoUrl = (photoId) => {
   const id = photoId ? `${photoId}` : null;
   return `${base}photos/${id}?client_id=${key}`;
