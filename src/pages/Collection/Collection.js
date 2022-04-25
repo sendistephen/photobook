@@ -29,7 +29,7 @@ import {
 	Message,
 } from "styles";
 import { connect } from "react-redux";
-import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import { useParams } from "react-router-dom";
 
 const Collection = (props) => {
 	const { collectionId } = useParams();
@@ -40,9 +40,9 @@ const Collection = (props) => {
 		props.fetechSingleCollection(collectionId);
 	}, []);
 
-	// useEffect(() => {
-	// 	props.fetchPhotos(collectionId);
-	// }, [collectionId]);
+	useEffect(() => {
+		props.fetchCollection(collectionId);
+	}, [collectionId]);
 
 	// clear collections for previous search results on unmount
 	useEffect(() => {
