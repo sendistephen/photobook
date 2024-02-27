@@ -1,6 +1,6 @@
-import { Component } from 'react';
-import { connect } from 'react-redux';
-import { getUserCollection } from 'store/user/userActions';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUserCollections } from 'store/userSlice';
 
 import {
   Collection,
@@ -9,45 +9,43 @@ import {
   Cover,
   Title,
 } from './UserCollection.styles';
+import { BiLeftArrow, BiRightArrow } from 'react-icons/bi';
 
-class UserCollection extends Component {
-  componentDidMount = () => {
-    const { username } = this.props;
-    this.props.getUserCollection(username);
+const UserCollection = ({ username }) => {
+  const dispatch = useDispatch();
+  const collections = useSelector((state) => state.user.collections);
+
+  useEffect(() => {
+    if (username) {
+      dispatch(fetchUserCollections(username));
+    }
+  }, [username, dispatch]);
+
+  const settings = {
+    dots: collections.length > 1,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 3,
+    nextArrow: collections.length > 3 ? <BiLeftArrow /> : null,
+    prevArrow: collections.length > 3 ? <BiRightArrow /> : null,
   };
 
-  render() {
-    const { collections } = this.props.collections;
-    const settings = {
-      dots: true,
-      infinite: true,
-      speed: 500,
-      slidesToShow: 3,
-      slidesToScroll: 3,
-    };
-    return (
-      <Collection>
-        <StyledSlider {...settings}>
-          {collections.map((collection) => (
-            <CollectionBox key={collection.id}>
-              <Cover
-                src={
-                  collection.cover_photo && collection.cover_photo.urls.small
-                }
-                alt={collection.title}
-              />
-              <Title>{collection.title}</Title>
-            </CollectionBox>
-          ))}
-        </StyledSlider>
-      </Collection>
-    );
-  }
-}
-const mapStateToProps = (state) => ({
-  collections: state.user,
-});
-const mapDispatchToProps = {
-  getUserCollection,
+  return (
+    <Collection>
+      <StyledSlider {...settings}>
+        {collections.map((collection) => (
+          <CollectionBox key={collection.id}>
+            <Cover
+              src={collection.cover_photo && collection.cover_photo.urls.small}
+              alt={collection.title}
+            />
+            <Title>{collection.title}</Title>
+          </CollectionBox>
+        ))}
+      </StyledSlider>
+    </Collection>
+  );
 };
-export default connect(mapStateToProps, mapDispatchToProps)(UserCollection);
+
+export default UserCollection;

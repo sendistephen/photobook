@@ -24,14 +24,15 @@ import MagicSliderDots from 'react-magic-slider-dots';
 import 'react-magic-slider-dots/dist/magic-dots.css';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
-import { connect, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useSelector } from 'react-redux';
 import {
   addFavoritePhoto,
   getFavorites,
   removeFavoritePhoto,
-} from 'store/favorites/favoritesActions';
+} from 'store/favoritesSlice';
+
 import { useEffect } from 'react';
 
 const Modal = ({ photos, index, ...props }) => {
@@ -52,13 +53,12 @@ const Modal = ({ photos, index, ...props }) => {
       return <MagicSliderDots dots={dots} numDotsToShow={3} dotWidth={30} />;
     },
   };
+
   useEffect(() => {
-    // load user favorites if user is authenticated
     if (isAuthenticated) {
       dispatch(getFavorites());
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [favourites]);
+  }, [dispatch, isAuthenticated]);
 
   return (
     <SliderContainer>
@@ -122,6 +122,4 @@ const Modal = ({ photos, index, ...props }) => {
   );
 };
 
-const mapStateToProps = (state) => ({});
-const mapDispatchToProps = {};
-export default connect(mapStateToProps, mapDispatchToProps)(Modal);
+export default Modal;

@@ -1,86 +1,92 @@
-import { useEffect } from "react";
-import Modal from "components/Modal";
-import InfiniteScroll from "react-infinite-scroll-component";
-import Loader from "react-loader-spinner";
-import { connect } from "react-redux";
-import { fetchPhotos, handleModal } from "store/photos/photosActions";
+import { useEffect } from 'react';
+import Modal from 'components/Modal';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 import {
-	GalleryImage,
-	GalleryItem,
-	LoadingSpinner,
-	Message,
-	StyledMasonry,
-	Container,
-} from "styles";
-import { breakpointColumns } from "utils/helper";
+  GalleryImage,
+  GalleryItem,
+  LoadingSpinner,
+  Message,
+  StyledMasonry,
+  Container,
+} from 'styles';
+import { breakpointColumns } from 'utils/helper';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  fetchPhotos,
+  selectHasMore,
+  selectIndex,
+  selectIsLoading,
+  selectPhotos,
+  showModal,
+} from '../../store/photosSlice';
+import LoaderComponent from 'components/LoaderComponent';
 
 const PhotoList = (props) => {
-	useEffect(() => {
-		props.fetchPhotos();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+  const dispatch = useDispatch();
+  const photos = useSelector(selectPhotos);
+  const hasMore = useSelector(selectHasMore);
+  const isLoading = useSelector(selectIsLoading);
+  const index = useSelector(selectIndex);
 
-	const { photos, hasMore, isLoading, index } = props.photos;
-	return (
-		<Container>
-			{photos.length === 0 && isLoading ? (
-				<LoadingSpinner>
-					<Loader type="ThreeDots" color="#32D3AC" />
-				</LoadingSpinner>
-			) : (
-				<>
-					{photos.length > 0 && (
-						<InfiniteScroll
-							dataLength={photos.length}
-							next={props.fetchPhotos}
-							hasMore={hasMore}
-							loader={
-								<LoadingSpinner>
-									<Loader type="ThreeDots" color="#32D3AC" />
-								</LoadingSpinner>
-							}
-							endMessage={
-								<Message>
-									<b>There are no more photos</b>
-								</Message>
-							}>
-							<StyledMasonry
-								breakpointCols={breakpointColumns}
-								columnClassName="masonry-grid_column">
-								{photos.map((photo, index) => (
-									<GalleryItem key={index}>
-										<GalleryImage
-											src={photo.urls.small}
-											alt={photo.description}
-											onClick={() => props.handleModal(index)}
-										/>
-									</GalleryItem>
-								))}
-							</StyledMasonry>
+  useEffect(() => {
+    dispatch(fetchPhotos());
+  }, [dispatch]);
 
-							{index > -1 && (
-								<Modal
-									photos={photos}
-									index={index}
-									hideModal={() => props.handleModal(-1)}
-								/>
-							)}
-						</InfiniteScroll>
-					)}
-				</>
-			)}
-		</Container>
-	);
+  return (
+    <Container>
+      {photos.length === 0 && isLoading ? (
+        <LoadingSpinner>
+          <LoaderComponent />
+        </LoadingSpinner>
+      ) : (
+        <>
+          {photos.length > 0 && (
+            <InfiniteScroll
+              dataLength={photos.length}
+              next={props.fetchPhotos}
+              hasMore={hasMore}
+              loader={
+                <LoadingSpinner>
+                  <LoaderComponent />
+                </LoadingSpinner>
+              }
+              endMessage={
+                <Message>
+                  <b>There are no more photos</b>
+                </Message>
+              }
+            >
+              <StyledMasonry
+                breakpointCols={breakpointColumns}
+                columnClassName='masonry-grid_column'
+              >
+                {photos.map((photo, index) => (
+                  <GalleryItem
+                    key={index}
+                    onClick={() => dispatch(showModal(index))}
+                  >
+                    <GalleryImage
+                      src={photo.urls.small}
+                      alt={photo.description}
+                    />
+                  </GalleryItem>
+                ))}
+              </StyledMasonry>
+
+              {index > -1 && (
+                <Modal
+                  photos={photos}
+                  index={index}
+                  hideModal={() => dispatch(showModal(-1))}
+                />
+              )}
+            </InfiniteScroll>
+          )}
+        </>
+      )}
+    </Container>
+  );
 };
 
-const mapStateToProps = (state) => ({
-	photos: state.photos,
-});
-
-const mapDispatchToProps = {
-	fetchPhotos,
-	handleModal,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(PhotoList);
+export default PhotoList;

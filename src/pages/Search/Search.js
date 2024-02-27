@@ -1,48 +1,43 @@
 import { PhotoTopic, SearchCollections, SearchPhotos } from 'components';
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { StyledLink, NavWrapper } from './Search.styles';
-import { handleTabClick } from '../../store/search/searchActions';
+import { useDispatch } from 'react-redux';
+import { useLocation } from 'react-router-dom';
+import { handleTabClick } from 'store/searchSlice';
+import { NavWrapper, StyledLink } from './Search.styles';
 
-class Search extends Component {
-  toggleTabs = () => {
-    if (this.props.location.pathname.includes('photos')) {
+const Search = () => {
+  const dispatch = useDispatch();
+  const location = useLocation();
+
+  const toggleTabs = () => {
+    if (location.pathname.includes('photos')) {
       return <SearchPhotos />;
     } else {
       return <SearchCollections />;
     }
   };
 
-  render() {
-    return (
-      <>
-        <PhotoTopic />
-        <NavWrapper>
-          <StyledLink
-            to={`/search/photos/${this.props.match.params.searchWord}`}
-            activeClassName='main-nav-active'
-            onClick={() => this.props.handleTabClick('photos')}
-          >
-            Photos
-          </StyledLink>
-          <StyledLink
-            to={`/search/collections/${this.props.match.params.searchWord}`}
-            activeClassName='main-nav-active'
-            onClick={() => this.props.handleTabClick('collections')}
-          >
-            Collections
-          </StyledLink>
-        </NavWrapper>
-        {this.toggleTabs()}
-      </>
-    );
-  }
-}
-const mapStateToProps = (state) => ({
-  search: state.search,
-});
-const mapDispatchToProps = {
-  handleTabClick,
+  return (
+    <>
+      <PhotoTopic />
+      <NavWrapper>
+        <StyledLink
+          to={`/search/photos/${this.props.match.params.searchWord}`}
+          className={({ isActive }) => (isActive ? 'main-nav-active' : '')}
+          onClick={() => dispatch(handleTabClick('photos'))}
+        >
+          Photos
+        </StyledLink>
+        <StyledLink
+          to={`/search/collections/${this.props.match.params.searchWord}`}
+          className={({ isActive }) => (isActive ? 'main-nav-active' : '')}
+          onClick={() => dispatch(handleTabClick('collections'))}
+        >
+          Collections
+        </StyledLink>
+      </NavWrapper>
+      {toggleTabs()}
+    </>
+  );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Search);
+export default Search;

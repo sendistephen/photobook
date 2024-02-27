@@ -1,26 +1,25 @@
-import { createStore, applyMiddleware, combineReducers } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import reduxThunk from 'redux-thunk';
-import { persistStore, persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
-import photos from './photos/photosReducer';
-import photo from './photo/photoReducer';
-import user from './user/userReducer';
-import collections from './collections/collectionsReducer';
-import search from './search/searchReducer';
-import favorites from './favorites/favoritesReducer';
-import theme from './theme/themeReducer';
-import auth from './Auth/authReducer';
+import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers } from 'redux';
+import { persistReducer, persistStore } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import authReducer from './authSlice';
+import collectionsReducer from './collectionSlice';
+import favoritesReducer from './favoritesSlice';
+import photoReducer from './photoSlice';
+import photosReducer from './photosSlice';
+import searchReducer from './searchSlice';
+import themeReducer from './themeSlice';
+import userReducer from './userSlice';
 
 const reducers = combineReducers({
-  photos,
-  photo,
-  user,
-  collections,
-  search,
-  favorites,
-  theme,
-  auth,
+  photos: photosReducer,
+  photo: photoReducer,
+  user: userReducer,
+  collections: collectionsReducer,
+  search: searchReducer,
+  favorites: favoritesReducer,
+  theme: themeReducer,
+  auth: authReducer,
 });
 const persistConfig = {
   key: 'root',
@@ -28,12 +27,23 @@ const persistConfig = {
   whitelist: ['theme'],
 };
 
-const middleware = [reduxThunk];
-
 const persistedReducer = persistReducer(persistConfig, reducers);
 
-export const store = createStore(
-  persistedReducer,
-  composeWithDevTools(applyMiddleware(...middleware))
-);
+export const store = configureStore({
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [
+          'persist/PERSIST',
+          'persist/REHYDRATE',
+          'persist/PAUSE',
+          'persist/PERSIST',
+          'persist/PURGE',
+          'persist/REGISTER',
+        ],
+      },
+    }),
+});
+
 export const persistor = persistStore(store);

@@ -6,16 +6,18 @@ import {
   Title,
 } from 'components/Collections/Collections.styles';
 import { useEffect } from 'react';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { fetchCollections } from 'store/collections/collectionsActions';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCollections } from 'store/collectionSlice';
 
 const Collections = (props) => {
+  const dispatch = useDispatch();
+  const collections = useSelector((state) => state.collections.collections);
+
   useEffect(() => {
-    props.fetchCollections();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  const { collections } = props.data;
+    dispatch(fetchCollections());
+  }, [dispatch]);
+
   return (
     <Collection>
       {collections.map((collection) => (
@@ -34,11 +36,5 @@ const Collections = (props) => {
     </Collection>
   );
 };
-const mapStateToProps = (state) => ({
-  data: state.collections,
-});
-const mapDispatchToProps = {
-  fetchCollections,
-};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Collections);
+export default Collections;

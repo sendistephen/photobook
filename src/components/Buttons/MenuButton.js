@@ -4,7 +4,11 @@ export default function MenuButton(props) {
   const { item } = props;
   return (
     <MenuItem>
-      <StyledLink exact to={item.link} activeClassName='main-nav-active'>
+      <StyledLink
+        exact
+        to={item.link}
+        className={({ isActive }) => (isActive ? 'main-nav-active' : '')}
+      >
         <Icon
           toggleTheme={props.toggleTheme}
           src={item.icon}

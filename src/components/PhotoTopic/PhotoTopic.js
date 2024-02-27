@@ -1,59 +1,45 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import { fetchPhotoTopic } from 'store/photo/photoActions';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { fetchPhotoTopic } from '../../store/photoSlice';
+
 import { Container } from 'styles';
 import {
-  Image,
   Content,
   ContentWrapper,
+  Description,
+  Image,
   StyledLink,
   Subtitle,
-  Description,
   TopicStats,
 } from './PhotoTopic.styles';
+import { useEffect } from 'react';
 
-class PhotoTopic extends Component {
-  componentDidMount = () => {
-    this.props.fetchPhotoTopic({ slug: this.props.match.params.searchWord });
-  };
-  componentDidUpdate = (prevProps, prevState) => {
-    const { searchWord } = this.props.match.params;
-    if (
-      prevProps.match.params.searchWord !== this.props.match.params.searchWord
-    ) {
-      this.props.fetchPhotoTopic({ slug: searchWord });
-    }
-  };
+const PhotoTopic = () => {
+  const dispatch = useDispatch();
+  const { searchWord } = useParams();
 
-  render() {
-    const { topic } = this.props.photo;
-    return (
-      <>
-        {topic.slug && (
-          <Container>
-            <ContentWrapper>
-              <Image src={topic.cover_photo.urls.small} alt={topic.slug} />
-              <Content>
-                <Subtitle>#{topic.slug}</Subtitle>
-                <Description>{topic.description}</Description>
-                <TopicStats>{topic.total_photos} photos</TopicStats>
-                <StyledLink to='/'>Follow</StyledLink>
-              </Content>
-            </ContentWrapper>
-          </Container>
-        )}
-      </>
-    );
-  }
-}
-const mapStateToProps = (state) => ({
-  photo: state.photo,
-});
-const mapDispatchToProps = {
-  fetchPhotoTopic,
+  const topic = useSelector((state) => state.photo.topic);
+
+  useEffect(() => {
+    dispatch(fetchPhotoTopic({ slug: searchWord }));
+  }, [dispatch, searchWord]);
+
+  return (
+    <>
+      {topic.slug && (
+        <Container>
+          <ContentWrapper>
+            <Image src={topic.cover_photo.urls.small} alt={topic.slug} />
+            <Content>
+              <Subtitle>#{topic.slug}</Subtitle>
+              <Description>{topic.description}</Description>
+              <TopicStats>{topic.total_photos} photos</TopicStats>
+              <StyledLink to='/'>Follow</StyledLink>
+            </Content>
+          </ContentWrapper>
+        </Container>
+      )}
+    </>
+  );
 };
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(PhotoTopic));
+export default PhotoTopic;

@@ -14,15 +14,15 @@ export const getURL = (config) => {
   );
   return `${base}photos?${query}&client_id=${key}`;
 };
- 
+
 export const getPhotoUrl = (photoId) => {
   const id = photoId ? `${photoId}` : null;
   return `${base}photos/${id}?client_id=${key}`;
 };
 
 export const getUserUrl = (username) => {
-  const user = username ? `${username}` : null;
-  return `${base}users/${user}?client_id=${key}`;
+  if (!username) return null;
+  return `${base}users/${username}?client_id=${key}`;
 };
 
 export const getUserPhotosUrl = ({ username, page, perPage }) => {
@@ -30,6 +30,7 @@ export const getUserPhotosUrl = ({ username, page, perPage }) => {
 };
 
 export const getUserCollections = ({ username, page, perPage }) => {
+  if (!username) return null;
   return `${base}users/${username}/collections?page=${page}&per_page=${perPage}&client_id=${key}`;
 };
 

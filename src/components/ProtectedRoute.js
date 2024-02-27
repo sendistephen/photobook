@@ -1,16 +1,10 @@
-import { useAuth0 } from '@auth0/auth0-react';
-import { Route } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
-function ProtectedRoute({ Component, isAuthenticated, ...restOfProps }) {
-  const { loginWithRedirect } = useAuth0();
-  return (
-    <Route
-      render={() =>
-        isAuthenticated ? <Component {...restOfProps} /> : loginWithRedirect()
-      }
-      {...restOfProps}
-    />
-  );
+function ProtectedRoute({ element }) {
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
+  return isAuthenticated ? <>element</> : <Navigate to='/' replace />;
 }
 
 export default ProtectedRoute;

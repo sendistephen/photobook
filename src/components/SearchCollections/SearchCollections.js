@@ -1,89 +1,74 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from "react";
-import { connect } from "react-redux";
-import { Link, withRouter } from "react-router-dom";
-import InfiniteScroll from "react-infinite-scroll-component";
-import Loader from "react-loader-spinner";
+import { useEffect } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { Container, LoadingSpinner, Message } from 'styles';
+import { breakpointColumns } from 'utils/helper';
 import {
-	Gallery,
-	CollectionItem,
-	CollectionImage,
-	TotalPhotos,
-} from "./SearchCollections.styles";
-import { breakpointColumns } from "utils/helper";
-import { Container, LoadingSpinner, Message } from "styles";
+  clearUserCollection,
+  fetchCollections,
+} from '../../store/collectionSlice';
 import {
-	fetchCollections,
-	clearCollection,
-} from "../../store/search/searchActions";
-import { useParams } from "react-router-dom";
+  CollectionImage,
+  CollectionItem,
+  Gallery,
+  TotalPhotos,
+} from './SearchCollections.styles';
+
+import { useParams } from 'react-router-dom';
+import LoaderComponent from 'components/LoaderComponent';
 
 const SearchCollections = (props) => {
-	const { searchWord } = useParams();
+  const { searchWord } = useParams();
+  const dispatch = useDispatch();
 
-	// fetch colletions on mount
-	useEffect(() => {
-		props.fetchCollections(searchWord);
-	}, []);
+  useEffect(() => {
+    dispatch(fetchCollections({ query: searchWord, page: 1, perPage: 30 }));
+    return () => {
+      dispatch(clearUserCollection());
+    };
+  }, [dispatch, searchWord]);
 
-	// fetch collections everytime the search word changes
-	useEffect(() => {
-		props.fetchCollections(searchWord);
-	}, [searchWord]);
+  const { collections, hasMore } = props.collections;
 
-	// clear collections for previous search results on unmount
-	useEffect(() => {
-		props.clearCollection();
-	}, [searchWord]);
-
-	const { collections, hasMore } = props.collections;
-
-	return (
-		<Container>
-			<InfiniteScroll
-				dataLength={collections.length}
-				next={() => props.fetchCollections(searchWord)}
-				hasMore={hasMore}
-				loader={
-					<LoadingSpinner>
-						<Loader type="ThreeDots" color="#32D3AC" />
-					</LoadingSpinner>
-				}
-				endMessage={
-					<Message>
-						<b>There are no more photo collections</b>
-					</Message>
-				}>
-				<Gallery
-					breakpointCols={breakpointColumns}
-					columnClassName="masonry-grid_column">
-					{collections.map((collection) => (
-						<Link
-							key={collection.id}
-							to={`/collections/${collection.id}/photos`}>
-							<CollectionItem>
-								<CollectionImage
-									src={collection.cover_photo.urls.small}
-									alt={collection.description}
-								/>
-								<TotalPhotos>{collection.total_photos} photos</TotalPhotos>
-							</CollectionItem>
-						</Link>
-					))}
-				</Gallery>
-			</InfiniteScroll>
-		</Container>
-	);
+  return (
+    <Container>
+      <InfiniteScroll
+        dataLength={collections.length}
+        next={() => props.fetchCollections(searchWord)}
+        hasMore={hasMore}
+        loader={
+          <LoadingSpinner>
+            <LoaderComponent />
+          </LoadingSpinner>
+        }
+        endMessage={
+          <Message>
+            <b>There are no more photo collections</b>
+          </Message>
+        }
+      >
+        <Gallery
+          breakpointCols={breakpointColumns}
+          columnClassName='masonry-grid_column'
+        >
+          {collections.map((collection) => (
+            <Link
+              key={collection.id}
+              to={`/collections/${collection.id}/photos`}
+            >
+              <CollectionItem>
+                <CollectionImage
+                  src={collection.cover_photo.urls.small}
+                  alt={collection.description}
+                />
+                <TotalPhotos>{collection.total_photos} photos</TotalPhotos>
+              </CollectionItem>
+            </Link>
+          ))}
+        </Gallery>
+      </InfiniteScroll>
+    </Container>
+  );
 };
-
-const mapStateToProps = (state) => ({
-	collections: state.search,
-});
-const mapDispatchToProps = {
-	fetchCollections,
-	clearCollection,
-};
-export default connect(
-	mapStateToProps,
-	mapDispatchToProps
-)(withRouter(SearchCollections));
+export default SearchCollections;
