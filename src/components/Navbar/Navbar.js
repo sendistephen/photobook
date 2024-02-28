@@ -86,7 +86,9 @@ const Navbar = (props) => {
               )}
               {isAuthenticated && (
                 <Logout
-                  onClick={() => logout({ returnTo: window.location.origin })}
+                  onClick={() =>
+                    logout({ returnTo: process.env.REACT_APP_BASE_URL })
+                  }
                 >
                   <Title>Log out</Title>
                 </Logout>
