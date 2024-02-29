@@ -23,6 +23,7 @@ export const fetchUserPhotos = createAsyncThunk(
       const response = await axios(
         getUserPhotosUrl({ username, page, perPage })
       );
+
       return response.data;
     } catch (error) {
       return rejectWithValue(error.message);

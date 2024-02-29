@@ -18,12 +18,13 @@ const UserPhotos = () => {
   const { username } = useParams();
 
   const dispatch = useDispatch();
+
   const { photos, hasMore, isLoading, index } = useSelector(
     (state) => state.user
   );
 
   useEffect(() => {
-    dispatch(fetchUserPhotos(username));
+    dispatch(fetchUserPhotos({ username }));
   }, [username, dispatch]);
 
   if (photos.length === 0) {
@@ -42,7 +43,7 @@ const UserPhotos = () => {
       {photos.length > 0 && (
         <InfiniteScroll
           dataLength={photos.length}
-          next={() => dispatch(fetchUserPhotos(username))}
+          next={() => dispatch(fetchUserPhotos({ username }))}
           hasMore={hasMore}
           loader={
             <LoadingSpinner>
