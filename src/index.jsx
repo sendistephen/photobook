@@ -15,9 +15,9 @@ const root = ReactDOM.createRoot(container);
 root.render(
   <React.StrictMode>
     <Auth0Provider
-      domain={process.env.REACT_APP_AUTH0_DOMAIN}
-      clientId={process.env.REACT_APP_AUTH0_CLIENT_ID}
-      audience={process.env.REACT_APP_AUTH0_AUDIENCE}
+      domain={import.meta.env.VITE_APP_AUTH0_DOMAIN}
+      clientId={import.meta.env.VITE_APP_AUTH0_CLIENT_ID}
+      audience={import.meta.env.VITE_APP_AUTH0_AUDIENCE}
       authorizationParams={{
         redirect_uri: window.location.origin,
       }}
@@ -30,7 +30,3 @@ root.render(
     </Auth0Provider>
   </React.StrictMode>
 );
-
-if (module.hot && process.env.NODE_ENV !== 'production') {
-  module.hot.accept();
-}

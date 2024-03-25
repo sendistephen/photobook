@@ -42,15 +42,20 @@ export const Input = styled.input`
     width: 100%;
   }
 `;
-export const MenuWrapper = styled.div`
+const shouldNotForwardProp = (prop) => !['isOpen'].includes(prop);
+
+// Using the utility function with styled-components' .withConfig
+export const MenuWrapper = styled.div.withConfig({
+  shouldForwardProp: shouldNotForwardProp,
+})`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   justify-content: center;
   align-items: center;
   gap: 20px;
   transition: 0.5s ease-in-out;
+
   @media (max-width: 768px) {
-    display: flex;
     flex-direction: column;
     justify-content: start;
     align-items: start;
@@ -63,10 +68,11 @@ export const MenuWrapper = styled.div`
     position: fixed;
     top: 0;
     right: 0;
-    transform: translateX(5px);
+    transform: translateX(${({ isOpen }) => (isOpen ? '0' : '100%')});
     display: ${({ isOpen }) => (isOpen ? 'flex' : 'none')};
   }
 `;
+
 export const SearchIcon = styled(BiSearch)`
   position: absolute;
   width: 19px;

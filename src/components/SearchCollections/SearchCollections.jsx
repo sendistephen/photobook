@@ -1,13 +1,10 @@
 import { useEffect } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Container, LoadingSpinner, Message } from 'styles';
 import { breakpointColumns } from 'utils/helper';
-import {
-  clearUserCollection,
-  fetchCollections,
-} from '../../store/collectionSlice';
+
 import {
   CollectionImage,
   CollectionItem,
@@ -17,28 +14,41 @@ import {
 
 import { useParams } from 'react-router-dom';
 import LoaderComponent from 'components/LoaderComponent';
+import { fetchCollections, clearCollections } from 'store/searchSlice';
 
-const SearchCollections = (props) => {
+const SearchCollections = () => {
   const { searchWord } = useParams();
   const dispatch = useDispatch();
+  const isBottomLoader = true;
+
+  const { collections, hasMore, page } = useSelector((state) => state.search);
 
   useEffect(() => {
-    dispatch(fetchCollections({ query: searchWord, page: 1, perPage: 30 }));
+    if (searchWord) {
+      dispatch(fetchCollections({ query: searchWord, page: 1, perPage: 30 }));
+    }
     return () => {
-      dispatch(clearUserCollection());
+      dispatch(clearCollections());
     };
   }, [dispatch, searchWord]);
 
-  const { collections, hasMore } = props.collections;
+  const fetchMoreCollections = () => {
+    // Increment the page number for the next fetch
+    const nextPage = page + 1;
+    dispatch(
+      fetchCollections({ query: searchWord, page: nextPage, perPage: 30 })
+    );
+  };
 
   return (
     <Container>
       <InfiniteScroll
+        key={Math.random()}
         dataLength={collections.length}
-        next={() => props.fetchCollections(searchWord)}
+        next={fetchMoreCollections}
         hasMore={hasMore}
         loader={
-          <LoadingSpinner>
+          <LoadingSpinner className={isBottomLoader ? 'is-bottom-loader' : ''}>
             <LoaderComponent />
           </LoadingSpinner>
         }

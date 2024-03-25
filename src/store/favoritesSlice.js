@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const API_URL = process.env.REACT_APP_PHOTO_SERVER_API;
+const API_URL = import.meta.env.VITE_APP_PHOTO_SERVER_API;
 
 // Async thunk for fetching favorite photos
 export const getFavorites = createAsyncThunk(

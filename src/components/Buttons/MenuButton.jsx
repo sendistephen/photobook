@@ -5,7 +5,6 @@ export default function MenuButton(props) {
   return (
     <MenuItem>
       <StyledLink
-        exact
         to={item.link}
         className={({ isActive }) => (isActive ? 'main-nav-active' : '')}
       >

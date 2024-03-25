@@ -5,7 +5,8 @@ import { getCollections, getSearchResults } from 'utils/api';
 // Async thunk for fetching search results for photos
 export const fetchPhotos = createAsyncThunk(
   'search/fetchPhotos',
-  async ({ query, page, perPage }, { rejectWithValue }) => {
+  async ({ query, page = 1, perPage = 50 }, { rejectWithValue }) => {
+    if (!query) return;
     try {
       const response = await axios(getSearchResults({ query, page, perPage }));
       return response.data.results;
@@ -18,9 +19,12 @@ export const fetchPhotos = createAsyncThunk(
 // Async thunk for fetching search results for collections
 export const fetchCollections = createAsyncThunk(
   'search/fetchCollections',
-  async ({ query, page, perPage }, { rejectWithValue }) => {
+  async ({ query, page = 1, perPage = 50 }, { rejectWithValue }) => {
+    if (!query) return;
+
     try {
       const response = await axios(getCollections({ query, page, perPage }));
+      console.log(response.data.results);
       return response.data.results;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -33,7 +37,7 @@ const initialState = {
   collections: [],
   activeTab: '',
   page: 1,
-  perPage: 25,
+  perPage: 50,
   isLoading: false,
   error: null,
   hasMore: true,

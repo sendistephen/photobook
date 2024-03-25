@@ -8,7 +8,7 @@ const initialState = {
   page: 1,
   perPage: 50,
   hasMore: true,
-  index: -1,
+  index: null,
   error: null,
 };
 
@@ -32,6 +32,9 @@ const photosSlice = createSlice({
   reducers: {
     showModal: (state, action) => {
       state.index = action.payload;
+    },
+    hideModal: (state) => {
+      state.index = null;
     },
   },
   extraReducers: (builder) => {
@@ -59,5 +62,5 @@ export const selectCurrentPage = (state) => state.photos.page;
 export const selectPerPage = (state) => state.photos.perPage;
 export const selectIndex = (state) => state.photos.index;
 
-export const { showModal } = photosSlice.actions;
+export const { showModal, hideModal } = photosSlice.actions;
 export default photosSlice.reducer;

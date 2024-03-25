@@ -14,6 +14,7 @@ import { breakpointColumns } from 'utils/helper';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   fetchPhotos,
+  hideModal,
   selectHasMore,
   selectIndex,
   selectIsLoading,
@@ -27,16 +28,22 @@ const PhotoList = (props) => {
   const photos = useSelector(selectPhotos);
   const hasMore = useSelector(selectHasMore);
   const isLoading = useSelector(selectIsLoading);
-  const index = useSelector(selectIndex);
+  const selectedPhotoId = useSelector(selectIndex);
 
   useEffect(() => {
     dispatch(fetchPhotos());
   }, [dispatch]);
 
+  const fetchMorePhotos = () => {
+    dispatch(fetchPhotos());
+  };
+
+  const isBottomLoader = true;
+
   return (
     <Container>
       {photos.length === 0 && isLoading ? (
-        <LoadingSpinner>
+        <LoadingSpinner className={isBottomLoader ? 'is-bottom-loader' : ''}>
           <LoaderComponent />
         </LoadingSpinner>
       ) : (
@@ -44,7 +51,7 @@ const PhotoList = (props) => {
           {photos.length > 0 && (
             <InfiniteScroll
               dataLength={photos.length}
-              next={props.fetchPhotos}
+              next={fetchMorePhotos}
               hasMore={hasMore}
               loader={
                 <LoadingSpinner>
@@ -64,7 +71,7 @@ const PhotoList = (props) => {
                 {photos.map((photo, index) => (
                   <GalleryItem
                     key={index}
-                    onClick={() => dispatch(showModal(index))}
+                    onClick={() => dispatch(showModal(photo.id))}
                   >
                     <GalleryImage
                       src={photo.urls.small}
@@ -74,11 +81,11 @@ const PhotoList = (props) => {
                 ))}
               </StyledMasonry>
 
-              {index > -1 && (
+              {selectedPhotoId && (
                 <Modal
                   photos={photos}
-                  index={index}
-                  hideModal={() => dispatch(showModal(-1))}
+                  selectedPhotoId={selectedPhotoId}
+                  hideModal={() => dispatch(hideModal())}
                 />
               )}
             </InfiniteScroll>

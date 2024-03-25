@@ -18,7 +18,7 @@ export const fetchUser = createAsyncThunk(
 // Async thunk for fetching user photos
 export const fetchUserPhotos = createAsyncThunk(
   'user/fetchUserPhotos',
-  async ({ username, page = 1, perPage = 10 }, { rejectWithValue }) => {
+  async ({ username, page, perPage = 5 }, { rejectWithValue }) => {
     try {
       const response = await axios(
         getUserPhotosUrl({ username, page, perPage })
@@ -39,6 +39,7 @@ export const fetchUserCollections = createAsyncThunk(
       const response = await axios(
         getUserCollections({ username, page, perPage })
       );
+
       return response.data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -54,7 +55,7 @@ const initialState = {
   page: 1,
   perPage: 5,
   hasMore: true,
-  index: -1,
+  index: null,
   error: null,
 };
 
@@ -67,6 +68,9 @@ const userSlice = createSlice({
     },
     openModal: (state, action) => {
       state.index = action.payload;
+    },
+    hideModal: (state) => {
+      state.index = null;
     },
   },
   extraReducers: (builder) => {
@@ -88,10 +92,15 @@ const userSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(fetchUserPhotos.fulfilled, (state, action) => {
-        state.photos = [...state.photos, ...action.payload];
-        state.page += 1;
+        const newPhotos = action.payload;
+        const existingPhotoIds = new Set(state.photos.map((photo) => photo.id));
+        const mergedPhotos = [
+          ...state.photos,
+          ...newPhotos.filter((photo) => !existingPhotoIds.has(photo.id)),
+        ];
+        state.photos = mergedPhotos;
         state.isLoading = false;
-        state.hasMore = !!action.payload.length;
+        state.hasMore = newPhotos.length === state.perPage;
       })
       .addCase(fetchUserPhotos.rejected, (state, action) => {
         state.isLoading = false;
@@ -114,5 +123,5 @@ const userSlice = createSlice({
 });
 
 // Export actions and reducer
-export const { clearUserPhotos, openModal } = userSlice.actions;
+export const { clearUserPhotos, openModal, hideModal } = userSlice.actions;
 export default userSlice.reducer;

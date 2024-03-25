@@ -10,16 +10,19 @@ import {
   Title,
 } from './UserCollection.styles';
 import { BiLeftArrow, BiRightArrow } from 'react-icons/bi';
+import { useParams } from 'react-router-dom';
 
-const UserCollection = ({ username }) => {
+const UserCollection = () => {
+  const { username } = useParams();
+
   const dispatch = useDispatch();
-  const collections = useSelector((state) => state.user.collections);
-
   useEffect(() => {
     if (username) {
-      dispatch(fetchUserCollections(username));
+      dispatch(fetchUserCollections({ username }));
     }
   }, [username, dispatch]);
+
+  const collections = useSelector((state) => state.user.collections);
 
   const settings = {
     dots: collections.length > 1,

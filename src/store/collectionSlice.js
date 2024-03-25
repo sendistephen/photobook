@@ -21,7 +21,7 @@ export const fetchSingleCollection = createAsyncThunk(
 
 export const fetchCollection = createAsyncThunk(
   'collections/fetchCollection',
-  async ({ collectionId, page, perPage }, { rejectWithValue }) => {
+  async ({ collectionId, page = 1, perPage = 50 }, { rejectWithValue }) => {
     try {
       const response = await axios(
         getCollection({ collectionId, page, perPage })

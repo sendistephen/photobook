@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import {
   FormGroup,
@@ -25,9 +26,9 @@ import { menu } from 'data/menu';
 import MenuButton from 'components/Buttons';
 import { toggleThemeChange } from 'store/themeSlice';
 
-const Navbar = (props) => {
+const Navbar = () => {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const [query, setQuery] = useState('');
   const [isOpen, setIsOpen] = useState(false);
 
@@ -40,9 +41,10 @@ const Navbar = (props) => {
   const handleSearch = (e) => {
     setQuery(e.target.value);
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    props.history.push(`/search/photos/${query}`);
+    navigate(`/search/photos/${query}`);
     setQuery('');
   };
 
@@ -87,7 +89,7 @@ const Navbar = (props) => {
               {isAuthenticated && (
                 <Logout
                   onClick={() =>
-                    logout({ returnTo: process.env.REACT_APP_BASE_URL })
+                    logout({ returnTo: import.meta.env.VITE_APP_BASE_URL })
                   }
                 >
                   <Title>Log out</Title>

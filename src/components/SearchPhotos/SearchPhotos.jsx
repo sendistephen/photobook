@@ -22,17 +22,24 @@ const SearchPhotos = (props) => {
   const { photos, hasMore, index } = useSelector((state) => state.search);
 
   useEffect(() => {
-    dispatch(fetchPhotos(searchWord));
+    if (searchWord) {
+      dispatch(fetchPhotos({ query: searchWord }));
+    }
+
     return () => {
       dispatch(clearPhotos());
     };
   }, [dispatch, searchWord]);
 
+  const fetchMore = () => {
+    dispatch(fetchPhotos(searchWord));
+  };
+
   return (
     <Container>
       <InfiniteScroll
         dataLength={photos.length}
-        next={() => props.fetchPhotos(searchWord)}
+        next={fetchMore}
         hasMore={hasMore}
         loader={
           <LoadingSpinner>

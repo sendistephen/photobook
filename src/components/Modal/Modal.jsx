@@ -1,46 +1,49 @@
-import { useToasts } from 'react-toast-notifications';
-import {
-  FavIcon,
-  Icon,
-  IconWrapper,
-  CloseModal,
-  PhotoFooter,
-  PhotoHeader,
-  PhotoImage,
-  Subtitle,
-  TextWrapper,
-  PhotoImageWrapper,
-  SliderContainer,
-  Title,
-  Avatar,
-  AvatarImg,
-  StyledSlider,
-} from './Modal.styles';
+import { useEffect } from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
+import closeIcon from 'assets/icons/cross.svg';
 import heartIcon from 'assets/icons/heart.svg';
 import starIcon from 'assets/icons/star.svg';
 import favIcon from 'assets/icons/star2.svg';
-import closeIcon from 'assets/icons/cross.svg';
+import moment from 'moment';
 import MagicSliderDots from 'react-magic-slider-dots';
 import 'react-magic-slider-dots/dist/magic-dots.css';
-import moment from 'moment';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { useAuth0 } from '@auth0/auth0-react';
-import { useSelector } from 'react-redux';
+import { useToasts } from 'react-toast-notifications';
 import {
   addFavoritePhoto,
   getFavorites,
   removeFavoritePhoto,
 } from 'store/favoritesSlice';
+import {
+  Avatar,
+  AvatarImg,
+  CloseModal,
+  FavIcon,
+  Icon,
+  IconWrapper,
+  PhotoFooter,
+  PhotoHeader,
+  PhotoImage,
+  PhotoImageWrapper,
+  SliderContainer,
+  StyledSlider,
+  Subtitle,
+  TextWrapper,
+  Title,
+} from './Modal.styles';
 
-import { useEffect } from 'react';
-
-const Modal = ({ photos, index, ...props }) => {
+const Modal = ({ photos, selectedPhotoId, ...props }) => {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
   const favourites = useSelector((state) => state.favorites.photos);
+
   const { loginWithRedirect, isAuthenticated } = useAuth0();
   const { addToast } = useToasts();
+
+  const initialSlideIndex = photos.findIndex(
+    (photo) => photo.id === selectedPhotoId
+  );
 
   const settings = {
     dots: true,
@@ -48,7 +51,7 @@ const Modal = ({ photos, index, ...props }) => {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    initialSlide: index,
+    initialSlide: initialSlideIndex,
     appendDots: (dots) => {
       return <MagicSliderDots dots={dots} numDotsToShow={3} dotWidth={30} />;
     },

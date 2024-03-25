@@ -38,11 +38,15 @@ const Collection = (props) => {
 
   useEffect(() => {
     dispatch(fetchSingleCollection(collectionId));
-    dispatch(fetchCollection(collectionId));
+    dispatch(fetchCollection({ collectionId }));
     return () => {
       dispatch(clearUserCollection());
     };
   }, [dispatch, collectionId]);
+
+  const fetchMore = () => {
+    dispatch(fetchCollection({ collectionId }));
+  };
 
   return (
     <Container>
@@ -74,7 +78,7 @@ const Collection = (props) => {
       ) : (
         <InfiniteScroll
           dataLength={userPhotoCollection.length}
-          next={() => props.fetchCollection(collectionId)}
+          next={fetchMore}
           hasMore={hasMore}
           loader={
             <LoadingSpinner>
@@ -93,7 +97,7 @@ const Collection = (props) => {
           >
             {userPhotoCollection.map((photo, index) => (
               <GalleryItem
-                key={photo.id}
+                key={`photo-${photo.slug}-${index}-${photo.id}`}
                 onClick={() => dispatch(openModal(index))}
               >
                 <GalleryImage src={photo.urls.small} alt={photo.description} />

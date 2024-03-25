@@ -34,18 +34,23 @@ export const MessageBox = styled.div`
 `;
 
 export const Message = styled.p`
-  width: 50%;
+  width: 100%;
   height: 10%;
   text-align: center;
   font-weight: bold;
   color: ${(props) => props.theme.linkColor};
 `;
 export const LoadingSpinner = styled.div`
-  min-height: 80vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: 80vh;
+
+  &.is-bottom-loader {
+    min-height: 50px;
+  }
 `;
+
 export const StyledMasonry = styled(Masonry)`
   display: -webkit-box;
   display: -ms-flexbox;

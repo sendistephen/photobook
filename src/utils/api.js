@@ -1,6 +1,8 @@
-const base = process.env.REACT_APP_UNSPLASH_API_URL;
-const key = process.env.REACT_APP_UNSPLASH_ACCESS_KEY;
-const server = process.env.REACT_APP_PHOTO_SERVER_API;
+import styled from 'styled-components';
+
+const base = import.meta.env.VITE_APP_UNSPLASH_API_URL;
+const key = import.meta.env.VITE_APP_UNSPLASH_ACCESS_KEY;
+const server = import.meta.env.VITE_APP_PHOTO_SERVER_API;
 
 export const getURL = (config) => {
   const query = Object.entries(config).reduce(
@@ -49,10 +51,12 @@ export const getSingleTopic = ({ slug }) => {
 };
 
 export const getCollection = ({ collectionId, page, perPage }) => {
+  if (!collectionId) return;
   return `${base}collections/${collectionId}/photos?page=${page}&per_page=${perPage}&client_id=${key}`;
 };
 
 export const getSingleCollection = ({ collectionId }) => {
+  if (!collectionId) return;
   return `${base}collections/${collectionId}?client_id=${key}`;
 };
 export const getFavorites = () => {
@@ -61,3 +65,6 @@ export const getFavorites = () => {
 export const savePhoto = () => {
   return `${server}photos/favorites`;
 };
+
+export const filterProps = (Component, shouldForwardProp) =>
+  styled(Component).withConfig({ shouldForwardProp })();

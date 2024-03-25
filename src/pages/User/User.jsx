@@ -67,8 +67,8 @@ const User = () => {
         </UserAvatar>
       )}
 
-      <UserCollection username={username} />
-      <UserPhotos name={username} />
+      <UserCollection />
+      <UserPhotos />
     </Wrapper>
   );
 };

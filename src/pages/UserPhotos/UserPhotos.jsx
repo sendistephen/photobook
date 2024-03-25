@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Modal from 'components/Modal';
@@ -10,49 +10,51 @@ import {
   Message,
   StyledMasonry,
 } from 'styles';
-import { fetchUserPhotos, openModal } from 'store/userSlice';
+import { fetchUserPhotos, hideModal, openModal } from 'store/userSlice';
 import { useParams } from 'react-router-dom';
 import LoaderComponent from 'components/LoaderComponent';
 
 const UserPhotos = () => {
   const { username } = useParams();
-
+  const [page, setPage] = useState(1);
+  const isBottomLoader = true;
   const dispatch = useDispatch();
 
-  const { photos, hasMore, isLoading, index } = useSelector(
-    (state) => state.user
-  );
+  const {
+    photos,
+    hasMore,
+    index: selectedPhotoId,
+  } = useSelector((state) => state.user);
 
   useEffect(() => {
-    dispatch(fetchUserPhotos({ username }));
-  }, [username, dispatch]);
+    if (username) dispatch(fetchUserPhotos({ username, page }));
+  }, [username, page, dispatch]);
+
+  const loadMorePhotos = () => {
+    setPage((prevPage) => prevPage + 1);
+  };
 
   if (photos.length === 0) {
     return <Message>No photos available.</Message>;
   }
 
-  if (isLoading) {
-    return (
-      <LoadingSpinner>
-        <LoaderComponent />
-      </LoadingSpinner>
-    );
-  }
   return (
     <div>
       {photos.length > 0 && (
         <InfiniteScroll
           dataLength={photos.length}
-          next={() => dispatch(fetchUserPhotos({ username }))}
+          next={loadMorePhotos}
           hasMore={hasMore}
           loader={
-            <LoadingSpinner>
+            <LoadingSpinner
+              className={isBottomLoader ? 'is-bottom-loader' : ''}
+            >
               <LoaderComponent />
             </LoadingSpinner>
           }
           endMessage={
             <Message>
-              <b>There are no more photos</b>
+              <p>There are no more photos</p>
             </Message>
           }
         >
@@ -69,11 +71,11 @@ const UserPhotos = () => {
               </GalleryItem>
             ))}
           </StyledMasonry>
-          {index > -1 && (
+          {selectedPhotoId && (
             <Modal
+              selectedPhotoId={selectedPhotoId}
               photos={photos}
-              index={index}
-              hideModal={() => dispatch(openModal(-1))}
+              hideModal={() => dispatch(hideModal())}
             />
           )}
         </InfiniteScroll>
