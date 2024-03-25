@@ -63,6 +63,25 @@ const Modal = ({ photos, selectedPhotoId, ...props }) => {
     }
   }, [dispatch, isAuthenticated]);
 
+  const toggleFavorite = async (photo) => {
+    if (!auth.isAuthenticated) {
+      loginWithRedirect();
+      return;
+    }
+    try {
+      if (favourites[photo.id]) {
+        await dispatch(removeFavoritePhoto(photo.id)).unwrap();
+        addToast('Removed from favorites', { appearance: 'info' });
+      } else {
+        await dispatch(addFavoritePhoto(photo)).unwrap();
+        addToast('Added to favorites', { appearance: 'success' });
+      }
+    } catch (error) {
+      console.error('Favorite toggle failed:', error);
+      addToast('Failed to update favorites', { appearance: 'error' });
+    }
+  };
+
   return (
     <SliderContainer>
       <StyledSlider {...settings}>
@@ -102,16 +121,7 @@ const Modal = ({ photos, selectedPhotoId, ...props }) => {
                 </IconWrapper>
                 <FavIcon>
                   <Icon
-                    onClick={() => {
-                      auth.isAuthenticated
-                        ? favorited
-                          ? dispatch(removeFavoritePhoto(photo.id))
-                          : dispatch(addFavoritePhoto(photo)) &&
-                            addToast('Saved Successfully', {
-                              appearance: 'success',
-                            })
-                        : loginWithRedirect();
-                    }}
+                    onClick={() => toggleFavorite(photo)}
                     src={favorited ? favIcon : starIcon}
                     alt='Fav icon'
                   />

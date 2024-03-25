@@ -16,7 +16,7 @@ import { Gallery } from 'components/SearchCollections/SearchCollections.styles';
 import { showModal, getFavorites } from 'store/favoritesSlice';
 import LoaderComponent from 'components/LoaderComponent';
 
-const Favorites = (props) => {
+const Favorites = () => {
   const { photos, isLoading, hasMore, index } = useSelector(
     (state) => state.favorites
   );
@@ -35,13 +35,15 @@ const Favorites = (props) => {
     return favoritePhotos;
   };
 
+  if (favorites.length === 0)
+    return (
+      <MessageBox>
+        <Message>You currently have no saved photos</Message>
+      </MessageBox>
+    );
+
   return (
     <Container>
-      {favorites.length === 0 && (
-        <MessageBox>
-          <Message>You currently have no saved photos</Message>
-        </MessageBox>
-      )}
       {isLoading && (
         <LoadingSpinner>
           <LoaderComponent />

@@ -40,6 +40,9 @@ export const addFavoritePhoto = createAsyncThunk(
       );
       return response.data;
     } catch (error) {
+      if (error.code === 11000) {
+        return rejectWithValue('Photo already exists in favorites');
+      }
       return rejectWithValue(error.message);
     }
   }
