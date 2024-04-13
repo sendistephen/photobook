@@ -23,7 +23,7 @@ import {
 } from '../../store/photosSlice';
 import LoaderComponent from 'components/LoaderComponent';
 
-const PhotoList = (props) => {
+const PhotoList = () => {
   const dispatch = useDispatch();
   const photos = useSelector(selectPhotos);
   const hasMore = useSelector(selectHasMore);

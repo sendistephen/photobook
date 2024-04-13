@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { useAuth0 } from '@auth0/auth0-react';
 import closeIcon from 'assets/icons/cross.svg';
 import heartIcon from 'assets/icons/heart.svg';
 import starIcon from 'assets/icons/star.svg';
@@ -12,8 +11,10 @@ import { Link } from 'react-router-dom';
 import { useToasts } from 'react-toast-notifications';
 import {
   addFavoritePhoto,
+  addFavoritePhotoOptimistic,
   getFavorites,
   removeFavoritePhoto,
+  removeFavoritePhotoOptmistic,
 } from 'store/favoritesSlice';
 import {
   Avatar,
@@ -32,13 +33,15 @@ import {
   TextWrapper,
   Title,
 } from './Modal.styles';
+import { signWithGoogle } from 'utils/auth';
+import useAuth from 'hooks/useAuth';
 
 const Modal = ({ photos, selectedPhotoId, ...props }) => {
   const dispatch = useDispatch();
-  const auth = useSelector((state) => state.auth);
-  const favourites = useSelector((state) => state.favorites.photos);
 
-  const { loginWithRedirect, isAuthenticated } = useAuth0();
+  const favorites = useSelector((state) => state.favorites.photos);
+  const { isAuthenticated } = useAuth();
+
   const { addToast } = useToasts();
 
   const initialSlideIndex = photos.findIndex(
@@ -57,28 +60,38 @@ const Modal = ({ photos, selectedPhotoId, ...props }) => {
     },
   };
 
+  console.log(favorites);
   useEffect(() => {
-    if (isAuthenticated) {
+    if (isAuthenticated && favorites.length === 0) {
       dispatch(getFavorites());
     }
   }, [dispatch, isAuthenticated]);
 
-  const toggleFavorite = async (photo) => {
-    if (!auth.isAuthenticated) {
-      loginWithRedirect();
+  const handleSaveFavoritePhoto = async (photo) => {
+    if (!isAuthenticated) {
+      await signWithGoogle();
       return;
     }
     try {
-      if (favourites[photo.id]) {
+      // check if the photo is already in the favorites.
+      const isFavorited = favorites.some((fav) => fav.id === photo.id);
+
+      if (isFavorited) {
+        await dispatch(removeFavoritePhotoOptmistic(photo.id));
         await dispatch(removeFavoritePhoto(photo.id)).unwrap();
         addToast('Removed from favorites', { appearance: 'info' });
       } else {
-        await dispatch(addFavoritePhoto(photo)).unwrap();
+        dispatch(addFavoritePhotoOptimistic(photo));
+
+        dispatch(addFavoritePhoto(photo)).unwrap();
         addToast('Added to favorites', { appearance: 'success' });
       }
     } catch (error) {
       console.error('Favorite toggle failed:', error);
       addToast('Failed to update favorites', { appearance: 'error' });
+
+      // optionally rollback the optimistic update if there's an error
+      dispatch(addFavoritePhotoOptimistic(photo));
     }
   };
 
@@ -86,7 +99,7 @@ const Modal = ({ photos, selectedPhotoId, ...props }) => {
     <SliderContainer>
       <StyledSlider {...settings}>
         {photos.map((photo) => {
-          const favorited = !!favourites[photo.id];
+          const favorited = favorites.some((fav) => fav.id === photo.id);
 
           return (
             <div key={photo.id}>
@@ -121,7 +134,7 @@ const Modal = ({ photos, selectedPhotoId, ...props }) => {
                 </IconWrapper>
                 <FavIcon>
                   <Icon
-                    onClick={() => toggleFavorite(photo)}
+                    onClick={() => handleSaveFavoritePhoto(photo)}
                     src={favorited ? favIcon : starIcon}
                     alt='Fav icon'
                   />

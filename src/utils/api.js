@@ -68,3 +68,6 @@ export const savePhoto = () => {
 
 export const filterProps = (Component, shouldForwardProp) =>
   styled(Component).withConfig({ shouldForwardProp })();
+
+
+  

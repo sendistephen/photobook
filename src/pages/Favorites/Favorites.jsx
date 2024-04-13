@@ -35,6 +35,7 @@ const Favorites = () => {
     return favoritePhotos;
   };
 
+  console.log(favorites);
   if (favorites.length === 0)
     return (
       <MessageBox>

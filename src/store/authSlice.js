@@ -1,41 +1,71 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { getFavorites } from './favoritesSlice';
+import { getAuth, onAuthStateChanged } from '@firebase/auth';
 
 const initialState = {
   user: null,
-  token: null,
-  isLoading: false,
   isAuthenticated: false,
+  isLoading: true,
+  error: null,
 };
 
-// Assuming setUserToken could potentially be an async operation in the future
-export const setUserToken = createAsyncThunk(
-  'auth/setUserToken',
-  async ({ user, token }, { dispatch }) => {
-    // Simulate setting user token (e.g., saving to local storage or validating token)
-    // For now, we'll directly return the user and token as the operation is synchronous
-    dispatch(getFavorites());
-    return { user, token };
+const extractUserData = (user) => ({
+  uid: user.uid,
+  displayName: user.displayName,
+  email: user.email,
+  photoURL: user.photoURL,
+});
+
+export const observeAuthState = createAsyncThunk(
+  'auth/observeAuthState',
+  async (_, { dispatch }) => {
+    const auth = getAuth();
+
+    return new Promise((resolve) => {
+      const unsubscribe = onAuthStateChanged(auth, (user) => {
+        if (user) {
+          const userData = extractUserData(user);
+
+          dispatch(setUser({ user: userData }));
+          resolve(userData);
+        } else {
+          dispatch(clearUser());
+          resolve(null);
+        }
+      });
+      return () => unsubscribe();
+    });
   }
 );
 
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    setUser(state, action) {
+      state.user = action.payload.user;
+      state.isAuthenticated = true;
+      state.isLoading = false;
+    },
+    clearUser(state) {
+      state.user = null;
+      state.isAuthenticated = false;
+      state.isLoading = false;
+    },
+  },
   extraReducers: (builder) => {
     builder
-      .addCase(setUserToken.pending, (state) => {
+      .addCase(observeAuthState.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(setUserToken.fulfilled, (state, action) => {
-        state.user = action.payload.user;
-        state.token = action.payload.token;
-        state.isAuthenticated = true;
+      .addCase(observeAuthState.fulfilled, (state, action) => {
+        // The user state is already set by the subscriber callbacks
+      })
+      .addCase(observeAuthState.rejected, (state, action) => {
+        state.error = action.error.message;
         state.isLoading = false;
       });
-    //TODO: You can handle setUserToken.rejected here if there's an error during the async operation
   },
 });
-
+export const { setUser, clearUser } = authSlice.actions;
 export default authSlice.reducer;
