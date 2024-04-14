@@ -60,7 +60,6 @@ const Modal = ({ photos, selectedPhotoId, ...props }) => {
     },
   };
 
-  console.log(favorites);
   useEffect(() => {
     if (isAuthenticated && favorites.length === 0) {
       dispatch(getFavorites());

@@ -96,7 +96,12 @@ const favoritesSlice = createSlice({
   },
   reducers: {
     addFavoritePhotoOptimistic: (state, action) => {
-      state.photos.push(action.payload);
+      const photoExists = state.photos.some(
+        (photo) => photo.id === action.payload.id
+      );
+      if (!photoExists) {
+        state.photos.push(action.payload);
+      }
     },
     removeFavoritePhotoOptmistic: (state, action) => {
       state.photos = state.photos.filter(
@@ -110,6 +115,7 @@ const favoritesSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(getFavorites.fulfilled, (state, action) => {
+        console.log(action.payload);
         state.photos = action.payload;
         state.isLoading = false;
       })
@@ -118,7 +124,12 @@ const favoritesSlice = createSlice({
         state.error = action.payload;
       })
       .addCase(addFavoritePhoto.fulfilled, (state, action) => {
-        state.photos[action.payload.id] = action.payload;
+        const index = state.photos.findIndex(
+          (photo) => photo.id === action.payload.id
+        );
+        if (index === -1) {
+          state.photos.push(action.payload);
+        }
       })
       .addCase(removeFavoritePhoto.fulfilled, (state, action) => {
         state.photos = state.photos.filter(

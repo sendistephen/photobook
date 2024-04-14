@@ -15,6 +15,7 @@ import {
 import { Gallery } from 'components/SearchCollections/SearchCollections.styles';
 import { showModal, getFavorites } from 'store/favoritesSlice';
 import LoaderComponent from 'components/LoaderComponent';
+import { signInWithGoogle } from 'src/firebase/firebaseAuth';
 
 const Favorites = () => {
   const { photos, isLoading, hasMore, index } = useSelector(
@@ -35,7 +36,6 @@ const Favorites = () => {
     return favoritePhotos;
   };
 
-  console.log(favorites);
   if (favorites.length === 0)
     return (
       <MessageBox>

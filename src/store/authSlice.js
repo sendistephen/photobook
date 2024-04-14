@@ -5,6 +5,7 @@ import { getAuth, onAuthStateChanged } from '@firebase/auth';
 const initialState = {
   user: null,
   isAuthenticated: false,
+  isIntializing: true,
   isLoading: true,
   error: null,
 };
@@ -45,11 +46,13 @@ const authSlice = createSlice({
     setUser(state, action) {
       state.user = action.payload.user;
       state.isAuthenticated = true;
+      state.isInitializing = false;
       state.isLoading = false;
     },
     clearUser(state) {
       state.user = null;
       state.isAuthenticated = false;
+      state.isInitializing = false;
       state.isLoading = false;
     },
   },
@@ -59,10 +62,11 @@ const authSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(observeAuthState.fulfilled, (state, action) => {
-        // The user state is already set by the subscriber callbacks
+        state.isInitializing = false;
       })
       .addCase(observeAuthState.rejected, (state, action) => {
         state.error = action.error.message;
+        state.isInitializing = false;
         state.isLoading = false;
       });
   },
