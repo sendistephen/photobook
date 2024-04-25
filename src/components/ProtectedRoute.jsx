@@ -1,15 +1,19 @@
 import { Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { signWithGoogle } from 'utils/auth';
+import { signWithGoogle } from '@/utils/auth';
+import { useEffect } from 'react';
 
 function ProtectedRoute({ element }) {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const isInitializing = useSelector((state) => state.auth.isInitializing);
 
-  console.log(isAuthenticated, isInitializing);
   if (isInitializing) {
     return <div>Loading...</div>;
   }
+
+  useEffect(() => {
+    if (!isAuthenticated) handleSignIn();
+  }, [isAuthenticated]);
 
   const handleSignIn = async () => {
     try {

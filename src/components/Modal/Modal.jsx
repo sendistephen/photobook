@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
-import closeIcon from 'assets/icons/cross.svg';
-import heartIcon from 'assets/icons/heart.svg';
-import starIcon from 'assets/icons/star.svg';
-import favIcon from 'assets/icons/star2.svg';
+import closeIcon from '@/assets/icons/cross.svg';
+import heartIcon from '@/assets/icons/heart.svg';
+import starIcon from '@/assets/icons/star.svg';
+import favIcon from '@/assets/icons/star2.svg';
 import moment from 'moment';
 import MagicSliderDots from 'react-magic-slider-dots';
 import 'react-magic-slider-dots/dist/magic-dots.css';
@@ -15,7 +15,7 @@ import {
   getFavorites,
   removeFavoritePhoto,
   removeFavoritePhotoOptmistic,
-} from 'store/favoritesSlice';
+} from '@/store/favoritesSlice';
 import {
   Avatar,
   AvatarImg,
@@ -33,8 +33,8 @@ import {
   TextWrapper,
   Title,
 } from './Modal.styles';
-import { signWithGoogle } from 'utils/auth';
-import useAuth from 'hooks/useAuth';
+import { signWithGoogle } from '@/utils/auth';
+import useAuth from '@/hooks/useAuth';
 
 const Modal = ({ photos, selectedPhotoId, ...props }) => {
   const dispatch = useDispatch();

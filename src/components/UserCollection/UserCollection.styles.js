@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Slider from 'react-slick';
-import { SmallText2 } from 'styles/TextStyles';
+import { SmallText2 } from '@/styles/TextStyles';
 
 export const Collection = styled.div`
   width: 100%;

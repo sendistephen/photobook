@@ -1,6 +1,6 @@
 import moment from 'moment';
 import { useParams, Link } from 'react-router-dom';
-import { Wrapper } from 'styles';
+import { Wrapper } from '@/styles';
 import {
   Avatar,
   AvatarImg,
@@ -17,14 +17,14 @@ import {
   TextWrapper,
   PhotoImageWrapper,
   Title,
-} from './Photo.styles';
-import heartIcon from 'assets/icons/heart.svg';
-import favIcon from 'assets/icons/star2.svg';
-import starIcon from 'assets/icons/star.svg';
-import optionIcon from 'assets/icons/option.svg';
+} from '@/Photo.styles';
+import heartIcon from '@/assets/icons/heart.svg';
+import favIcon from '@/assets/icons/star2.svg';
+import starIcon from '@/assets/icons/star.svg';
+import optionIcon from '@/assets/icons/option.svg';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPhoto } from 'store/photoSlice';
-import { Collections } from 'components';
+import { fetchPhoto } from '@/store/photoSlice';
+import { Collections } from '@/components';
 import { useEffect } from 'react';
 
 const Photo = () => {

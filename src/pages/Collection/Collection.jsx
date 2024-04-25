@@ -1,13 +1,13 @@
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { Modal } from 'components';
+import { Modal } from '@/components';
 import React, { useEffect } from 'react';
-import { breakpointColumns } from 'utils/helper';
+import { breakpointColumns } from '@/utils/helper';
 import {
   fetchCollection,
   openModal,
   clearUserCollection,
   fetchSingleCollection,
-} from 'store/collectionSlice';
+} from '@/store/collectionSlice';
 import {
   Gallery,
   Wrapper,
@@ -18,17 +18,17 @@ import {
   Title,
   Tag,
   Stats,
-} from './Collection.styles';
+} from '@/Collection.styles';
 import {
   Container,
   GalleryImage,
   GalleryItem,
   LoadingSpinner,
   Message,
-} from 'styles';
+} from '@/styles';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import LoaderComponent from 'components/LoaderComponent';
+import LoaderComponent from '@/components/LoaderComponent';
 
 const Collection = (props) => {
   const { collectionId } = useParams();

@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import Modal from 'components/Modal';
+import Modal from '@/components/Modal';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 import {
@@ -9,8 +9,8 @@ import {
   Message,
   StyledMasonry,
   Container,
-} from 'styles';
-import { breakpointColumns } from 'utils/helper';
+} from '@/styles';
+import { breakpointColumns } from '@/utils/helper';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   fetchPhotos,
@@ -20,8 +20,8 @@ import {
   selectIsLoading,
   selectPhotos,
   showModal,
-} from '../../store/photosSlice';
-import LoaderComponent from 'components/LoaderComponent';
+} from '@/store/photosSlice';
+import LoaderComponent from '@/components/LoaderComponent';
 
 const PhotoList = () => {
   const dispatch = useDispatch();

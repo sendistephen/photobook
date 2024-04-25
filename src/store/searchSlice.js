@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { getCollections, getSearchResults } from 'utils/api';
+import { getCollections, getSearchResults } from '@/utils/api';
 
 // Async thunk for fetching search results for photos
 export const fetchPhotos = createAsyncThunk(

@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { getUserCollections, getUserPhotosUrl, getUserUrl } from 'utils/api';
+import { getUserCollections, getUserPhotosUrl, getUserUrl } from '@/utils/api';
 
 // Async thunk for fetching user details
 export const fetchUser = createAsyncThunk(

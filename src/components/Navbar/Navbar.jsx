@@ -11,7 +11,6 @@ import {
   SearchIcon,
   Login,
   Logout,
-  Title,
   Theme,
   Label,
   MenuThemeItem,
@@ -19,15 +18,15 @@ import {
   BuggerIcon,
   StyledXMarkIcon,
 } from './Navbar.styles';
-import { Container } from 'styles';
-import ThemeIcon from 'assets/icons/theme.svg';
-import { menu } from 'data/menu';
-import MenuButton from 'components/Buttons';
-import { toggleThemeChange } from 'store/themeSlice';
-import useAuth from 'hooks/useAuth';
-import { clearUser } from 'store/authSlice';
+import { Container } from '@/styles';
+import ThemeIcon from '@/assets/icons/theme.svg';
+import { menu } from '@/data/menu';
+import MenuButton from '@/components/Buttons';
+import { toggleThemeChange } from '@/store/themeSlice';
+import useAuth from '@/hooks/useAuth';
+import { clearUser } from '@/store/authSlice';
 import { getAuth, signOut } from '@firebase/auth';
-import { signInWithGoogle } from '../../firebase/firebaseAuth';
+import { signInWithGoogle } from '@/firebase/firebaseAuth';
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -98,9 +97,7 @@ const Navbar = () => {
                 <Login onClick={() => signInWithGoogle()}>Login</Login>
               )}
               {isAuthenticated && (
-                <Logout onClick={handleLogout}>
-                  <Title>Log out</Title>
-                </Logout>
+                <Logout onClick={handleLogout}>Log out</Logout>
               )}
             </>
           </MenuWrapper>

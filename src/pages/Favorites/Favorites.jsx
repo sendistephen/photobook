@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useAuth0 } from '@auth0/auth0-react';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { Modal } from 'components';
-import { breakpointColumns } from 'utils/helper';
+import { Modal } from '@/components';
+import { breakpointColumns } from '@/utils/helper';
 import {
   Container,
   GalleryImage,
@@ -11,11 +11,10 @@ import {
   LoadingSpinner,
   MessageBox,
   Message,
-} from 'styles';
-import { Gallery } from 'components/SearchCollections/SearchCollections.styles';
-import { showModal, getFavorites } from 'store/favoritesSlice';
-import LoaderComponent from 'components/LoaderComponent';
-import { signInWithGoogle } from 'src/firebase/firebaseAuth';
+} from '@/styles';
+import { Gallery } from '@/components/SearchCollections/SearchCollections.styles';
+import { showModal, getFavorites } from '@/store/favoritesSlice';
+import LoaderComponent from '@/components/LoaderComponent';
 
 const Favorites = () => {
   const { photos, isLoading, hasMore, index } = useSelector(
@@ -24,6 +23,8 @@ const Favorites = () => {
   const favorites = useSelector((state) => state.favorites.photos);
   const dispatch = useDispatch();
   const { isAuthenticated, isLoading: authLoading } = useAuth0();
+
+  console.log(favorites);
 
   useEffect(() => {
     if (!authLoading && isAuthenticated) {
@@ -36,57 +37,61 @@ const Favorites = () => {
     return favoritePhotos;
   };
 
-  if (favorites.length === 0)
-    return (
-      <MessageBox>
-        <Message>You currently have no saved photos</Message>
-      </MessageBox>
-    );
-
   return (
     <Container>
-      {isLoading && (
-        <LoadingSpinner>
+      {isLoading ? (
+        <LoadingSpinner className={isBottomLoader ? 'is-bottom-loader' : ''}>
           <LoaderComponent />
         </LoadingSpinner>
-      )}
-
-      <InfiniteScroll
-        dataLength={Object.entries(photos).length}
-        next={fetchPhotos}
-        hasMore={hasMore}
-        loader={
-          <LoadingSpinner>
-            <LoaderComponent />
-          </LoadingSpinner>
-        }
-        endMessage={
-          <Message>
-            <b>There are no more photos</b>
-          </Message>
-        }
-      >
-        <Gallery
-          breakpointCols={breakpointColumns}
-          columnClassName='masonry-grid_column'
-        >
-          {fetchPhotos().map((photo, index) => (
-            <GalleryItem
-              key={photo.id}
-              onClick={() => dispatch(showModal(index))}
+      ) : (
+        <>
+          {favorites.length > 0 ? (
+            <InfiniteScroll
+              dataLength={Object.entries(photos).length}
+              next={fetchPhotos}
+              hasMore={hasMore}
+              loader={
+                <LoadingSpinner>
+                  <LoaderComponent />
+                </LoadingSpinner>
+              }
+              endMessage={
+                <Message>
+                  <b>There are no more photos</b>
+                </Message>
+              }
             >
-              <GalleryImage src={photo.urls.small} alt={photo.description} />
-            </GalleryItem>
-          ))}
-        </Gallery>
-        {index > -1 && (
-          <Modal
-            photos={fetchPhotos()}
-            index={index}
-            hideModal={() => dispatch(showModal(-1))}
-          />
-        )}
-      </InfiniteScroll>
+              <Gallery
+                breakpointCols={breakpointColumns}
+                columnClassName='masonry-grid_column'
+              >
+                {fetchPhotos().map((photo, index) => (
+                  <GalleryItem
+                    key={photo.id}
+                    onClick={() => dispatch(showModal(index))}
+                  >
+                    <GalleryImage
+                      src={photo.urls.small}
+                      alt={photo.description}
+                    />
+                  </GalleryItem>
+                ))}
+              </Gallery>
+              {index > -1 && (
+                <Modal
+                  photos={fetchPhotos()}
+                  index={index}
+                  hideModal={() => dispatch(showModal(-1))}
+                />
+              )}
+            </InfiniteScroll>
+          ) : (
+            <MessageBox>
+              <Message>You currently have no saved photos</Message>
+            </MessageBox>
+          )}
+        </>
+      )}
     </Container>
   );
 };

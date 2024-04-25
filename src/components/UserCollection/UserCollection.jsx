@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchUserCollections } from 'store/userSlice';
+import { fetchUserCollections } from '@/store/userSlice';
 
 import {
   Collection,
@@ -8,7 +8,7 @@ import {
   CollectionBox,
   Cover,
   Title,
-} from './UserCollection.styles';
+} from '@/UserCollection.styles';
 import { BiLeftArrow, BiRightArrow } from 'react-icons/bi';
 import { useParams } from 'react-router-dom';
 

@@ -1,6 +1,6 @@
-import { LoadingSpinner } from 'pages/Photo/Photo.styles';
+import { LoadingSpinner } from '@/pages/Photo/Photo.styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { Wrapper } from 'styles';
+import { Wrapper } from '@/styles';
 
 import { useParams } from 'react-router-dom';
 import {
@@ -13,14 +13,14 @@ import {
   Stats,
   Title,
   UserAvatar,
-} from './User.styles';
+} from '@/User.styles';
 
-import UserCollection from 'components/UserCollection';
-import UserPhotos from 'pages/UserPhotos';
-import { clearUserPhotos, fetchUser } from 'store/userSlice';
-import { shortenNumber } from 'utils/helper';
+import UserCollection from '@/components/UserCollection';
+import UserPhotos from '@/pages/UserPhotos';
+import { clearUserPhotos, fetchUser } from '@/store/userSlice';
+import { shortenNumber } from '@/utils/helper';
 import { useEffect } from 'react';
-import LoaderComponent from 'components/LoaderComponent';
+import LoaderComponent from '@/components/LoaderComponent';
 
 const User = () => {
   const { username } = useParams();

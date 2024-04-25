@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { observeAuthState } from 'store/authSlice';
+import { observeAuthState } from '@/store/authSlice';
 
 const useAuth = () => {
   const dispatch = useDispatch();

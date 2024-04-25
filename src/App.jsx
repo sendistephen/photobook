@@ -1,20 +1,20 @@
 import React, { useEffect, lazy, Suspense } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { observeAuthState } from 'store/authSlice';
+import { observeAuthState } from '@/store/authSlice';
 import { ToastProvider } from 'react-toast-notifications';
-import { Navbar } from 'components';
+import { Navbar } from '@/components';
 import { ThemeProvider } from 'styled-components';
-import { theme } from 'styles/ColorStyles';
-import { GlobalStyles } from 'styles/GlobalStyles';
-import ProtectedRoute from 'components/ProtectedRoute';
+import { theme } from '@/styles/ColorStyles';
+import { GlobalStyles } from '@/styles/GlobalStyles';
+import ProtectedRoute from '@/components/ProtectedRoute';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-const Photos = lazy(() => import('pages/Photos'));
-const Photo = lazy(() => import('pages/Photo'));
-const User = lazy(() => import('pages/User'));
-const Search = lazy(() => import('pages/Search'));
-const Collection = lazy(() => import('pages/Collection'));
-const Favorites = lazy(() => import('pages/Favorites'));
+const Photos = lazy(() => import('@/pages/Photos'));
+const Photo = lazy(() => import('@/pages/Photo'));
+const User = lazy(() => import('@/pages/User'));
+const Search = lazy(() => import('@/pages/Search'));
+const Collection = lazy(() => import('@/pages/Collection'));
+const Favorites = lazy(() => import('@/pages/Favorites'));
 
 const App = () => {
   const darkThemeEnabled = useSelector((state) => state.theme.darkThemeEnabled);

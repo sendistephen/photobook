@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getFavorites } from './favoritesSlice';
-import { getAuth, onAuthStateChanged } from '@firebase/auth';
+import { onAuthStateChanged } from '@firebase/auth';
+import { auth } from '@/firebase/firebase-config';
 
 const initialState = {
   user: null,
@@ -20,8 +20,6 @@ const extractUserData = (user) => ({
 export const observeAuthState = createAsyncThunk(
   'auth/observeAuthState',
   async (_, { dispatch }) => {
-    const auth = getAuth();
-
     return new Promise((resolve) => {
       const unsubscribe = onAuthStateChanged(auth, (user) => {
         if (user) {

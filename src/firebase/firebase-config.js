@@ -1,3 +1,8 @@
+import {
+  browserLocalPersistence,
+  getAuth,
+  setPersistence,
+} from '@firebase/auth';
 import { initializeApp } from 'firebase/app';
 
 const firebaseConfig = {
@@ -12,4 +17,13 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
+// Intialize the default authentication persistence
+const auth = getAuth(app);
+
+// Set the default auth persistence
+setPersistence(auth, browserLocalPersistence)
+  .then(() => {})
+  .catch((error) => console.log('Error: ', error));
 export default app;
+
+export { auth };
