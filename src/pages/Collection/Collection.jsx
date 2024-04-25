@@ -18,7 +18,7 @@ import {
   Title,
   Tag,
   Stats,
-} from '@/Collection.styles';
+} from './Collection.styles';
 import {
   Container,
   GalleryImage,

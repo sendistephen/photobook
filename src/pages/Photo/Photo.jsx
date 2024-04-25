@@ -17,7 +17,7 @@ import {
   TextWrapper,
   PhotoImageWrapper,
   Title,
-} from '@/Photo.styles';
+} from './Photo.styles';
 import heartIcon from '@/assets/icons/heart.svg';
 import favIcon from '@/assets/icons/star2.svg';
 import starIcon from '@/assets/icons/star.svg';

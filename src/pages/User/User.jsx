@@ -13,7 +13,7 @@ import {
   Stats,
   Title,
   UserAvatar,
-} from '@/User.styles';
+} from './User.styles';
 
 import UserCollection from '@/components/UserCollection';
 import UserPhotos from '@/pages/UserPhotos';

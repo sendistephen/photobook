@@ -8,7 +8,7 @@ import {
   CollectionBox,
   Cover,
   Title,
-} from '@/UserCollection.styles';
+} from './UserCollection.styles';
 import { BiLeftArrow, BiRightArrow } from 'react-icons/bi';
 import { useParams } from 'react-router-dom';
 

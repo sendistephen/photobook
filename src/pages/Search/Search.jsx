@@ -2,7 +2,7 @@ import { PhotoTopic, SearchCollections, SearchPhotos } from '@/components';
 import { useDispatch } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
 import { handleTabClick } from '@/store/searchSlice';
-import { NavWrapper, StyledLink } from '@/Search.styles';
+import { NavWrapper, StyledLink } from './Search.styles';
 
 const Search = () => {
   const dispatch = useDispatch();
