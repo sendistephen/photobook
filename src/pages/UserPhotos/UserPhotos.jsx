@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import Modal from 'components/Modal';
-import { breakpointColumns } from 'utils/helper';
+import Modal from '@/components/Modal';
+import { breakpointColumns } from '@/utils/helper';
 import {
   GalleryImage,
   GalleryItem,
   LoadingSpinner,
   Message,
   StyledMasonry,
-} from 'styles';
-import { fetchUserPhotos, hideModal, openModal } from 'store/userSlice';
+} from '@/styles';
+import { fetchUserPhotos, hideModal, openModal } from '@/store/userSlice';
 import { useParams } from 'react-router-dom';
-import LoaderComponent from 'components/LoaderComponent';
+import LoaderComponent from '@/components/LoaderComponent';
 
 const UserPhotos = () => {
   const { username } = useParams();

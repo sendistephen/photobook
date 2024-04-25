@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { getURL } from 'utils/api';
+import { getURL } from '@/utils/api';
 
 const initialState = {
   photos: [],

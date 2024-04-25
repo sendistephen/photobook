@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { useAuth0 } from '@auth0/auth0-react';
 import {
   FormGroup,
   Header,
@@ -12,7 +11,6 @@ import {
   SearchIcon,
   Login,
   Logout,
-  Title,
   Theme,
   Label,
   MenuThemeItem,
@@ -20,11 +18,15 @@ import {
   BuggerIcon,
   StyledXMarkIcon,
 } from './Navbar.styles';
-import { Container } from 'styles';
-import ThemeIcon from 'assets/icons/theme.svg';
-import { menu } from 'data/menu';
-import MenuButton from 'components/Buttons';
-import { toggleThemeChange } from 'store/themeSlice';
+import { Container } from '@/styles';
+import ThemeIcon from '@/assets/icons/theme.svg';
+import { menu } from '@/data/menu';
+import MenuButton from '@/components/Buttons';
+import { toggleThemeChange } from '@/store/themeSlice';
+import useAuth from '@/hooks/useAuth';
+import { clearUser } from '@/store/authSlice';
+import { getAuth, signOut } from '@firebase/auth';
+import { signInWithGoogle } from '@/firebase/firebaseAuth';
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -32,7 +34,7 @@ const Navbar = () => {
   const [query, setQuery] = useState('');
   const [isOpen, setIsOpen] = useState(false);
 
-  const { loginWithRedirect, isAuthenticated, logout } = useAuth0();
+  const { user, isAuthenticated } = useAuth();
 
   const handleToggle = () => {
     dispatch(toggleThemeChange());
@@ -48,6 +50,14 @@ const Navbar = () => {
     setQuery('');
   };
 
+  const handleLogout = async () => {
+    const auth = getAuth();
+
+    await signOut(auth).catch((error) => {
+      console.error('Firebase sign-out error:', error);
+    });
+    dispatch(clearUser());
+  };
   return (
     <Header>
       <Container>
@@ -84,16 +94,10 @@ const Navbar = () => {
               </MenuThemeItem>
               {/* check if user is authenticated */}
               {!isAuthenticated && (
-                <Login onClick={() => loginWithRedirect()}>Login</Login>
+                <Login onClick={() => signInWithGoogle()}>Login</Login>
               )}
               {isAuthenticated && (
-                <Logout
-                  onClick={() =>
-                    logout({ returnTo: import.meta.env.VITE_APP_BASE_URL })
-                  }
-                >
-                  <Title>Log out</Title>
-                </Logout>
+                <Logout onClick={handleLogout}>Log out</Logout>
               )}
             </>
           </MenuWrapper>

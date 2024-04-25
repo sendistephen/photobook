@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Container, LoadingSpinner, Message } from 'styles';
-import { breakpointColumns } from 'utils/helper';
+import { Container, LoadingSpinner, Message } from '@/styles';
+import { breakpointColumns } from '@/utils/helper';
 
 import {
   CollectionImage,
@@ -13,8 +13,8 @@ import {
 } from './SearchCollections.styles';
 
 import { useParams } from 'react-router-dom';
-import LoaderComponent from 'components/LoaderComponent';
-import { fetchCollections, clearCollections } from 'store/searchSlice';
+import LoaderComponent from '@/components/LoaderComponent';
+import { fetchCollections, clearCollections } from '@/store/searchSlice';
 
 const SearchCollections = () => {
   const { searchWord } = useParams();

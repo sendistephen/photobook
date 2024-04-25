@@ -4,11 +4,11 @@ import {
   Image,
   ImageHolder,
   Title,
-} from 'components/Collections/Collections.styles';
+} from '@/components/Collections/Collections.styles';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCollections } from 'store/collectionSlice';
+import { fetchCollections } from '@/store/collectionSlice';
 
 const Collections = (props) => {
   const dispatch = useDispatch();

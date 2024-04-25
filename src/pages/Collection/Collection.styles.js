@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { StyledMasonry } from 'styles';
-import { MediumText, NormalText } from 'styles/TextStyles';
+import { StyledMasonry } from '@/styles';
+import { MediumText, NormalText } from '@/styles/TextStyles';
 
 export const Gallery = styled(StyledMasonry)``;
 export const Wrapper = styled.div`

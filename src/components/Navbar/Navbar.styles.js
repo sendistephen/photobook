@@ -95,7 +95,7 @@ export const StyledLink = styled(NavLink)`
     &:first-child {
       background: #a2c8fa 0% 0% no-repeat padding-box;
     }
-    :last-of-type {
+    &:last-of-type {
       background: #ffb4bc 0% 0% no-repeat padding-box;
     }
   }
@@ -143,23 +143,27 @@ export const Login = styled.div`
   border: 1px solid black;
   border-radius: 5px;
   cursor: pointer;
-  :hover {
+  &:hover {
     background-color: black;
     color: white;
   }
 `;
-export const Logout = styled.div`
-  padding: 5px;
+export const Logout = styled.button`
+  padding: 8px 10px;
   margin-top: -17px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #c36060;
+  background-color: ${(props) => props.theme.linkColor};
+  color: ${(props) => props.theme.text};
+  border: 2px solid ${(props) => props.theme.borderColor};
   border-radius: 5px;
+  border-style: none;
   cursor: pointer;
-  :hover {
-    background-color: #c36060;
-    color: white;
+
+  &:hover {
+    background-color: ${(props) => props.theme.linkColor};
+    opacity: 0.8;
   }
 `;
 export const Title = styled.h4`

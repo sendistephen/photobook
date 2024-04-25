@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { BodyMain, SmallText, SmallText2 } from 'styles/TextStyles';
+import { BodyMain, SmallText, SmallText2 } from '@/styles/TextStyles';
 
 export const PhotoWrapper = styled.div`
   width: 680px;

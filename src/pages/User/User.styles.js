@@ -1,4 +1,4 @@
-import { MediumText, NormalText } from 'styles/TextStyles';
+import { MediumText, NormalText } from '@/styles/TextStyles';
 import styled from 'styled-components';
 
 export const UserAvatar = styled.div`

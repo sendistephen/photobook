@@ -1,4 +1,4 @@
-import Modal from 'components/Modal';
+import Modal from '@/components/Modal';
 import { useEffect } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useParams } from 'react-router-dom';
@@ -8,12 +8,12 @@ import {
   GalleryItem,
   LoadingSpinner,
   Message,
-} from 'styles';
+} from '@/styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { breakpointColumns } from 'utils/helper';
+import { breakpointColumns } from '@/utils/helper';
 import { Gallery } from './SearchPhotos.styles';
-import { fetchPhotos, handleModal, clearPhotos } from '../../store/searchSlice';
-import LoaderComponent from 'components/LoaderComponent';
+import { fetchPhotos, handleModal, clearPhotos } from '@/store/searchSlice';
+import LoaderComponent from '@/components/LoaderComponent';
 
 const SearchPhotos = (props) => {
   const { searchWord } = useParams();

@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { fetchPhotoTopic } from '../../store/photoSlice';
+import { fetchPhotoTopic } from '@/store/photoSlice';
 
-import { Container } from 'styles';
+import { Container } from '@/styles';
 import {
   Content,
   ContentWrapper,

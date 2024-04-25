@@ -4,7 +4,7 @@ import {
   getAllCollections,
   getCollection,
   getSingleCollection,
-} from 'utils/api';
+} from '@/utils/api';
 
 // Async thunks
 export const fetchSingleCollection = createAsyncThunk(
