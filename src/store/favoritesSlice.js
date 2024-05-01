@@ -88,12 +88,6 @@ const favoritesSlice = createSlice({
   name: 'favorites',
   initialState,
   reducers: {
-    showModal: (state, action) => {
-      state.index = action.payload;
-    },
-    hideModal: (state) => {
-      state.index = -1;
-    },
     addFavoritePhotoOptimistic: (state, action) => {
       const photoExists = state.photos.some(
         (photo) => photo.id === action.payload.id
@@ -143,10 +137,6 @@ const favoritesSlice = createSlice({
   },
 });
 
-export const {
-  hideModal,
-  showModal,
-  removeFavoritePhotoOptmistic,
-  addFavoritePhotoOptimistic,
-} = favoritesSlice.actions;
+export const { removeFavoritePhotoOptmistic, addFavoritePhotoOptimistic } =
+  favoritesSlice.actions;
 export default favoritesSlice.reducer;

@@ -13,8 +13,6 @@ function ProtectedRoute({ children }) {
     }
   }, []);
 
-  if (loading) return <div>Loading...</div>;
-
   return user ? <>{children}</> : null;
 }
 

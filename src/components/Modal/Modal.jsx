@@ -23,6 +23,7 @@ import {
   FavIcon,
   Icon,
   IconWrapper,
+  ModalOverlay,
   PhotoFooter,
   PhotoHeader,
   PhotoImage,
@@ -35,6 +36,7 @@ import {
 } from './Modal.styles';
 import { signInWithRedirect } from '@firebase/auth';
 import { auth, googleAuthProvider } from '@/firebase/firebase-config';
+import { hideModal } from '@/store/modalSlice';
 
 const Modal = ({ photos, selectedPhotoId, ...props }) => {
   const dispatch = useDispatch();
@@ -67,6 +69,13 @@ const Modal = ({ photos, selectedPhotoId, ...props }) => {
     }
   }, [dispatch, user]);
 
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, []);
+
   const handleSaveFavoritePhoto = async (photo) => {
     if (!user) {
       await signInWithRedirect(auth, googleAuthProvider);
@@ -95,56 +104,73 @@ const Modal = ({ photos, selectedPhotoId, ...props }) => {
     }
   };
 
+  const handleOverlayClick = (e) => {
+    if (e.target === e.currentTarget) {
+      hideModal();
+    }
+  };
+
   return (
-    <SliderContainer>
-      <StyledSlider {...settings}>
-        {photos.map((photo) => {
-          const favorited = favorites.some((fav) => fav.id === photo.id);
+    <ModalOverlay onClick={handleOverlayClick}>
+      <SliderContainer>
+        <StyledSlider {...settings}>
+          {photos.map((photo) => {
+            const favorited = favorites.some((fav) => fav.id === photo.id);
 
-          return (
-            <div key={photo.id}>
-              <PhotoHeader>
-                <Link to={`/users/${photo.user.username}`}>
-                  <Avatar>
-                    <AvatarImg
-                      src={photo.user.profile_image.medium}
-                      alt={photo.user.username}
+            return (
+              <div key={photo.id}>
+                <PhotoHeader>
+                  <Link to={`/users/${photo.user.username}`}>
+                    <Avatar>
+                      <AvatarImg
+                        src={photo.user.profile_image.medium}
+                        alt={photo.user.username}
+                      />
+                      <TextWrapper>
+                        <Title>{photo.user.username}</Title>
+                        <Subtitle>
+                          {moment(photo.created_at).fromNow()}
+                        </Subtitle>
+                      </TextWrapper>
+                    </Avatar>
+                  </Link>
+                  <CloseModal>
+                    <Icon
+                      src={closeIcon}
+                      alt='close'
+                      onClick={props.hideModal}
                     />
-                    <TextWrapper>
-                      <Title>{photo.user.username}</Title>
-                      <Subtitle>{moment(photo.created_at).fromNow()}</Subtitle>
-                    </TextWrapper>
-                  </Avatar>
-                </Link>
-                <CloseModal>
-                  <Icon src={closeIcon} alt='close' onClick={props.hideModal} />
-                </CloseModal>
-              </PhotoHeader>
+                  </CloseModal>
+                </PhotoHeader>
 
-              <PhotoImageWrapper>
-                <Link to={`/photos/${photo.id}`} key={photo.id}>
-                  <PhotoImage src={photo.urls.small} alt={photo.description} />
-                </Link>
-              </PhotoImageWrapper>
+                <PhotoImageWrapper>
+                  <Link to={`/photos/${photo.id}`} key={photo.id}>
+                    <PhotoImage
+                      src={photo.urls.small}
+                      alt={photo.description}
+                    />
+                  </Link>
+                </PhotoImageWrapper>
 
-              <PhotoFooter>
-                <IconWrapper>
-                  <Icon src={heartIcon} alt='heart icon' />
-                  <span>{photo.likes}</span>
-                </IconWrapper>
-                <FavIcon>
-                  <Icon
-                    onClick={() => handleSaveFavoritePhoto(photo)}
-                    src={favorited ? favIcon : starIcon}
-                    alt='Fav icon'
-                  />
-                </FavIcon>
-              </PhotoFooter>
-            </div>
-          );
-        })}
-      </StyledSlider>
-    </SliderContainer>
+                <PhotoFooter>
+                  <IconWrapper>
+                    <Icon src={heartIcon} alt='heart icon' />
+                    <span>{photo.likes}</span>
+                  </IconWrapper>
+                  <FavIcon>
+                    <Icon
+                      onClick={() => handleSaveFavoritePhoto(photo)}
+                      src={favorited ? favIcon : starIcon}
+                      alt='Fav icon'
+                    />
+                  </FavIcon>
+                </PhotoFooter>
+              </div>
+            );
+          })}
+        </StyledSlider>
+      </SliderContainer>
+    </ModalOverlay>
   );
 };
 

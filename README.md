@@ -24,9 +24,9 @@ Welcome to Photobook, a dynamic web application inspired by the Unsplash platfor
 
 - Improvements and Bug Fixes:
 
--[✕] Close the modal when clicking outside the modal content.
-
 -[✕] Prevent background scrolling when the modal is open.
+
+-[✓] Close the modal when clicking outside the modal content.
 
 ## Getting Started
 
