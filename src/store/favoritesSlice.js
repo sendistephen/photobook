@@ -15,7 +15,7 @@ export const getFavorites = createAsyncThunk(
   'favorites/getFavorites',
   async (_, { getState, rejectWithValue }) => {
     const { user } = getState().auth; // get user from redux state...
-
+    console.log('user', user);
     // handle unauthenticated access
     if (!user) return rejectWithValue('User not authenticated');
 

@@ -1,41 +1,46 @@
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useAuth0 } from '@auth0/auth0-react';
-import InfiniteScroll from 'react-infinite-scroll-component';
 import { Modal } from '@/components';
-import { breakpointColumns } from '@/utils/helper';
+import LoaderComponent from '@/components/LoaderComponent';
+import { Gallery } from '@/components/SearchCollections/SearchCollections.styles';
 import {
   Container,
   GalleryImage,
   GalleryItem,
   LoadingSpinner,
-  MessageBox,
   Message,
+  MessageBox,
 } from '@/styles';
-import { Gallery } from '@/components/SearchCollections/SearchCollections.styles';
-import { showModal, getFavorites } from '@/store/favoritesSlice';
-import LoaderComponent from '@/components/LoaderComponent';
+import { hideModal, showModal } from '@/store/photosSlice';
+import { breakpointColumns } from '@/utils/helper';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { useDispatch, useSelector } from 'react-redux';
+import { getFavorites } from '@/store/favoritesSlice';
+import { useEffect } from 'react';
 
 const Favorites = () => {
   const { photos, isLoading, hasMore, index } = useSelector(
     (state) => state.favorites
   );
+
+  const user = useSelector((state) => state.auth.user);
+
   const favorites = useSelector((state) => state.favorites.photos);
   const dispatch = useDispatch();
-  const { isAuthenticated, isLoading: authLoading } = useAuth0();
-
-  console.log(favorites);
 
   useEffect(() => {
-    if (!authLoading && isAuthenticated) {
+    if (user) {
       dispatch(getFavorites());
+    } else {
+      console.log('User not authenticated');
     }
-  }, [dispatch, authLoading, isAuthenticated]);
+  }, [dispatch, user]);
 
   const fetchPhotos = () => {
     const favoritePhotos = Object.values(photos);
     return favoritePhotos;
   };
+
+  
+  const isBottomLoader = true;
 
   return (
     <Container>
@@ -79,7 +84,7 @@ const Favorites = () => {
               </Gallery>
               {index > -1 && (
                 <Modal
-                  photos={fetchPhotos()}
+                  photos={favorites}
                   index={index}
                   hideModal={() => dispatch(showModal(-1))}
                 />
