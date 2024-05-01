@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import {
   FormGroup,
@@ -23,8 +23,6 @@ import ThemeIcon from '@/assets/icons/theme.svg';
 import { menu } from '@/data/menu';
 import MenuButton from '@/components/Buttons';
 import { toggleThemeChange } from '@/store/themeSlice';
-import useAuth from '@/hooks/useAuth';
-import { clearUser } from '@/store/authSlice';
 import { getAuth, signOut } from '@firebase/auth';
 import { signInWithGoogle } from '@/firebase/firebaseAuth';
 
@@ -34,7 +32,7 @@ const Navbar = () => {
   const [query, setQuery] = useState('');
   const [isOpen, setIsOpen] = useState(false);
 
-  const { user, isAuthenticated } = useAuth();
+  const user = useSelector((state) => state.auth.user);
 
   const handleToggle = () => {
     dispatch(toggleThemeChange());
@@ -56,8 +54,8 @@ const Navbar = () => {
     await signOut(auth).catch((error) => {
       console.error('Firebase sign-out error:', error);
     });
-    dispatch(clearUser());
   };
+
   return (
     <Header>
       <Container>
@@ -93,12 +91,12 @@ const Navbar = () => {
                 <Label>Theme</Label>
               </MenuThemeItem>
               {/* check if user is authenticated */}
-              {!isAuthenticated && (
-                <Login onClick={() => signInWithGoogle()}>Login</Login>
+              {!user && (
+                <Login onClick={() => dispatch(signInWithGoogle())}>
+                  Login
+                </Login>
               )}
-              {isAuthenticated && (
-                <Logout onClick={handleLogout}>Log out</Logout>
-              )}
+              {user && <Logout onClick={handleLogout}>Log out</Logout>}
             </>
           </MenuWrapper>
         </HeaderContainer>

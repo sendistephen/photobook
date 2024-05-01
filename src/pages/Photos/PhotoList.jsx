@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import Modal from '@/components/Modal';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
@@ -22,6 +22,7 @@ import {
   showModal,
 } from '@/store/photosSlice';
 import LoaderComponent from '@/components/LoaderComponent';
+import { debounce } from 'lodash';
 
 const PhotoList = () => {
   const dispatch = useDispatch();
@@ -39,6 +40,13 @@ const PhotoList = () => {
   };
 
   const isBottomLoader = true;
+
+  const handleShowModal = useCallback(
+    debounce((id) => {
+      dispatch(showModal(id));
+    }, 300),
+    [dispatch]
+  );
 
   return (
     <Container>
@@ -71,7 +79,7 @@ const PhotoList = () => {
                 {photos.map((photo, index) => (
                   <GalleryItem
                     key={index}
-                    onClick={() => dispatch(showModal(photo.id))}
+                    onClick={() => handleShowModal(photo.id)}
                   >
                     <GalleryImage
                       src={photo.urls.small}

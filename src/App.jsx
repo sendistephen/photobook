@@ -1,13 +1,14 @@
-import React, { useEffect, lazy, Suspense } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { observeAuthState } from '@/store/authSlice';
-import { ToastProvider } from 'react-toast-notifications';
 import { Navbar } from '@/components';
-import { ThemeProvider } from 'styled-components';
+import ProtectedRoute from '@/components/ProtectedRoute';
 import { theme } from '@/styles/ColorStyles';
 import { GlobalStyles } from '@/styles/GlobalStyles';
-import ProtectedRoute from '@/components/ProtectedRoute';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { getAuth, onAuthStateChanged } from '@firebase/auth';
+import { lazy, Suspense, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import { ToastProvider } from 'react-toast-notifications';
+import { clearUser, setUser } from '@/store/authSlice';
+import { ThemeProvider } from 'styled-components';
 
 const Photos = lazy(() => import('@/pages/Photos'));
 const Photo = lazy(() => import('@/pages/Photo'));
@@ -22,7 +23,23 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(observeAuthState());
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
+        dispatch(
+          setUser({
+            uid: currentUser.uid,
+            displayName: currentUser.displayName,
+            email: currentUser.email,
+            photoURL: currentUser.photoURL,
+          })
+        );
+      } else {
+        dispatch(clearUser());
+      }
+    });
+
+    return () => unsubscribe();
   }, [dispatch]);
 
   return (
@@ -48,7 +65,11 @@ const App = () => {
                 />
                 <Route
                   path='/favorites'
-                  element={<ProtectedRoute element={<Favorites />} />}
+                  element={
+                    <ProtectedRoute>
+                      <Favorites />
+                    </ProtectedRoute>
+                  }
                 />
               </Routes>
             </Suspense>

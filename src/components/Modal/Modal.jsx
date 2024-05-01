@@ -33,14 +33,15 @@ import {
   TextWrapper,
   Title,
 } from './Modal.styles';
-import { signWithGoogle } from '@/utils/auth';
-import useAuth from '@/hooks/useAuth';
+import { signInWithRedirect } from '@firebase/auth';
+import { auth, googleAuthProvider } from '@/firebase/firebase-config';
 
 const Modal = ({ photos, selectedPhotoId, ...props }) => {
   const dispatch = useDispatch();
 
+  const user = useSelector((state) => state.auth.user);
+
   const favorites = useSelector((state) => state.favorites.photos);
-  const { isAuthenticated } = useAuth();
 
   const { addToast } = useToasts();
 
@@ -61,14 +62,14 @@ const Modal = ({ photos, selectedPhotoId, ...props }) => {
   };
 
   useEffect(() => {
-    if (isAuthenticated && favorites.length === 0) {
+    if (user && favorites.length === 0) {
       dispatch(getFavorites());
     }
-  }, [dispatch, isAuthenticated]);
+  }, [dispatch, user]);
 
   const handleSaveFavoritePhoto = async (photo) => {
-    if (!isAuthenticated) {
-      await signWithGoogle();
+    if (!user) {
+      await signInWithRedirect(auth, googleAuthProvider);
       return;
     }
     try {
