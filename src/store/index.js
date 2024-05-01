@@ -10,6 +10,7 @@ import photosReducer from './photosSlice';
 import searchReducer from './searchSlice';
 import themeReducer from './themeSlice';
 import userReducer from './userSlice';
+import modalReducer from './modalSlice';
 
 const reducers = combineReducers({
   photos: photosReducer,
@@ -20,6 +21,7 @@ const reducers = combineReducers({
   favorites: favoritesReducer,
   theme: themeReducer,
   auth: authReducer,
+  modal: modalReducer,
 });
 const persistConfig = {
   key: 'root',

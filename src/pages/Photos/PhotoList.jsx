@@ -14,25 +14,28 @@ import { breakpointColumns } from '@/utils/helper';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   fetchPhotos,
-  hideModal,
   selectHasMore,
-  selectIndex,
   selectIsLoading,
   selectPhotos,
-  showModal,
 } from '@/store/photosSlice';
 import LoaderComponent from '@/components/LoaderComponent';
-import { debounce } from 'lodash';
+import { showModal, hideModal } from '@/store/modalSlice';
 
 const PhotoList = () => {
   const dispatch = useDispatch();
   const photos = useSelector(selectPhotos);
   const hasMore = useSelector(selectHasMore);
   const isLoading = useSelector(selectIsLoading);
-  const selectedPhotoId = useSelector(selectIndex);
+  const { isOpen, selectedPhotoId } = useSelector((state) => state.modal);
 
   useEffect(() => {
     dispatch(fetchPhotos());
+  }, [dispatch]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(hideModal());
+    };
   }, [dispatch]);
 
   const fetchMorePhotos = () => {
@@ -41,12 +44,8 @@ const PhotoList = () => {
 
   const isBottomLoader = true;
 
-  const handleShowModal = useCallback(
-    debounce((id) => {
-      dispatch(showModal(id));
-    }, 300),
-    [dispatch]
-  );
+  const openModal = (photoId) => dispatch(showModal(photoId));
+  const closeModal = () => dispatch(hideModal());
 
   return (
     <Container>
@@ -76,10 +75,10 @@ const PhotoList = () => {
                 breakpointCols={breakpointColumns}
                 columnClassName='masonry-grid_column'
               >
-                {photos.map((photo, index) => (
+                {photos.map((photo) => (
                   <GalleryItem
-                    key={index}
-                    onClick={() => handleShowModal(photo.id)}
+                    key={photo.id}
+                    onClick={() => openModal(photo.id)}
                   >
                     <GalleryImage
                       src={photo.urls.small}
@@ -89,11 +88,11 @@ const PhotoList = () => {
                 ))}
               </StyledMasonry>
 
-              {selectedPhotoId && (
+              {isOpen && (
                 <Modal
                   photos={photos}
                   selectedPhotoId={selectedPhotoId}
-                  hideModal={() => dispatch(hideModal())}
+                  hideModal={closeModal}
                 />
               )}
             </InfiniteScroll>

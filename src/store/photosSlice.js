@@ -8,7 +8,6 @@ const initialState = {
   page: 1,
   perPage: 50,
   hasMore: true,
-  index: null,
   error: null,
 };
 
@@ -29,14 +28,7 @@ export const fetchPhotos = createAsyncThunk(
 const photosSlice = createSlice({
   name: 'photos',
   initialState,
-  reducers: {
-    showModal: (state, action) => {
-      state.index = action.payload;
-    },
-    hideModal: (state) => {
-      state.index = null;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchPhotos.pending, (state) => {
@@ -62,5 +54,4 @@ export const selectCurrentPage = (state) => state.photos.page;
 export const selectPerPage = (state) => state.photos.perPage;
 export const selectIndex = (state) => state.photos.index;
 
-export const { showModal, hideModal } = photosSlice.actions;
 export default photosSlice.reducer;
