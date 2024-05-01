@@ -8,15 +8,12 @@ import {
 } from 'firebase/firestore';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-// const API_URL = import.meta.env.VITE_APP_PHOTO_SERVER_API;
-
 // Async thunk for fetching favorite photos
 export const getFavorites = createAsyncThunk(
   'favorites/getFavorites',
   async (_, { getState, rejectWithValue }) => {
-    const { user } = getState().auth; // get user from redux state...
-    console.log('user', user);
-    // handle unauthenticated access
+    const { user } = getState().auth;
+
     if (!user) return rejectWithValue('User not authenticated');
 
     const db = getFirestore();
@@ -26,14 +23,14 @@ export const getFavorites = createAsyncThunk(
       `users/${user.uid}/favorites`
     );
     try {
-      // fetch all docs from the favorites collection
       const querySnapShot = await getDocs(favoritesCollectionRef);
       const favorites = [];
       querySnapShot.forEach((doc) => {
         // push each favorite into the array with the document ID included
         favorites.push({ id: doc.id, ...doc.data() });
       });
-      return favorites; // array of favorites
+      return favorites;
+      s;
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -84,6 +81,7 @@ const initialState = {
   photos: [],
   isLoading: false,
   error: null,
+  index: -1,
 };
 
 const favoritesSlice = createSlice({
@@ -93,8 +91,9 @@ const favoritesSlice = createSlice({
     showModal: (state, action) => {
       state.index = action.payload;
     },
-  },
-  reducers: {
+    hideModal: (state) => {
+      state.index = -1;
+    },
     addFavoritePhotoOptimistic: (state, action) => {
       const photoExists = state.photos.some(
         (photo) => photo.id === action.payload.id
@@ -115,7 +114,6 @@ const favoritesSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(getFavorites.fulfilled, (state, action) => {
-        console.log(action.payload);
         state.photos = action.payload;
         state.isLoading = false;
       })
@@ -146,6 +144,7 @@ const favoritesSlice = createSlice({
 });
 
 export const {
+  hideModal,
   showModal,
   removeFavoritePhotoOptmistic,
   addFavoritePhotoOptimistic,

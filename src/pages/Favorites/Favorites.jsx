@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Modal } from '@/components';
 import LoaderComponent from '@/components/LoaderComponent';
 import { Gallery } from '@/components/SearchCollections/SearchCollections.styles';
@@ -9,12 +10,11 @@ import {
   Message,
   MessageBox,
 } from '@/styles';
-import { hideModal, showModal } from '@/store/photosSlice';
 import { breakpointColumns } from '@/utils/helper';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useDispatch, useSelector } from 'react-redux';
 import { getFavorites } from '@/store/favoritesSlice';
-import { useEffect } from 'react';
+import { showModal } from '@/store/favoritesSlice';
 
 const Favorites = () => {
   const { photos, isLoading, hasMore, index } = useSelector(
@@ -23,7 +23,6 @@ const Favorites = () => {
 
   const user = useSelector((state) => state.auth.user);
 
-  const favorites = useSelector((state) => state.favorites.photos);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -39,9 +38,12 @@ const Favorites = () => {
     return favoritePhotos;
   };
 
-  
+  const openModal = (index) => dispatch(showModal(index));
+  const closeModal = () => dispatch(hideModal());
+
   const isBottomLoader = true;
 
+  console.log('index', index);
   return (
     <Container>
       {isLoading ? (
@@ -50,7 +52,7 @@ const Favorites = () => {
         </LoadingSpinner>
       ) : (
         <>
-          {favorites.length > 0 ? (
+          {photos.length > 0 ? (
             <InfiniteScroll
               dataLength={Object.entries(photos).length}
               next={fetchPhotos}
@@ -70,11 +72,8 @@ const Favorites = () => {
                 breakpointCols={breakpointColumns}
                 columnClassName='masonry-grid_column'
               >
-                {fetchPhotos().map((photo, index) => (
-                  <GalleryItem
-                    key={photo.id}
-                    onClick={() => dispatch(showModal(index))}
-                  >
+                {photos.map((photo, index) => (
+                  <GalleryItem key={photo.id} onClick={() => openModal(index)}>
                     <GalleryImage
                       src={photo.urls.small}
                       alt={photo.description}
@@ -84,9 +83,9 @@ const Favorites = () => {
               </Gallery>
               {index > -1 && (
                 <Modal
-                  photos={favorites}
-                  index={index}
-                  hideModal={() => dispatch(showModal(-1))}
+                  photos={photos}
+                  selectedPhotoId={photos[index].id}
+                  hideModal={closeModal}
                 />
               )}
             </InfiniteScroll>
