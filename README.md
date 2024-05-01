@@ -22,6 +22,12 @@ Welcome to Photobook, a dynamic web application inspired by the Unsplash platfor
 - Advanced Search Functionality:
   Implement advanced search features, such as filtering by date, location, and more.
 
+- Improvements and Bug Fixes:
+
+-[✕] Close the modal when clicking outside the modal content.
+
+-[✕] Prevent background scrolling when the modal is open.
+
 ## Getting Started
 
 ### Prerequisites
