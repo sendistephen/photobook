@@ -73,11 +73,11 @@ const PhotoList = () => {
             >
               <StyledMasonry
                 breakpointCols={breakpointColumns}
-                columnClassName='masonry-grid_column'
+                columnClassName="masonry-grid_column"
               >
-                {photos.map((photo) => (
+                {photos.map((photo, index) => (
                   <GalleryItem
-                    key={photo.id}
+                    key={`${photo.id}-${index}`}
                     onClick={() => openModal(photo.id)}
                   >
                     <GalleryImage
