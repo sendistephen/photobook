@@ -20,7 +20,7 @@ export const getFavorites = createAsyncThunk(
 
     const favoritesCollectionRef = collection(
       db,
-      `users/${user.uid}/favorites`
+      `users/${user.uid}/favorites`,
     );
     try {
       const querySnapShot = await getDocs(favoritesCollectionRef);
@@ -34,7 +34,7 @@ export const getFavorites = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(error.message);
     }
-  }
+  },
 );
 
 // Async thunk for adding a favorite photo
@@ -54,7 +54,7 @@ export const addFavoritePhoto = createAsyncThunk(
       console.error('Error adding favorite photo to Firestore: ', error);
       return rejectWithValue('Photo already exists in favorites');
     }
-  }
+  },
 );
 
 // Async thunk for removing a favorite photo
@@ -74,7 +74,7 @@ export const removeFavoritePhoto = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(error.message);
     }
-  }
+  },
 );
 
 const initialState = {
@@ -90,7 +90,7 @@ const favoritesSlice = createSlice({
   reducers: {
     addFavoritePhotoOptimistic: (state, action) => {
       const photoExists = state.photos.some(
-        (photo) => photo.id === action.payload.id
+        (photo) => photo.id === action.payload.id,
       );
       if (!photoExists) {
         state.photos.push(action.payload);
@@ -98,7 +98,7 @@ const favoritesSlice = createSlice({
     },
     removeFavoritePhotoOptmistic: (state, action) => {
       state.photos = state.photos.filter(
-        (photo) => photo.id !== action.payload
+        (photo) => photo.id !== action.payload,
       );
     },
   },
@@ -117,7 +117,7 @@ const favoritesSlice = createSlice({
       })
       .addCase(addFavoritePhoto.fulfilled, (state, action) => {
         const index = state.photos.findIndex(
-          (photo) => photo.id === action.payload.id
+          (photo) => photo.id === action.payload.id,
         );
         if (index === -1) {
           state.photos.push(action.payload);
@@ -125,7 +125,7 @@ const favoritesSlice = createSlice({
       })
       .addCase(removeFavoritePhoto.fulfilled, (state, action) => {
         state.photos = state.photos.filter(
-          (photo) => photo.id !== action.payload
+          (photo) => photo.id !== action.payload,
         );
       })
       .addCase(addFavoritePhoto.rejected, (state, action) => {

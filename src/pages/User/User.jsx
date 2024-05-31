@@ -47,7 +47,7 @@ const User = () => {
         <UserAvatar>
           <Avatar src={user.profile_image.large} alt={user.first_name} />
           <Title>{user.name}</Title>
-          <a href={user.portfolio_url} target='blank'>
+          <a href={user.portfolio_url} target="blank">
             {user.portfolio_url}{' '}
           </a>
           <Stats>

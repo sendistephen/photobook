@@ -22,7 +22,7 @@ export const fetchPhotos = createAsyncThunk(
 
     const response = await axios(url);
     return response.data;
-  }
+  },
 );
 
 const photosSlice = createSlice({

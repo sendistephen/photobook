@@ -54,7 +54,7 @@ const SearchPhotos = (props) => {
       >
         <Gallery
           breakpointCols={breakpointColumns}
-          columnClassName='masonry-grid_column'
+          columnClassName="masonry-grid_column"
         >
           {photos.map((photo, index) => (
             <GalleryItem

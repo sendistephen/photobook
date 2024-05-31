@@ -43,7 +43,7 @@ const PhotoList = () => {
     throttle(() => {
       dispatch(fetchPhotos());
     }, 3000),
-    [dispatch]
+    [dispatch],
   );
 
   const isBottomLoader = true;

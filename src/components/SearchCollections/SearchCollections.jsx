@@ -37,10 +37,10 @@ const SearchCollections = () => {
     throttle(() => {
       const nextPage = page + 1;
       dispatch(
-        fetchCollections({ query: searchWord, page: nextPage, perPage: 30 })
+        fetchCollections({ query: searchWord, page: nextPage, perPage: 30 }),
       );
     }, 3000),
-    [dispatch, searchWord, page]
+    [dispatch, searchWord, page],
   );
 
   return (

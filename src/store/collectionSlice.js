@@ -16,7 +16,7 @@ export const fetchSingleCollection = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(error.message);
     }
-  }
+  },
 );
 
 export const fetchCollection = createAsyncThunk(
@@ -24,13 +24,13 @@ export const fetchCollection = createAsyncThunk(
   async ({ collectionId, page = 1, perPage = 50 }, { rejectWithValue }) => {
     try {
       const response = await axios(
-        getCollection({ collectionId, page, perPage })
+        getCollection({ collectionId, page, perPage }),
       );
       return response.data;
     } catch (error) {
       return rejectWithValue(error.message);
     }
-  }
+  },
 );
 
 export const fetchCollections = createAsyncThunk(
@@ -42,13 +42,13 @@ export const fetchCollections = createAsyncThunk(
         getAllCollections({
           page: page || state.collections.page,
           perPage: perPage || state.collections.perPage,
-        })
+        }),
       );
       return response.data;
     } catch (error) {
       return rejectWithValue(error.message);
     }
-  }
+  },
 );
 
 const initialState = {

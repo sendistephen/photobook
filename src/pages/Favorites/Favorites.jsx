@@ -18,7 +18,7 @@ import { showModal, hideModal } from '@/store/modalSlice';
 
 const Favorites = () => {
   const { photos, isLoading, hasMore } = useSelector(
-    (state) => state.favorites
+    (state) => state.favorites,
   );
   const { isOpen, selectedPhotoId } = useSelector((state) => state.modal);
 
@@ -70,7 +70,7 @@ const Favorites = () => {
             >
               <Gallery
                 breakpointCols={breakpointColumns}
-                columnClassName='masonry-grid_column'
+                columnClassName="masonry-grid_column"
               >
                 {photos.map((photo) => (
                   <GalleryItem

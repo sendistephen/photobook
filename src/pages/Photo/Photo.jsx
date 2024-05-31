@@ -58,7 +58,7 @@ const Photo = () => {
               </Avatar>
             </Link>
             <OptionsMenu>
-              <Icon src={optionIcon} alt='Options menu' />
+              <Icon src={optionIcon} alt="Options menu" />
             </OptionsMenu>
           </PhotoHeader>
 
@@ -71,7 +71,7 @@ const Photo = () => {
           )}
           <PhotoFooter>
             <IconWrapper>
-              <Icon src={heartIcon} alt='heart icon' />
+              <Icon src={heartIcon} alt="heart icon" />
               <span>{photo.likes}</span>
             </IconWrapper>
             <div></div>
@@ -79,7 +79,7 @@ const Photo = () => {
               <Icon
                 src={favorited ? favIcon : starIcon}
                 onClick={() => console.log(photo)}
-                alt='Fav icon'
+                alt="Fav icon"
               />
             </FavIcon>
           </PhotoFooter>

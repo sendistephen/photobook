@@ -34,7 +34,7 @@ const PhotoTopic = () => {
               <Subtitle>#{topic.slug}</Subtitle>
               <Description>{topic.description}</Description>
               <TopicStats>{topic.total_photos} photos</TopicStats>
-              <StyledLink to='/'>Follow</StyledLink>
+              <StyledLink to="/">Follow</StyledLink>
             </Content>
           </ContentWrapper>
         </Container>

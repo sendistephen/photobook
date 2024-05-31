@@ -12,7 +12,7 @@ export const fetchUser = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(error.message);
     }
-  }
+  },
 );
 
 // Async thunk for fetching user photos
@@ -21,14 +21,14 @@ export const fetchUserPhotos = createAsyncThunk(
   async ({ username, page, perPage = 5 }, { rejectWithValue }) => {
     try {
       const response = await axios(
-        getUserPhotosUrl({ username, page, perPage })
+        getUserPhotosUrl({ username, page, perPage }),
       );
 
       return response.data;
     } catch (error) {
       return rejectWithValue(error.message);
     }
-  }
+  },
 );
 
 // Async thunk for fetching user collections
@@ -37,14 +37,14 @@ export const fetchUserCollections = createAsyncThunk(
   async ({ username, page = 1, perPage = 10 }, { rejectWithValue }) => {
     try {
       const response = await axios(
-        getUserCollections({ username, page, perPage })
+        getUserCollections({ username, page, perPage }),
       );
 
       return response.data;
     } catch (error) {
       return rejectWithValue(error.message);
     }
-  }
+  },
 );
 
 const initialState = {

@@ -12,7 +12,7 @@ export const getURL = (config) => {
       }
       return accumulator + `${current[0]}=${current[1]}&`;
     },
-    ''
+    '',
   );
   return `${base}photos?${query}&client_id=${key}`;
 };
@@ -68,6 +68,3 @@ export const savePhoto = () => {
 
 export const filterProps = (Component, shouldForwardProp) =>
   styled(Component).withConfig({ shouldForwardProp })();
-
-
-  

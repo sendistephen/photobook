@@ -1,5 +1,7 @@
 # Photobook
 
+[![Maintainability](https://api.codeclimate.com/v1/badges/c7ceebd1ca92bb937b36/maintainability)](https://codeclimate.com/github/sendistephen/photobook/maintainability)
+
 Welcome to Photobook, a dynamic web application inspired by the Unsplash platform. This project serves as a robust portal for exploring and managing a rich collection of photographs. Users can browse the latest photo uploads, delve into specific user profiles, and search for photos, topics, or collections based on their queries.
 
 ## Features

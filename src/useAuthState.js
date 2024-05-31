@@ -16,7 +16,7 @@ export const useAuthState = () => {
             displayName: currentUser.displayName,
             email: currentUser.email,
             photoURL: currentUser.photoURL,
-          })
+          }),
         );
       } else {
         dispatch(clearUser());

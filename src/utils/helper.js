@@ -21,4 +21,3 @@ export const breakpointColumns = {
   768: 2,
   576: 1,
 };
-

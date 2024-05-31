@@ -12,7 +12,7 @@ export const fetchPhoto = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(error.message);
     }
-  }
+  },
 );
 
 // Async thunk for fetching photo topics
@@ -25,7 +25,7 @@ export const fetchPhotoTopic = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(error.message);
     }
-  }
+  },
 );
 
 const photoSlice = createSlice({

@@ -49,7 +49,7 @@ const Collection = () => {
     throttle(() => {
       dispatch(fetchCollection({ collectionId }));
     }, 3000),
-    [dispatch, collectionId]
+    [dispatch, collectionId],
   );
 
   return (

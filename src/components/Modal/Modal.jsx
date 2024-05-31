@@ -48,7 +48,7 @@ const Modal = ({ photos, selectedPhotoId, ...props }) => {
   const { addToast } = useToasts();
 
   const initialSlideIndex = photos.findIndex(
-    (photo) => photo.id === selectedPhotoId
+    (photo) => photo.id === selectedPhotoId,
   );
 
   const settings = {
@@ -137,7 +137,7 @@ const Modal = ({ photos, selectedPhotoId, ...props }) => {
                   <CloseModal>
                     <Icon
                       src={closeIcon}
-                      alt='close'
+                      alt="close"
                       onClick={props.hideModal}
                     />
                   </CloseModal>
@@ -154,14 +154,14 @@ const Modal = ({ photos, selectedPhotoId, ...props }) => {
 
                 <PhotoFooter>
                   <IconWrapper>
-                    <Icon src={heartIcon} alt='heart icon' />
+                    <Icon src={heartIcon} alt="heart icon" />
                     <span>{photo.likes}</span>
                   </IconWrapper>
                   <FavIcon>
                     <Icon
                       onClick={() => handleSaveFavoritePhoto(photo)}
                       src={favorited ? favIcon : starIcon}
-                      alt='Fav icon'
+                      alt="Fav icon"
                     />
                   </FavIcon>
                 </PhotoFooter>

@@ -13,6 +13,7 @@ import {
 import { fetchUserPhotos, hideModal, openModal } from '@/store/userSlice';
 import { useParams } from 'react-router-dom';
 import LoaderComponent from '@/components/LoaderComponent';
+import { throttle } from 'lodash';
 
 const UserPhotos = () => {
   const { username } = useParams();
@@ -34,7 +35,7 @@ const UserPhotos = () => {
     throttle(() => {
       setPage((prevPage) => prevPage + 1);
     }, 3000),
-    []
+    [],
   );
 
   if (photos.length === 0) {

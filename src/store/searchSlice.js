@@ -13,7 +13,7 @@ export const fetchPhotos = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(error.message);
     }
-  }
+  },
 );
 
 // Async thunk for fetching search results for collections
@@ -29,7 +29,7 @@ export const fetchCollections = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(error.message);
     }
-  }
+  },
 );
 
 const initialState = {
