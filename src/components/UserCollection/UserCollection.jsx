@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUserCollections } from '@/store/userSlice';
 
@@ -11,6 +11,7 @@ import {
 } from './UserCollection.styles';
 import { BiLeftArrow, BiRightArrow } from 'react-icons/bi';
 import { useParams } from 'react-router-dom';
+import { throttle } from 'lodash';
 
 const UserCollection = () => {
   const { username } = useParams();

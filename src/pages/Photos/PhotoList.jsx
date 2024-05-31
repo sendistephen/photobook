@@ -20,6 +20,7 @@ import {
 } from '@/store/photosSlice';
 import LoaderComponent from '@/components/LoaderComponent';
 import { showModal, hideModal } from '@/store/modalSlice';
+import { throttle } from 'lodash';
 
 const PhotoList = () => {
   const dispatch = useDispatch();
@@ -38,9 +39,12 @@ const PhotoList = () => {
     };
   }, [dispatch]);
 
-  const fetchMorePhotos = () => {
-    dispatch(fetchPhotos());
-  };
+  const fetchMorePhotos = useCallback(
+    throttle(() => {
+      dispatch(fetchPhotos());
+    }, 3000),
+    [dispatch]
+  );
 
   const isBottomLoader = true;
 
