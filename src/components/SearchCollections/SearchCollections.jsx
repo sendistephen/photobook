@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -15,6 +15,7 @@ import {
 import { useParams } from 'react-router-dom';
 import LoaderComponent from '@/components/LoaderComponent';
 import { fetchCollections, clearCollections } from '@/store/searchSlice';
+import { throttle } from 'lodash';
 
 const SearchCollections = () => {
   const { searchWord } = useParams();
@@ -32,13 +33,15 @@ const SearchCollections = () => {
     };
   }, [dispatch, searchWord]);
 
-  const fetchMoreCollections = () => {
-    // Increment the page number for the next fetch
-    const nextPage = page + 1;
-    dispatch(
-      fetchCollections({ query: searchWord, page: nextPage, perPage: 30 })
-    );
-  };
+  const fetchMoreCollections = useCallback(
+    throttle(() => {
+      const nextPage = page + 1;
+      dispatch(
+        fetchCollections({ query: searchWord, page: nextPage, perPage: 30 })
+      );
+    }, 3000),
+    [dispatch, searchWord, page]
+  );
 
   return (
     <Container>
@@ -60,11 +63,11 @@ const SearchCollections = () => {
       >
         <Gallery
           breakpointCols={breakpointColumns}
-          columnClassName='masonry-grid_column'
+          columnClassName="masonry-grid_column"
         >
-          {collections.map((collection) => (
+          {collections.map((collection, index) => (
             <Link
-              key={collection.id}
+              key={`${collection.id}-${index}`}
               to={`/collections/${collection.id}/photos`}
             >
               <CollectionItem>
