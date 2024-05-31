@@ -1,6 +1,6 @@
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Modal } from '@/components';
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { breakpointColumns } from '@/utils/helper';
 import {
   fetchCollection,
@@ -29,8 +29,9 @@ import {
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import LoaderComponent from '@/components/LoaderComponent';
+import { throttle } from 'lodash';
 
-const Collection = (props) => {
+const Collection = () => {
   const { collectionId } = useParams();
   const dispatch = useDispatch();
   const { userPhotoCollection, collection, index, isLoading, hasMore } =
@@ -44,9 +45,12 @@ const Collection = (props) => {
     };
   }, [dispatch, collectionId]);
 
-  const fetchMore = () => {
-    dispatch(fetchCollection({ collectionId }));
-  };
+  const fetchMore = useCallback(
+    throttle(() => {
+      dispatch(fetchCollection({ collectionId }));
+    }, 3000),
+    [dispatch, collectionId]
+  );
 
   return (
     <Container>
@@ -93,11 +97,11 @@ const Collection = (props) => {
         >
           <Gallery
             breakpointCols={breakpointColumns}
-            columnClassName='masonry-grid_column'
+            columnClassName="masonry-grid_column"
           >
             {userPhotoCollection.map((photo, index) => (
               <GalleryItem
-                key={`photo-${photo.slug}-${index}-${photo.id}`}
+                key={`${photo.id}-${index}`}
                 onClick={() => dispatch(openModal(index))}
               >
                 <GalleryImage src={photo.urls.small} alt={photo.description} />

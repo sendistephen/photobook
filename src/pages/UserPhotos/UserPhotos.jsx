@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Modal from '@/components/Modal';
@@ -30,9 +30,12 @@ const UserPhotos = () => {
     if (username) dispatch(fetchUserPhotos({ username, page }));
   }, [username, page, dispatch]);
 
-  const loadMorePhotos = () => {
-    setPage((prevPage) => prevPage + 1);
-  };
+  const loadMorePhotos = useCallback(
+    throttle(() => {
+      setPage((prevPage) => prevPage + 1);
+    }, 3000),
+    []
+  );
 
   if (photos.length === 0) {
     return <Message>No photos available.</Message>;
@@ -60,7 +63,7 @@ const UserPhotos = () => {
         >
           <StyledMasonry
             breakpointCols={breakpointColumns}
-            columnClassName='masonry-grid_column'
+            columnClassName="masonry-grid_column"
           >
             {photos.map((photo) => (
               <GalleryItem
