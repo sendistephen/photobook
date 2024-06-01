@@ -1,13 +1,16 @@
-import { addDoc, collection, getFirestore } from '@firebase/firestore';
-import app from './firebase-config';
 import { getAuth } from '@firebase/auth';
+import { addDoc, collection, getFirestore } from '@firebase/firestore';
 
-const db = getFirestore(app);
-const auth = getAuth(app);
+import app from './firebase-config';
+
+const db = getFirestore(app),
+  auth = getAuth(app);
 
 export const addFavoritePhoto = async (photo) => {
   const user = auth.currentUser;
-  if (!user) return; // Making sure user is authenticated
+  if (!user) {
+    return;
+  } // Making sure user is authenticated
 
   const photoObject = {
     id: photo.id,
@@ -25,6 +28,6 @@ export const addFavoritePhoto = async (photo) => {
     await addDoc(collection(db, 'favorites'), photoObject);
     console.log('Photo added to favorites');
   } catch (error) {
-    console.error('Error adding favorite photo');
+    console.error('Error adding favorite photo', error);
   }
 };

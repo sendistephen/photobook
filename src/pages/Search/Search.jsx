@@ -1,21 +1,21 @@
-import { PhotoTopic, SearchCollections, SearchPhotos } from '@/components';
 import { useDispatch } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
+
+import { PhotoTopic, SearchCollections, SearchPhotos } from '@/components';
 import { handleTabClick } from '@/store/searchSlice';
+
 import { NavWrapper, StyledLink } from './Search.styles';
 
 const Search = () => {
-  const dispatch = useDispatch();
-  const location = useLocation();
-  const { searchWord } = useParams();
-
-  const toggleTabs = () => {
-    if (location.pathname.includes('photos')) {
-      return <SearchPhotos />;
-    } else {
+  const dispatch = useDispatch(),
+    location = useLocation(),
+    { searchWord } = useParams(),
+    toggleTabs = () => {
+      if (location.pathname.includes('photos')) {
+        return <SearchPhotos />;
+      }
       return <SearchCollections />;
-    }
-  };
+    };
 
   return (
     <>

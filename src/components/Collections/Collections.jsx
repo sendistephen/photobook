@@ -1,18 +1,19 @@
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+
 import {
-  CollectionItem,
   Collection,
+  CollectionItem,
   Image,
   ImageHolder,
   Title,
 } from '@/components/Collections/Collections.styles';
-import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import { fetchCollections } from '@/store/collectionSlice';
 
-const Collections = (props) => {
-  const dispatch = useDispatch();
-  const collections = useSelector((state) => state.collections.collections);
+const Collections = () => {
+  const dispatch = useDispatch(),
+    collections = useSelector((state) => state.collections.collections);
 
   useEffect(() => {
     dispatch(fetchCollections());

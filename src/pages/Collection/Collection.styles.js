@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+
 import { StyledMasonry } from '@/styles';
 import { MediumText, NormalText } from '@/styles/TextStyles';
 

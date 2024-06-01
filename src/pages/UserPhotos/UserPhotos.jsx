@@ -1,8 +1,8 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroll-component';
+
+import LoaderComponent from '@/components/LoaderComponent';
 import Modal from '@/components/Modal';
-import { breakpointColumns } from '@/utils/helper';
+import { hideModal, openModal } from '@/store/userSlice';
 import {
   GalleryImage,
   GalleryItem,
@@ -10,33 +10,19 @@ import {
   Message,
   StyledMasonry,
 } from '@/styles';
-import { fetchUserPhotos, hideModal, openModal } from '@/store/userSlice';
-import { useParams } from 'react-router-dom';
-import LoaderComponent from '@/components/LoaderComponent';
-import { throttle } from 'lodash';
+import { breakpointColumns } from '@/utils/helper';
+
+import useUserPhotos from './useUserPhotos';
 
 const UserPhotos = () => {
-  const { username } = useParams();
-  const [page, setPage] = useState(1);
-  const isBottomLoader = true;
-  const dispatch = useDispatch();
-
   const {
     photos,
     hasMore,
-    index: selectedPhotoId,
-  } = useSelector((state) => state.user);
-
-  useEffect(() => {
-    if (username) dispatch(fetchUserPhotos({ username, page }));
-  }, [username, page, dispatch]);
-
-  const loadMorePhotos = useCallback(
-    throttle(() => {
-      setPage((prevPage) => prevPage + 1);
-    }, 3000),
-    [],
-  );
+    selectedPhotoId,
+    loadMorePhotos,
+    isBottomLoader,
+    dispatch,
+  } = useUserPhotos();
 
   if (photos.length === 0) {
     return <Message>No photos available.</Message>;

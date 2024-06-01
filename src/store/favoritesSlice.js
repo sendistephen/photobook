@@ -1,12 +1,12 @@
-import {
-  doc,
-  setDoc,
-  getFirestore,
-  collection,
-  getDocs,
-  deleteDoc,
-} from 'firebase/firestore';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  getFirestore,
+  setDoc,
+} from 'firebase/firestore';
 
 // Async thunk for fetching favorite photos
 export const getFavorites = createAsyncThunk(
@@ -14,23 +14,20 @@ export const getFavorites = createAsyncThunk(
   async (_, { getState, rejectWithValue }) => {
     const { user } = getState().auth;
 
-    if (!user) return rejectWithValue('User not authenticated');
+    if (!user) {
+      return rejectWithValue('User not authenticated');
+    }
 
-    const db = getFirestore();
-
-    const favoritesCollectionRef = collection(
-      db,
-      `users/${user.uid}/favorites`,
-    );
+    const db = getFirestore(),
+      favoritesCollectionRef = collection(db, `users/${user.uid}/favorites`);
     try {
-      const querySnapShot = await getDocs(favoritesCollectionRef);
-      const favorites = [];
+      const querySnapShot = await getDocs(favoritesCollectionRef),
+        favorites = [];
       querySnapShot.forEach((doc) => {
-        // push each favorite into the array with the document ID included
+        // Push each favorite into the array with the document ID included
         favorites.push({ id: doc.id, ...doc.data() });
       });
       return favorites;
-      s;
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -41,13 +38,12 @@ export const getFavorites = createAsyncThunk(
 export const addFavoritePhoto = createAsyncThunk(
   'favorites/addFavoritePhoto',
   async (photoObj, { getState, rejectWithValue }) => {
-    const { user } = getState().auth;
-
-    const db = getFirestore();
-    const photoRef = doc(db, `users/${user.uid}/favorites`, photoObj.id);
+    const { user } = getState().auth,
+      db = getFirestore(),
+      photoRef = doc(db, `users/${user.uid}/favorites`, photoObj.id);
 
     try {
-      // set the photo in the user's favorites' collection in Firestore
+      // Set the photo in the user's favorites' collection in Firestore
       await setDoc(photoRef, photoObj, { merge: true });
       return photoObj;
     } catch (error) {
@@ -63,10 +59,12 @@ export const removeFavoritePhoto = createAsyncThunk(
   async (photoID, { getState, rejectWithValue }) => {
     const { user } = getState().auth;
 
-    if (!user) return rejectWithValue('User not authenticated');
+    if (!user) {
+      return rejectWithValue('User not authenticated');
+    }
 
-    const db = getFirestore();
-    const photoRef = doc(db, `users/${user.uid}/favorites`, photoID);
+    const db = getFirestore(),
+      photoRef = doc(db, `users/${user.uid}/favorites`, photoID);
 
     try {
       await deleteDoc(photoRef);
@@ -78,64 +76,63 @@ export const removeFavoritePhoto = createAsyncThunk(
 );
 
 const initialState = {
-  photos: [],
-  isLoading: false,
-  error: null,
-  index: -1,
-};
-
-const favoritesSlice = createSlice({
-  name: 'favorites',
-  initialState,
-  reducers: {
-    addFavoritePhotoOptimistic: (state, action) => {
-      const photoExists = state.photos.some(
-        (photo) => photo.id === action.payload.id,
-      );
-      if (!photoExists) {
-        state.photos.push(action.payload);
-      }
-    },
-    removeFavoritePhotoOptmistic: (state, action) => {
-      state.photos = state.photos.filter(
-        (photo) => photo.id !== action.payload,
-      );
-    },
+    photos: [],
+    isLoading: false,
+    error: null,
+    index: -1,
   },
-  extraReducers: (builder) => {
-    builder
-      .addCase(getFavorites.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(getFavorites.fulfilled, (state, action) => {
-        state.photos = action.payload;
-        state.isLoading = false;
-      })
-      .addCase(getFavorites.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload;
-      })
-      .addCase(addFavoritePhoto.fulfilled, (state, action) => {
-        const index = state.photos.findIndex(
+  favoritesSlice = createSlice({
+    name: 'favorites',
+    initialState,
+    reducers: {
+      addFavoritePhotoOptimistic: (state, action) => {
+        const photoExists = state.photos.some(
           (photo) => photo.id === action.payload.id,
         );
-        if (index === -1) {
+        if (!photoExists) {
           state.photos.push(action.payload);
         }
-      })
-      .addCase(removeFavoritePhoto.fulfilled, (state, action) => {
+      },
+      removeFavoritePhotoOptmistic: (state, action) => {
         state.photos = state.photos.filter(
           (photo) => photo.id !== action.payload,
         );
-      })
-      .addCase(addFavoritePhoto.rejected, (state, action) => {
-        state.error = action.payload;
-      })
-      .addCase(removeFavoritePhoto.rejected, (state, action) => {
-        state.error = action.payload;
-      });
-  },
-});
+      },
+    },
+    extraReducers: (builder) => {
+      builder
+        .addCase(getFavorites.pending, (state) => {
+          state.isLoading = true;
+        })
+        .addCase(getFavorites.fulfilled, (state, action) => {
+          state.photos = action.payload;
+          state.isLoading = false;
+        })
+        .addCase(getFavorites.rejected, (state, action) => {
+          state.isLoading = false;
+          state.error = action.payload;
+        })
+        .addCase(addFavoritePhoto.fulfilled, (state, action) => {
+          const index = state.photos.findIndex(
+            (photo) => photo.id === action.payload.id,
+          );
+          if (index === -1) {
+            state.photos.push(action.payload);
+          }
+        })
+        .addCase(removeFavoritePhoto.fulfilled, (state, action) => {
+          state.photos = state.photos.filter(
+            (photo) => photo.id !== action.payload,
+          );
+        })
+        .addCase(addFavoritePhoto.rejected, (state, action) => {
+          state.error = action.payload;
+        })
+        .addCase(removeFavoritePhoto.rejected, (state, action) => {
+          state.error = action.payload;
+        });
+    },
+  });
 
 export const { removeFavoritePhotoOptmistic, addFavoritePhotoOptimistic } =
   favoritesSlice.actions;

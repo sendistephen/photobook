@@ -1,55 +1,54 @@
+import { throttle } from 'lodash';
 import { useCallback, useEffect } from 'react';
-import Modal from '@/components/Modal';
 import InfiniteScroll from 'react-infinite-scroll-component';
-
-import {
-  GalleryImage,
-  GalleryItem,
-  LoadingSpinner,
-  Message,
-  StyledMasonry,
-  Container,
-} from '@/styles';
-import { breakpointColumns } from '@/utils/helper';
 import { useDispatch, useSelector } from 'react-redux';
+
+import LoaderComponent from '@/components/LoaderComponent';
+import Modal from '@/components/Modal';
+import { hideModal, showModal } from '@/store/modalSlice';
 import {
   fetchPhotos,
   selectHasMore,
   selectIsLoading,
   selectPhotos,
 } from '@/store/photosSlice';
-import LoaderComponent from '@/components/LoaderComponent';
-import { showModal, hideModal } from '@/store/modalSlice';
-import { throttle } from 'lodash';
+import {
+  Container,
+  GalleryImage,
+  GalleryItem,
+  LoadingSpinner,
+  Message,
+  StyledMasonry,
+} from '@/styles';
+import { breakpointColumns } from '@/utils/helper';
 
 const PhotoList = () => {
-  const dispatch = useDispatch();
-  const photos = useSelector(selectPhotos);
-  const hasMore = useSelector(selectHasMore);
-  const isLoading = useSelector(selectIsLoading);
-  const { isOpen, selectedPhotoId } = useSelector((state) => state.modal);
+  const dispatch = useDispatch(),
+    photos = useSelector(selectPhotos),
+    hasMore = useSelector(selectHasMore),
+    isLoading = useSelector(selectIsLoading),
+    { isOpen, selectedPhotoId } = useSelector((state) => state.modal);
 
   useEffect(() => {
     dispatch(fetchPhotos());
   }, [dispatch]);
 
-  useEffect(() => {
-    return () => {
+  useEffect(
+    () => () => {
       dispatch(hideModal());
-    };
-  }, [dispatch]);
-
-  const fetchMorePhotos = useCallback(
-    throttle(() => {
-      dispatch(fetchPhotos());
-    }, 3000),
+    },
     [dispatch],
   );
 
-  const isBottomLoader = true;
-
-  const openModal = (photoId) => dispatch(showModal(photoId));
-  const closeModal = () => dispatch(hideModal());
+  const fetchMorePhotos = useCallback(
+      throttle(() => {
+        dispatch(fetchPhotos());
+      }, 3000),
+      [dispatch],
+    ),
+    isBottomLoader = true,
+    openModal = (photoId) => dispatch(showModal(photoId)),
+    closeModal = () => dispatch(hideModal());
 
   return (
     <Container>

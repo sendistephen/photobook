@@ -1,5 +1,6 @@
-import styled from 'styled-components';
 import Slider from 'react-slick';
+import styled from 'styled-components';
+
 import { SmallText2 } from '@/styles/TextStyles';
 
 export const Collection = styled.div`

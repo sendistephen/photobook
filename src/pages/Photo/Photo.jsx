@@ -1,6 +1,16 @@
 import moment from 'moment';
-import { useParams, Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useParams } from 'react-router-dom';
+
+import heartIcon from '@/assets/icons/heart.svg';
+import optionIcon from '@/assets/icons/option.svg';
+import starIcon from '@/assets/icons/star.svg';
+import favIcon from '@/assets/icons/star2.svg';
+import { Collections } from '@/components';
+import { fetchPhoto } from '@/store/photoSlice';
 import { Wrapper } from '@/styles';
+
 import {
   Avatar,
   AvatarImg,
@@ -12,27 +22,20 @@ import {
   PhotoFooter,
   PhotoHeader,
   PhotoImage,
+  PhotoImageWrapper,
   PhotoWrapper,
   Subtitle,
   TextWrapper,
-  PhotoImageWrapper,
   Title,
 } from './Photo.styles';
-import heartIcon from '@/assets/icons/heart.svg';
-import favIcon from '@/assets/icons/star2.svg';
-import starIcon from '@/assets/icons/star.svg';
-import optionIcon from '@/assets/icons/option.svg';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchPhoto } from '@/store/photoSlice';
-import { Collections } from '@/components';
-import { useEffect } from 'react';
 
 const Photo = () => {
-  const { id } = useParams();
-  const dispatch = useDispatch();
-
-  const photo = useSelector((state) => state.photo.photo);
-  const favorited = useSelector((state) => !!state.favorites.photos[photo.id]);
+  const { id } = useParams(),
+    dispatch = useDispatch(),
+    photo = useSelector((state) => state.photo.photo),
+    favorited = useSelector((state) =>
+      Boolean(state.favorites.photos[photo.id]),
+    );
 
   useEffect(() => {
     dispatch(fetchPhoto(id));

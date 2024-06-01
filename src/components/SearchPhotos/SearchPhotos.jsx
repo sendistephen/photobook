@@ -1,7 +1,11 @@
-import Modal from '@/components/Modal';
 import { useEffect } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+
+import LoaderComponent from '@/components/LoaderComponent';
+import Modal from '@/components/Modal';
+import { clearPhotos, fetchPhotos, handleModal } from '@/store/searchSlice';
 import {
   Container,
   GalleryImage,
@@ -9,17 +13,14 @@ import {
   LoadingSpinner,
   Message,
 } from '@/styles';
-import { useDispatch, useSelector } from 'react-redux';
 import { breakpointColumns } from '@/utils/helper';
+
 import { Gallery } from './SearchPhotos.styles';
-import { fetchPhotos, handleModal, clearPhotos } from '@/store/searchSlice';
-import LoaderComponent from '@/components/LoaderComponent';
 
-const SearchPhotos = (props) => {
-  const { searchWord } = useParams();
-  const dispatch = useDispatch();
-
-  const { photos, hasMore, index } = useSelector((state) => state.search);
+const SearchPhotos = () => {
+  const { searchWord } = useParams(),
+    dispatch = useDispatch(),
+    { photos, hasMore, index } = useSelector((state) => state.search);
 
   useEffect(() => {
     if (searchWord) {
