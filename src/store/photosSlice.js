@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+
 import { getURL } from '@/utils/api';
 
 const initialState = {
@@ -14,15 +15,14 @@ const initialState = {
 export const fetchPhotos = createAsyncThunk(
   'photos/fetchPhotos',
   async (_, { getState }) => {
-    const state = getState();
-    const url = getURL({
-      page: state.photos.page,
-      per_page: state.photos.perPage,
-    });
-
-    const response = await axios(url);
+    const state = getState(),
+      url = getURL({
+        page: state.photos.page,
+        per_page: state.photos.perPage,
+      }),
+      response = await axios(url);
     return response.data;
-  }
+  },
 );
 
 const photosSlice = createSlice({
@@ -38,7 +38,7 @@ const photosSlice = createSlice({
         state.photos = [...state.photos, ...action.payload];
         state.isLoading = false;
         state.page += 1;
-        state.hasMore = !!action.payload.length;
+        state.hasMore = Boolean(action.payload.length);
       })
       .addCase(fetchPhotos.rejected, (state) => {
         state.isLoading = false;

@@ -1,5 +1,6 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+
 import { getPhotoUrl, getSingleTopic } from '@/utils/api';
 
 // Async thunk for fetching a single photo
@@ -12,7 +13,7 @@ export const fetchPhoto = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(error.message);
     }
-  }
+  },
 );
 
 // Async thunk for fetching photo topics
@@ -25,7 +26,7 @@ export const fetchPhotoTopic = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(error.message);
     }
-  }
+  },
 );
 
 const photoSlice = createSlice({

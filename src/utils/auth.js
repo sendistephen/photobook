@@ -7,6 +7,7 @@ export const signWithGoogle = async () => {
   try {
     await signInWithPopup(auth, provider);
   } catch (error) {
+    console.log(error);
     throw new Error('Failed to sign in with Google.');
   }
 };

@@ -1,19 +1,20 @@
 import { getAuth, signOut } from '@firebase/auth';
 import { useDispatch, useSelector } from 'react-redux';
+
+import { signInWithGoogle } from '@/firebase/firebaseAuth';
+
 import { Login, Logout } from './Navbar.styles';
 
 export const AuthControls = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch(),
+    user = useSelector((state) => state.auth.user),
+    handleLogout = async () => {
+      const auth = getAuth();
 
-  const user = useSelector((state) => state.auth.user);
-
-  const handleLogout = async () => {
-    const auth = getAuth();
-
-    await signOut(auth).catch((error) => {
-      console.error('Firebase sign-out error:', error);
-    });
-  };
+      await signOut(auth).catch((error) => {
+        console.error('Firebase sign-out error:', error);
+      });
+    };
 
   return (
     <>

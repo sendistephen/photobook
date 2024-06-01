@@ -1,7 +1,12 @@
 import { useEffect } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { Modal } from '@/components';
 import LoaderComponent from '@/components/LoaderComponent';
 import { Gallery } from '@/components/SearchCollections/SearchCollections.styles';
+import { getFavorites } from '@/store/favoritesSlice';
+import { hideModal, showModal } from '@/store/modalSlice';
 import {
   Container,
   GalleryImage,
@@ -11,20 +16,14 @@ import {
   MessageBox,
 } from '@/styles';
 import { breakpointColumns } from '@/utils/helper';
-import InfiniteScroll from 'react-infinite-scroll-component';
-import { useDispatch, useSelector } from 'react-redux';
-import { getFavorites } from '@/store/favoritesSlice';
-import { showModal, hideModal } from '@/store/modalSlice';
 
 const Favorites = () => {
   const { photos, isLoading, hasMore } = useSelector(
-    (state) => state.favorites
-  );
-  const { isOpen, selectedPhotoId } = useSelector((state) => state.modal);
-
-  const user = useSelector((state) => state.auth.user);
-
-  const dispatch = useDispatch();
+      (state) => state.favorites,
+    ),
+    { isOpen, selectedPhotoId } = useSelector((state) => state.modal),
+    user = useSelector((state) => state.auth.user),
+    dispatch = useDispatch();
 
   useEffect(() => {
     if (user) {
@@ -35,14 +34,12 @@ const Favorites = () => {
   }, [dispatch, user]);
 
   const fetchPhotos = () => {
-    const favoritePhotos = Object.values(photos);
-    return favoritePhotos;
-  };
-
-  const openModal = (photoId) => dispatch(showModal(photoId));
-  const closeModal = () => dispatch(hideModal());
-
-  const isBottomLoader = true;
+      const favoritePhotos = Object.values(photos);
+      return favoritePhotos;
+    },
+    openModal = (photoId) => dispatch(showModal(photoId)),
+    closeModal = () => dispatch(hideModal()),
+    isBottomLoader = true;
 
   return (
     <Container>
@@ -70,7 +67,7 @@ const Favorites = () => {
             >
               <Gallery
                 breakpointCols={breakpointColumns}
-                columnClassName='masonry-grid_column'
+                columnClassName="masonry-grid_column"
               >
                 {photos.map((photo) => (
                   <GalleryItem

@@ -1,16 +1,15 @@
-import ProtectedRoute from '@/components/ProtectedRoute';
 import { lazy, Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-const Photos = lazy(() => import('@/pages/Photos'));
-const Photo = lazy(() => import('@/pages/Photo'));
-const User = lazy(() => import('@/pages/User'));
-const Search = lazy(() => import('@/pages/Search'));
-const Collection = lazy(() => import('@/pages/Collection'));
-const Favorites = lazy(() => import('@/pages/Favorites'));
+import ProtectedRoute from '@/components/ProtectedRoute';
 
-const AppRoutes = () => {
-  return (
+const Photos = lazy(() => import('@/pages/Photos')),
+  Photo = lazy(() => import('@/pages/Photo')),
+  User = lazy(() => import('@/pages/User')),
+  Search = lazy(() => import('@/pages/Search')),
+  Collection = lazy(() => import('@/pages/Collection')),
+  Favorites = lazy(() => import('@/pages/Favorites')),
+  AppRoutes = () => (
     <Suspense fallback={<>...</>}>
       <Routes>
         <Route path="/" element={<Photos />} />
@@ -33,6 +32,5 @@ const AppRoutes = () => {
       </Routes>
     </Suspense>
   );
-};
 
 export default AppRoutes;

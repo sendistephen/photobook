@@ -1,24 +1,17 @@
-import InfiniteScroll from 'react-infinite-scroll-component';
-import { Modal } from '@/components';
+import { throttle } from 'lodash';
 import React, { useCallback, useEffect } from 'react';
-import { breakpointColumns } from '@/utils/helper';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+
+import { Modal } from '@/components';
+import LoaderComponent from '@/components/LoaderComponent';
 import {
-  fetchCollection,
-  openModal,
   clearUserCollection,
+  fetchCollection,
   fetchSingleCollection,
+  openModal,
 } from '@/store/collectionSlice';
-import {
-  Gallery,
-  Wrapper,
-  TagsWrapper,
-  Image,
-  ImageWrapper,
-  StyledLink,
-  Title,
-  Tag,
-  Stats,
-} from './Collection.styles';
 import {
   Container,
   GalleryImage,
@@ -26,16 +19,25 @@ import {
   LoadingSpinner,
   Message,
 } from '@/styles';
-import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import LoaderComponent from '@/components/LoaderComponent';
-import { throttle } from 'lodash';
+import { breakpointColumns } from '@/utils/helper';
+
+import {
+  Gallery,
+  Image,
+  ImageWrapper,
+  Stats,
+  StyledLink,
+  Tag,
+  TagsWrapper,
+  Title,
+  Wrapper,
+} from './Collection.styles';
 
 const Collection = () => {
-  const { collectionId } = useParams();
-  const dispatch = useDispatch();
-  const { userPhotoCollection, collection, index, isLoading, hasMore } =
-    useSelector((state) => state.collections);
+  const { collectionId } = useParams(),
+    dispatch = useDispatch(),
+    { userPhotoCollection, collection, index, isLoading, hasMore } =
+      useSelector((state) => state.collections);
 
   useEffect(() => {
     dispatch(fetchSingleCollection(collectionId));
@@ -49,7 +51,7 @@ const Collection = () => {
     throttle(() => {
       dispatch(fetchCollection({ collectionId }));
     }, 3000),
-    [dispatch, collectionId]
+    [dispatch, collectionId],
   );
 
   return (

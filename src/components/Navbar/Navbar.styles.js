@@ -1,7 +1,7 @@
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid';
+import { BiSearch } from 'react-icons/bi';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
-import { BiSearch } from 'react-icons/bi';
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid';
 
 export const Header = styled.header`
   border-bottom: 2px solid ${(props) => props.theme.secondary};

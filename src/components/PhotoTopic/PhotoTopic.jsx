@@ -1,8 +1,10 @@
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { fetchPhotoTopic } from '@/store/photoSlice';
 
+import { fetchPhotoTopic } from '@/store/photoSlice';
 import { Container } from '@/styles';
+
 import {
   Content,
   ContentWrapper,
@@ -12,13 +14,11 @@ import {
   Subtitle,
   TopicStats,
 } from './PhotoTopic.styles';
-import { useEffect } from 'react';
 
 const PhotoTopic = () => {
-  const dispatch = useDispatch();
-  const { searchWord } = useParams();
-
-  const topic = useSelector((state) => state.photo.topic);
+  const dispatch = useDispatch(),
+    { searchWord } = useParams(),
+    topic = useSelector((state) => state.photo.topic);
 
   useEffect(() => {
     dispatch(fetchPhotoTopic({ slug: searchWord }));
@@ -34,7 +34,7 @@ const PhotoTopic = () => {
               <Subtitle>#{topic.slug}</Subtitle>
               <Description>{topic.description}</Description>
               <TopicStats>{topic.total_photos} photos</TopicStats>
-              <StyledLink to='/'>Follow</StyledLink>
+              <StyledLink to="/">Follow</StyledLink>
             </Content>
           </ContentWrapper>
         </Container>

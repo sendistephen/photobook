@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 import { GalleryImage, GalleryItem, StyledMasonry } from '@/styles';
 
 export const CollectionItem = styled(GalleryItem)`

@@ -1,7 +1,11 @@
+import { throttle } from 'lodash';
 import { useCallback, useEffect } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+
+import LoaderComponent from '@/components/LoaderComponent';
+import { clearCollections, fetchCollections } from '@/store/searchSlice';
 import { Container, LoadingSpinner, Message } from '@/styles';
 import { breakpointColumns } from '@/utils/helper';
 
@@ -12,17 +16,11 @@ import {
   TotalPhotos,
 } from './SearchCollections.styles';
 
-import { useParams } from 'react-router-dom';
-import LoaderComponent from '@/components/LoaderComponent';
-import { fetchCollections, clearCollections } from '@/store/searchSlice';
-import { throttle } from 'lodash';
-
 const SearchCollections = () => {
-  const { searchWord } = useParams();
-  const dispatch = useDispatch();
-  const isBottomLoader = true;
-
-  const { collections, hasMore, page } = useSelector((state) => state.search);
+  const { searchWord } = useParams(),
+    dispatch = useDispatch(),
+    isBottomLoader = true,
+    { collections, hasMore, page } = useSelector((state) => state.search);
 
   useEffect(() => {
     if (searchWord) {
@@ -37,10 +35,10 @@ const SearchCollections = () => {
     throttle(() => {
       const nextPage = page + 1;
       dispatch(
-        fetchCollections({ query: searchWord, page: nextPage, perPage: 30 })
+        fetchCollections({ query: searchWord, page: nextPage, perPage: 30 }),
       );
     }, 3000),
-    [dispatch, searchWord, page]
+    [dispatch, searchWord, page],
   );
 
   return (

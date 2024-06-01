@@ -1,16 +1,17 @@
 import { getAuth, GoogleAuthProvider, signInWithPopup } from '@firebase/auth';
+import toast from 'react-hot-toast';
 
-const auth = getAuth();
-const provider = new GoogleAuthProvider();
+const auth = getAuth(),
+  provider = new GoogleAuthProvider();
 
 export const signInWithGoogle = () => {
-  signInWithPopup(auth, provider).catch((error) => {
-    console.log(error);
+  signInWithPopup(auth, provider).catch(() => {
+    toast.error('Failed to sign in with Google.');
   });
 };
 
 export const signOut = () => {
-  auth.signOut().catch((error) => {
-    console.log(error);
+  auth.signOut().catch(() => {
+    toast.error('Failed to sign in with Google.');
   });
 };

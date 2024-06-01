@@ -1,14 +1,18 @@
+import 'react-magic-slider-dots/dist/magic-dots.css';
+
+import { signInWithRedirect } from '@firebase/auth';
+import moment from 'moment';
 import { useEffect } from 'react';
+import toast from 'react-hot-toast';
+import MagicSliderDots from 'react-magic-slider-dots';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+
 import closeIcon from '@/assets/icons/cross.svg';
 import heartIcon from '@/assets/icons/heart.svg';
 import starIcon from '@/assets/icons/star.svg';
 import favIcon from '@/assets/icons/star2.svg';
-import moment from 'moment';
-import MagicSliderDots from 'react-magic-slider-dots';
-import 'react-magic-slider-dots/dist/magic-dots.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { useToasts } from 'react-toast-notifications';
+import { auth, googleAuthProvider } from '@/firebase/firebase-config';
 import {
   addFavoritePhoto,
   addFavoritePhotoOptimistic,
@@ -16,6 +20,8 @@ import {
   removeFavoritePhoto,
   removeFavoritePhotoOptmistic,
 } from '@/store/favoritesSlice';
+import { hideModal } from '@/store/modalSlice';
+
 import {
   Avatar,
   AvatarImg,
@@ -34,34 +40,25 @@ import {
   TextWrapper,
   Title,
 } from './Modal.styles';
-import { signInWithRedirect } from '@firebase/auth';
-import { auth, googleAuthProvider } from '@/firebase/firebase-config';
-import { hideModal } from '@/store/modalSlice';
 
 const Modal = ({ photos, selectedPhotoId, ...props }) => {
-  const dispatch = useDispatch();
-
-  const user = useSelector((state) => state.auth.user);
-
-  const favorites = useSelector((state) => state.favorites.photos);
-
-  const { addToast } = useToasts();
-
-  const initialSlideIndex = photos.findIndex(
-    (photo) => photo.id === selectedPhotoId
-  );
-
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    initialSlide: initialSlideIndex,
-    appendDots: (dots) => {
-      return <MagicSliderDots dots={dots} numDotsToShow={3} dotWidth={30} />;
-    },
-  };
+  const dispatch = useDispatch(),
+    user = useSelector((state) => state.auth.user),
+    favorites = useSelector((state) => state.favorites.photos),
+    initialSlideIndex = photos.findIndex(
+      (photo) => photo.id === selectedPhotoId,
+    ),
+    settings = {
+      dots: true,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      initialSlide: initialSlideIndex,
+      appendDots: (dots) => (
+        <MagicSliderDots dots={dots} numDotsToShow={3} dotWidth={30} />
+      ),
+    };
 
   useEffect(() => {
     if (user && favorites.length === 0) {
@@ -77,38 +74,36 @@ const Modal = ({ photos, selectedPhotoId, ...props }) => {
   }, []);
 
   const handleSaveFavoritePhoto = async (photo) => {
-    if (!user) {
-      await signInWithRedirect(auth, googleAuthProvider);
-      return;
-    }
-    try {
-      // check if the photo is already in the favorites.
-      const isFavorited = favorites.some((fav) => fav.id === photo.id);
-
-      if (isFavorited) {
-        await dispatch(removeFavoritePhotoOptmistic(photo.id));
-        await dispatch(removeFavoritePhoto(photo.id)).unwrap();
-        addToast('Removed from favorites', { appearance: 'info' });
-      } else {
-        dispatch(addFavoritePhotoOptimistic(photo));
-
-        dispatch(addFavoritePhoto(photo)).unwrap();
-        addToast('Added to favorites', { appearance: 'success' });
+      if (!user) {
+        await signInWithRedirect(auth, googleAuthProvider);
+        return;
       }
-    } catch (error) {
-      console.error('Favorite toggle failed:', error);
-      addToast('Failed to update favorites', { appearance: 'error' });
+      try {
+        // Check if the photo is already in the favorites.
+        const isFavorited = favorites.some((fav) => fav.id === photo.id);
 
-      // optionally rollback the optimistic update if there's an error
-      dispatch(addFavoritePhotoOptimistic(photo));
-    }
-  };
+        if (isFavorited) {
+          await dispatch(removeFavoritePhotoOptmistic(photo.id));
+          await dispatch(removeFavoritePhoto(photo.id)).unwrap();
+          toast.success('Removed from favorites', { appearance: 'info' });
+        } else {
+          dispatch(addFavoritePhotoOptimistic(photo));
 
-  const handleOverlayClick = (e) => {
-    if (e.target === e.currentTarget) {
-      hideModal();
-    }
-  };
+          dispatch(addFavoritePhoto(photo)).unwrap();
+          toast.success('Added to favorites', { appearance: 'success' });
+        }
+      } catch (err) {
+        toast.error('Failed to update favorites');
+        console.log(err);
+        // Optionally rollback the optimistic update if there's an error
+        dispatch(addFavoritePhotoOptimistic(photo));
+      }
+    },
+    handleOverlayClick = (e) => {
+      if (e.target === e.currentTarget) {
+        hideModal();
+      }
+    };
 
   return (
     <ModalOverlay onClick={handleOverlayClick}>
@@ -137,7 +132,7 @@ const Modal = ({ photos, selectedPhotoId, ...props }) => {
                   <CloseModal>
                     <Icon
                       src={closeIcon}
-                      alt='close'
+                      alt="close"
                       onClick={props.hideModal}
                     />
                   </CloseModal>
@@ -154,14 +149,14 @@ const Modal = ({ photos, selectedPhotoId, ...props }) => {
 
                 <PhotoFooter>
                   <IconWrapper>
-                    <Icon src={heartIcon} alt='heart icon' />
+                    <Icon src={heartIcon} alt="heart icon" />
                     <span>{photo.likes}</span>
                   </IconWrapper>
                   <FavIcon>
                     <Icon
                       onClick={() => handleSaveFavoritePhoto(photo)}
                       src={favorited ? favIcon : starIcon}
-                      alt='Fav icon'
+                      alt="Fav icon"
                     />
                   </FavIcon>
                 </PhotoFooter>

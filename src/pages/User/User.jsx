@@ -1,8 +1,15 @@
-import { LoadingSpinner } from '@/pages/Photo/Photo.styles';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Wrapper } from '@/styles';
-
 import { useParams } from 'react-router-dom';
+
+import LoaderComponent from '@/components/LoaderComponent';
+import UserCollection from '@/components/UserCollection';
+import { LoadingSpinner } from '@/pages/Photo/Photo.styles';
+import UserPhotos from '@/pages/UserPhotos';
+import { clearUserPhotos, fetchUser } from '@/store/userSlice';
+import { Wrapper } from '@/styles';
+import { shortenNumber } from '@/utils/helper';
+
 import {
   Avatar,
   Followers,
@@ -15,17 +22,10 @@ import {
   UserAvatar,
 } from './User.styles';
 
-import UserCollection from '@/components/UserCollection';
-import UserPhotos from '@/pages/UserPhotos';
-import { clearUserPhotos, fetchUser } from '@/store/userSlice';
-import { shortenNumber } from '@/utils/helper';
-import { useEffect } from 'react';
-import LoaderComponent from '@/components/LoaderComponent';
-
 const User = () => {
-  const { username } = useParams();
-  const dispatch = useDispatch();
-  const { user, isLoading } = useSelector((state) => state.user);
+  const { username } = useParams(),
+    dispatch = useDispatch(),
+    { user, isLoading } = useSelector((state) => state.user);
 
   useEffect(() => {
     if (username) {
@@ -47,7 +47,7 @@ const User = () => {
         <UserAvatar>
           <Avatar src={user.profile_image.large} alt={user.first_name} />
           <Title>{user.name}</Title>
-          <a href={user.portfolio_url} target='blank'>
+          <a href={user.portfolio_url} target="blank">
             {user.portfolio_url}{' '}
           </a>
           <Stats>

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+
 import { BodyMain, MediumText } from '@/styles/TextStyles';
 
 export const Wrapper = styled.div`

@@ -7,10 +7,12 @@ const PREFIXES = [
 ];
 
 export const shortenNumber = (number) => {
-  if (number === 0) return number;
+  if (number === 0) {
+    return number;
+  }
 
-  const divisor = PREFIXES.filter((num) => number >= num.value).pop();
-  const truncatedNumber = (number / divisor.value).toFixed(1);
+  const divisor = PREFIXES.filter((num) => number >= num.value).pop(),
+    truncatedNumber = (number / divisor.value).toFixed(1);
 
   return `${truncatedNumber}${divisor.symbol}`;
 };
@@ -21,4 +23,3 @@ export const breakpointColumns = {
   768: 2,
   576: 1,
 };
-

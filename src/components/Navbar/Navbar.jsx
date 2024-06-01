@@ -1,9 +1,12 @@
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+
 import ThemeIcon from '@/assets/icons/theme.svg';
 import MenuButton from '@/components/Buttons';
 import { menu } from '@/data/menu';
 import { toggleThemeChange } from '@/store/themeSlice';
 import { Container } from '@/styles';
-import { useState } from 'react';
+
 import { AuthControls } from './AuthControls';
 import {
   BuggerIcon,
@@ -20,11 +23,12 @@ import {
 import { SearchBar } from './SearchBar';
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const dispatch = useDispatch();
 
-  const handleToggle = () => {
-    dispatch(toggleThemeChange());
-  };
+  const [isOpen, setIsOpen] = useState(false),
+    handleToggle = () => {
+      dispatch(toggleThemeChange());
+    };
 
   return (
     <Header>
