@@ -7,7 +7,7 @@ import {
   TagsWrapper,
   Title,
   Wrapper,
-} from './Collection.styles';
+} from '@/pages/Collection/Collection.styles';
 
 export const CollectionHeader = ({ collection }) => {
   if (!collection.user) return null;
