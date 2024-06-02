@@ -1,24 +1,15 @@
 import 'react-magic-slider-dots/dist/magic-dots.css';
 
 import MagicSliderDots from 'react-magic-slider-dots';
-import { Link } from 'react-router-dom';
 
 import closeIcon from '@/assets/icons/cross.svg';
-import heartIcon from '@/assets/icons/heart.svg';
-import starIcon from '@/assets/icons/star.svg';
-import favIcon from '@/assets/icons/star2.svg';
 
 import { ModalAvatar } from './Avatar';
 import {
   CloseModal,
-  FavIcon,
   Icon,
-  IconWrapper,
   ModalOverlay,
-  PhotoFooter,
   PhotoHeader,
-  PhotoImage,
-  PhotoImageWrapper,
   SliderContainer,
   StyledSlider,
 } from './Modal.styles';
@@ -67,15 +58,6 @@ const Modal = ({ photos, selectedPhotoId, ...props }) => {
                   </CloseModal>
                 </PhotoHeader>
 
-                <PhotoImageWrapper>
-                  <Link to={`/photos/${photo.id}`} key={photo.id}>
-                    <PhotoImage
-                      src={photo.urls.small}
-                      alt={photo.description}
-                    />
-                  </Link>
-                </PhotoImageWrapper>
-
                 <ModalPhoto
                   photo={photo}
                   favorited={favorited}
@@ -83,20 +65,6 @@ const Modal = ({ photos, selectedPhotoId, ...props }) => {
                     handleSaveFavoritePhoto(photo, user, favorites, dispatch)
                   }
                 />
-
-                <PhotoFooter>
-                  <IconWrapper>
-                    <Icon src={heartIcon} alt="heart icon" />
-                    <span>{photo.likes}</span>
-                  </IconWrapper>
-                  <FavIcon>
-                    <Icon
-                      onClick={() => handleSaveFavoritePhoto(photo)}
-                      src={favorited ? favIcon : starIcon}
-                      alt="Fav icon"
-                    />
-                  </FavIcon>
-                </PhotoFooter>
               </div>
             );
           })}

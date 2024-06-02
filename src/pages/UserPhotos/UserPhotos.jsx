@@ -1,11 +1,12 @@
 import PhotoGallery from '@/components/PhotoGallery';
-import { openModal } from '@/store/userSlice';
+import { hideModal, showModal } from '@/store/modalSlice';
 import { Message } from '@/styles';
 
 import { useUserPhotos } from './useUserPhotos';
 
 const UserPhotos = () => {
-  const { photos, hasMore, selectedPhotoId, loadMorePhotos } = useUserPhotos();
+  const { photos, hasMore, selectedPhotoId, loadMorePhotos, dispatch, isOpen } =
+    useUserPhotos();
 
   if (photos.length === 0) {
     return <Message>No photos available.</Message>;
@@ -15,8 +16,10 @@ const UserPhotos = () => {
     <PhotoGallery
       photos={photos}
       fetchMore={loadMorePhotos}
+      isOpen={isOpen}
       hasMore={hasMore}
-      openModal={openModal}
+      openModal={(photoId) => dispatch(showModal(photoId))}
+      closeModal={() => dispatch(hideModal())}
       selectedPhotoId={selectedPhotoId}
     />
   );
