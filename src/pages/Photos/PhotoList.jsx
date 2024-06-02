@@ -42,7 +42,6 @@ const PhotoList = () => {
     isOpen,
     selectedPhotoId,
   } = usePhotoList();
-
   return (
     <Container>
       {photos.length === 0 && isLoading ? (
@@ -61,5 +60,4 @@ const PhotoList = () => {
     </Container>
   );
 };
-
 export default PhotoList;

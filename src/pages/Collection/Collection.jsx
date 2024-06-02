@@ -46,7 +46,6 @@ const Collection = () => {
     openModal,
     closeModal,
   } = useCollection();
-
   return (
     <Container>
       <CollectionHeader collection={collection} />
@@ -63,5 +62,4 @@ const Collection = () => {
     </Container>
   );
 };
-
 export default Collection;
