@@ -27,6 +27,46 @@ import {
 } from './Photo.styles';
 import { usePhoto } from './usePhoto';
 
+const PhotoHeaderComponent = ({ user }) => (
+  <PhotoHeader>
+    <Link to={`/users/${user.username}`}>
+      <Avatar>
+        <AvatarImg src={user.profile_image.medium} alt={user.username} />
+        <TextWrapper>
+          <Title>{user.username}</Title>
+          <Subtitle>{moment(user.updated_at).fromNow()}</Subtitle>
+        </TextWrapper>
+      </Avatar>
+    </Link>
+    <OptionsMenu>
+      <Icon src={optionIcon} alt="Options menu" />
+    </OptionsMenu>
+  </PhotoHeader>
+);
+
+const PhotoFooterComponent = ({ photo, favorited, handleFavorite }) => (
+  <PhotoFooter>
+    <IconWrapper>
+      <Icon src={heartIcon} alt="heart icon" />
+      <span>{photo.likes}</span>
+    </IconWrapper>
+    <div></div>
+    <FavIcon>
+      <Icon
+        src={favorited ? favIcon : starIcon}
+        onClick={handleFavorite}
+        alt="Fav icon"
+      />
+    </FavIcon>
+  </PhotoFooter>
+);
+
+const PhotoImageSection = ({ urls, description }) => (
+  <PhotoImageWrapper>
+    <PhotoImage src={urls.small} alt={description} />
+  </PhotoImageWrapper>
+);
+
 const Photo = () => {
   const { photo, favorited } = usePhoto();
   return (
@@ -35,45 +75,18 @@ const Photo = () => {
 
       {photo.user && (
         <PhotoWrapper>
-          <PhotoHeader>
-            <Link to={`/users/${photo.user.username}`}>
-              <Avatar>
-                <AvatarImg
-                  src={photo.user.profile_image.medium}
-                  alt={photo.user.username}
-                />
-                <TextWrapper>
-                  <Title>{photo.user.username}</Title>
-                  <Subtitle>{moment(photo.updated_at).fromNow()}</Subtitle>
-                </TextWrapper>
-              </Avatar>
-            </Link>
-            <OptionsMenu>
-              <Icon src={optionIcon} alt="Options menu" />
-            </OptionsMenu>
-          </PhotoHeader>
+          <PhotoHeaderComponent user={photo.user} />
 
           <Description>{photo.description}</Description>
 
           {photo.urls && (
-            <PhotoImageWrapper>
-              <PhotoImage src={photo.urls.small} alt={photo.description} />
-            </PhotoImageWrapper>
+            <PhotoImageSection
+              urls={photo.urls}
+              description={photo.description}
+            />
           )}
-          <PhotoFooter>
-            <IconWrapper>
-              <Icon src={heartIcon} alt="heart icon" />
-              <span>{photo.likes}</span>
-            </IconWrapper>
-            <div></div>
-            <FavIcon>
-              <Icon
-                src={favorited ? favIcon : starIcon}
-                onClick={() => console.log(photo)}
-                alt="Fav icon"
-              />
-            </FavIcon>
-          </PhotoFooter>
+
+          <PhotoFooterComponent photo={photo} favorited={favorited} />
         </PhotoWrapper>
       )}
     </Wrapper>
