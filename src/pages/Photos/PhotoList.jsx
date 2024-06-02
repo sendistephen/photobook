@@ -10,6 +10,26 @@ const PhotoLoader = ({ isBottomLoader }) => (
   </LoadingSpinner>
 );
 
+const PhotoContent = ({
+  photos,
+  fetchMorePhotos,
+  hasMore,
+  isOpen,
+  openModal,
+  closeModal,
+  selectedPhotoId,
+}) => (
+  <PhotoGallery
+    photos={photos}
+    fetchMore={fetchMorePhotos}
+    hasMore={hasMore}
+    isOpen={isOpen}
+    openModal={openModal}
+    closeModal={closeModal}
+    selectedPhotoId={selectedPhotoId}
+  />
+);
+
 const PhotoList = () => {
   const {
     photos,
@@ -22,15 +42,14 @@ const PhotoList = () => {
     isOpen,
     selectedPhotoId,
   } = usePhotoList();
-
   return (
     <Container>
       {photos.length === 0 && isLoading ? (
         <PhotoLoader isBottomLoader={isBottomLoader} />
       ) : (
-        <PhotoGallery
+        <PhotoContent
           photos={photos}
-          fetchMore={fetchMorePhotos}
+          fetchMorePhotos={fetchMorePhotos}
           hasMore={hasMore}
           isOpen={isOpen}
           openModal={openModal}
@@ -41,5 +60,4 @@ const PhotoList = () => {
     </Container>
   );
 };
-
 export default PhotoList;
