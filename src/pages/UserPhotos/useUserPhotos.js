@@ -1,11 +1,11 @@
-import { throttle } from 'lodash';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import { fetchUserPhotos } from '@/store/userSlice';
+import { useLoadMorePhotos } from '@/useLoadMorePhotos';
 
-const useUserPhotos = () => {
+export const useUserPhotos = () => {
   const { username } = useParams();
   const [page, setPage] = useState(1);
   const dispatch = useDispatch();
@@ -21,21 +21,7 @@ const useUserPhotos = () => {
     }
   }, [username, page, dispatch]);
 
-  const loadMorePhotos = useCallback(
-    throttle(() => {
-      setPage((prevPage) => prevPage + 1);
-    }, 3000),
-    [],
-  );
+  const loadMorePhotos = useLoadMorePhotos(setPage);
 
-  return {
-    photos,
-    hasMore,
-    selectedPhotoId,
-    loadMorePhotos,
-    isBottomLoader: true,
-    dispatch,
-  };
+  return { photos, hasMore, selectedPhotoId, loadMorePhotos };
 };
-
-export default useUserPhotos;
