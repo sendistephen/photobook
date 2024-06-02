@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
 
 import {
+  fetchData,
   getAllCollections,
   getCollection,
   getSingleCollection,
@@ -11,26 +11,24 @@ import {
 export const fetchSingleCollection = createAsyncThunk(
   'collections/fetchSingleCollection',
   async (collectionId, { rejectWithValue }) => {
-    try {
-      const response = await axios(getSingleCollection(collectionId));
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
+    const data = await fetchData(
+      getSingleCollection,
+      collectionId,
+      rejectWithValue,
+    );
+    return data;
   },
 );
 
 export const fetchCollection = createAsyncThunk(
   'collections/fetchCollection',
   async ({ collectionId, page = 1, perPage = 50 }, { rejectWithValue }) => {
-    try {
-      const response = await axios(
-        getCollection({ collectionId, page, perPage }),
-      );
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
+    const data = await fetchData(
+      getCollection,
+      { collectionId, page, perPage },
+      rejectWithValue,
+    );
+    return data;
   },
 );
 
@@ -38,17 +36,14 @@ export const fetchCollections = createAsyncThunk(
   'collections/fetchCollections',
   async ({ page, perPage }, { getState, rejectWithValue }) => {
     const state = getState();
-    try {
-      const response = await axios(
-        getAllCollections({
-          page: page || state.collections.page,
-          perPage: perPage || state.collections.perPage,
-        }),
-      );
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
+    return fetchData(
+      getAllCollections,
+      {
+        page: page || state.collections.page,
+        perPage: perPage || state.collections.perPage,
+      },
+      rejectWithValue,
+    );
   },
 );
 

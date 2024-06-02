@@ -8,6 +8,8 @@ import {
   setDoc,
 } from 'firebase/firestore';
 
+import { handleAsyncThunkCases } from '@/utils/helper';
+
 // Async thunk for fetching favorite photos
 export const getFavorites = createAsyncThunk(
   'favorites/getFavorites',
@@ -100,37 +102,27 @@ const initialState = {
       },
     },
     extraReducers: (builder) => {
-      builder
-        .addCase(getFavorites.pending, (state) => {
-          state.isLoading = true;
-        })
-        .addCase(getFavorites.fulfilled, (state, action) => {
+      builder;
+      handleAsyncThunkCases(builder, getFavorites, {
+        fulfilled: (state, action) => {
           state.photos = action.payload;
-          state.isLoading = false;
-        })
-        .addCase(getFavorites.rejected, (state, action) => {
-          state.isLoading = false;
-          state.error = action.payload;
-        })
-        .addCase(addFavoritePhoto.fulfilled, (state, action) => {
+        },
+      });
+      handleAsyncThunkCases(builder, addFavoritePhoto, {
+        fulfilled: (state, action) => {
           const index = state.photos.findIndex(
             (photo) => photo.id === action.payload.id,
           );
-          if (index === -1) {
-            state.photos.push(action.payload);
-          }
-        })
-        .addCase(removeFavoritePhoto.fulfilled, (state, action) => {
+          if (index === -1) state.photos.push(action.payload);
+        },
+      });
+      handleAsyncThunkCases(builder, removeFavoritePhoto, {
+        fulfilled: (state, action) => {
           state.photos = state.photos.filter(
             (photo) => photo.id !== action.payload,
           );
-        })
-        .addCase(addFavoritePhoto.rejected, (state, action) => {
-          state.error = action.payload;
-        })
-        .addCase(removeFavoritePhoto.rejected, (state, action) => {
-          state.error = action.payload;
-        });
+        },
+      });
     },
   });
 

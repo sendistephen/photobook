@@ -1,3 +1,4 @@
+import axios from 'axios';
 import styled from 'styled-components';
 
 const base = import.meta.env.VITE_APP_UNSPLASH_API_URL,
@@ -67,3 +68,14 @@ export const savePhoto = () => `${server}photos/favorites`;
 
 export const filterProps = (Component, shouldForwardProp) =>
   styled(Component).withConfig({ shouldForwardProp })();
+
+// fetch data from the api
+
+export const fetchData = async (apiCall, params, rejectWithValue) => {
+  try {
+    const response = await axios(apiCall(params));
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.message);
+  }
+};
