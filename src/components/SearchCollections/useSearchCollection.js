@@ -5,12 +5,7 @@ import { useParams } from 'react-router-dom';
 
 import { clearCollections, fetchCollections } from '@/store/searchSlice';
 
-export const useSearchCollection = () => {
-  const { searchWord } = useParams(),
-    dispatch = useDispatch(),
-    isBottomLoader = true,
-    { collections, hasMore, page } = useSelector((state) => state.search);
-
+const useFetchInitialCollections = (searchWord, dispatch) => {
   useEffect(() => {
     if (searchWord) {
       dispatch(fetchCollections({ query: searchWord, page: 1, perPage: 30 }));
@@ -19,8 +14,10 @@ export const useSearchCollection = () => {
       dispatch(clearCollections());
     };
   }, [dispatch, searchWord]);
+};
 
-  const fetchMoreCollections = useCallback(
+const useFetchMoreCollections = (searchWord, dispatch, page) => {
+  return useCallback(
     throttle(() => {
       const nextPage = page + 1;
       dispatch(
@@ -28,6 +25,20 @@ export const useSearchCollection = () => {
       );
     }, 3000),
     [dispatch, searchWord, page],
+  );
+};
+
+export const useSearchCollection = () => {
+  const { searchWord } = useParams();
+  const dispatch = useDispatch();
+  const isBottomLoader = true;
+  const { collections, hasMore, page } = useSelector((state) => state.search);
+
+  useFetchInitialCollections(searchWord, dispatch);
+  const fetchMoreCollections = useFetchMoreCollections(
+    searchWord,
+    dispatch,
+    page,
   );
 
   return {
