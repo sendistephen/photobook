@@ -48,7 +48,6 @@ const Favorites = () => {
     selectedPhotoId,
     isBottomLoader,
   } = useFavorites();
-
   return (
     <Container>
       <FavoritesContent

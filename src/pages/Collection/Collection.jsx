@@ -50,19 +50,16 @@ const Collection = () => {
   return (
     <Container>
       <CollectionHeader collection={collection} />
-      <Container>
-        <CollectionHeader collection={collection} />
-        <CollectionContent
-          userPhotoCollection={userPhotoCollection}
-          isLoading={isLoading}
-          hasMore={hasMore}
-          fetchMore={fetchMore}
-          isOpen={isOpen}
-          selectedPhotoId={selectedPhotoId}
-          openModal={openModal}
-          closeModal={closeModal}
-        />
-      </Container>
+      <CollectionContent
+        userPhotoCollection={userPhotoCollection}
+        isLoading={isLoading}
+        hasMore={hasMore}
+        fetchMore={fetchMore}
+        isOpen={isOpen}
+        selectedPhotoId={selectedPhotoId}
+        openModal={openModal}
+        closeModal={closeModal}
+      />
     </Container>
   );
 };
