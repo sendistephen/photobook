@@ -17,7 +17,7 @@ export const useCollection = () => {
 
   useEffect(() => {
     if (collectionId) {
-      dispatch(fetchCollection(collectionId));
+      dispatch(fetchCollection({ collectionId }));
     }
   }, [collectionId, dispatch]);
 

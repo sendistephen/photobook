@@ -23,3 +23,26 @@ export const breakpointColumns = {
   768: 2,
   576: 1,
 };
+
+// Handles async thunk add case for common actions
+export const handleAsyncThunkCases = (
+  builder,
+  thunk,
+  { pending, fulfilled, rejected },
+) => {
+  builder
+    .addCase(thunk.pending, (state) => {
+      state.isLoading = true;
+      if (pending) pending(state);
+    })
+    .addCase(thunk.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.error = null;
+      if (fulfilled) fulfilled(state, action);
+    })
+    .addCase(thunk.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+      if (rejected) rejected(state, action);
+    });
+};
