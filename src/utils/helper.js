@@ -1,3 +1,15 @@
+import { signInWithRedirect } from '@firebase/auth';
+import toast from 'react-hot-toast';
+
+import { auth, googleAuthProvider } from '@/firebase/firebase-config';
+import {
+  addFavoritePhoto,
+  addFavoritePhotoOptimistic,
+  removeFavoritePhoto,
+  removeFavoritePhotoOptmistic,
+} from '@/store/favoritesSlice';
+import { hideModal } from '@/store/modalSlice';
+
 const PREFIXES = [
   { value: 1, symbol: '' },
   { value: 1000, symbol: 'k' },
@@ -45,4 +57,39 @@ export const handleAsyncThunkCases = (
       state.error = action.payload;
       if (rejected) rejected(state, action);
     });
+};
+
+export const handleSaveFavoritePhoto = async (
+  photo,
+  user,
+  favorites,
+  dispatch,
+) => {
+  if (!user) {
+    await signInWithRedirect(auth, googleAuthProvider);
+    return;
+  }
+  try {
+    const isFavorited = favorites.some((fav) => fav.id === photo.id);
+
+    if (isFavorited) {
+      await dispatch(removeFavoritePhotoOptmistic(photo.id));
+      await dispatch(removeFavoritePhoto(photo.id)).unwrap();
+      toast.success('Removed from favorites', { appearance: 'info' });
+    } else {
+      dispatch(addFavoritePhotoOptimistic(photo));
+      await dispatch(addFavoritePhoto(photo)).unwrap();
+      toast.success('Added to favorites', { appearance: 'success' });
+    }
+  } catch (err) {
+    toast.error('Failed to update favorites');
+    console.log(err);
+    dispatch(addFavoritePhotoOptimistic(photo));
+  }
+};
+
+export const handleOverlayClick = (e, dispatch) => {
+  if (e.target === e.currentTarget) {
+    dispatch(hideModal());
+  }
 };
