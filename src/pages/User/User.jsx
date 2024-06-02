@@ -1,26 +1,15 @@
+import { UserAvatarComponent } from 'components/User/UserAvatarComponent';
+
 import LoaderComponent from '@/components/LoaderComponent';
 import UserCollection from '@/components/UserCollection';
 import { LoadingSpinner } from '@/pages/Photo/Photo.styles';
 import UserPhotos from '@/pages/UserPhotos';
 import { Wrapper } from '@/styles';
-import { shortenNumber } from '@/utils/helper';
 
-import {
-  Avatar,
-  Followers,
-  Following,
-  Number,
-  Posts,
-  SmallText,
-  Stats,
-  Title,
-  UserAvatar,
-} from './User.styles';
 import { useUser } from './useUser';
 
 const User = () => {
   const { user, isLoading } = useUser();
-
   return (
     <Wrapper>
       {isLoading && (
@@ -28,34 +17,10 @@ const User = () => {
           <LoaderComponent />
         </LoadingSpinner>
       )}
-      {user.profile_image && (
-        <UserAvatar>
-          <Avatar src={user.profile_image.large} alt={user.first_name} />
-          <Title>{user.name}</Title>
-          <a href={user.portfolio_url} target="blank">
-            {user.portfolio_url}{' '}
-          </a>
-          <Stats>
-            <Posts>
-              <Number>{shortenNumber(user.downloads)}</Number>
-              <SmallText>Total Downloads</SmallText>
-            </Posts>
-            <Followers>
-              <Number>{shortenNumber(user.followers_count)}</Number>
-              <SmallText>Followers</SmallText>
-            </Followers>
-            <Following>
-              <Number>{shortenNumber(user.following_count)}</Number>
-              <SmallText>Following</SmallText>
-            </Following>
-          </Stats>
-        </UserAvatar>
-      )}
-
+      {user.profile_image && <UserAvatarComponent user={user} />}
       <UserCollection />
       <UserPhotos />
     </Wrapper>
   );
 };
-
 export default User;
