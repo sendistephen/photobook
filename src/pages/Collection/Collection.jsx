@@ -5,59 +5,40 @@ import { Container, LoadingSpinner } from '@/styles';
 
 import { useCollection } from './useCollection';
 
-const CollectionContent = ({
-  userPhotoCollection,
-  isLoading,
-  hasMore,
-  fetchMore,
-  isOpen,
-  selectedPhotoId,
-  openModal,
-  closeModal,
-}) => (
+const CollectionContent = (props) => (
   <>
-    {userPhotoCollection.length === 0 && isLoading ? (
+    {props.userPhotoCollection.length === 0 && props.isLoading ? (
       <LoadingSpinner>
         <LoaderComponent />
       </LoadingSpinner>
     ) : (
       <PhotoGallery
-        photos={userPhotoCollection}
-        fetchMore={fetchMore}
-        hasMore={hasMore}
-        isOpen={isOpen}
-        openModal={openModal}
-        closeModal={closeModal}
-        selectedPhotoId={selectedPhotoId}
+        photos={props.userPhotoCollection}
+        fetchMore={props.fetchMore}
+        hasMore={props.hasMore}
+        isOpen={props.isOpen}
+        openModal={props.openModal}
+        closeModal={props.closeModal}
+        selectedPhotoId={props.selectedPhotoId}
       />
     )}
   </>
 );
 
 const Collection = () => {
-  const {
-    userPhotoCollection,
-    collection,
-    isLoading,
-    hasMore,
-    fetchMore,
-    isOpen,
-    selectedPhotoId,
-    openModal,
-    closeModal,
-  } = useCollection();
+  const data = useCollection();
   return (
     <Container>
-      <CollectionHeader collection={collection} />
+      <CollectionHeader collection={data.collection} />
       <CollectionContent
-        userPhotoCollection={userPhotoCollection}
-        isLoading={isLoading}
-        hasMore={hasMore}
-        fetchMore={fetchMore}
-        isOpen={isOpen}
-        selectedPhotoId={selectedPhotoId}
-        openModal={openModal}
-        closeModal={closeModal}
+        userPhotoCollection={data.userPhotoCollection}
+        isLoading={data.isLoading}
+        hasMore={data.hasMore}
+        fetchMore={data.fetchMore}
+        isOpen={data.isOpen}
+        selectedPhotoId={data.selectedPhotoId}
+        openModal={data.openModal}
+        closeModal={data.closeModal}
       />
     </Container>
   );
