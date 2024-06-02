@@ -10,54 +10,38 @@ const PhotoLoader = ({ isBottomLoader }) => (
   </LoadingSpinner>
 );
 
-const PhotoContent = ({
-  photos,
-  fetchMorePhotos,
-  hasMore,
-  isOpen,
-  openModal,
-  closeModal,
-  selectedPhotoId,
-}) => (
+const PhotoContent = (props) => (
   <PhotoGallery
-    photos={photos}
-    fetchMore={fetchMorePhotos}
-    hasMore={hasMore}
-    isOpen={isOpen}
-    openModal={openModal}
-    closeModal={closeModal}
-    selectedPhotoId={selectedPhotoId}
+    photos={props.photos}
+    fetchMore={props.fetchMorePhotos}
+    hasMore={props.hasMore}
+    isOpen={props.isOpen}
+    openModal={props.openModal}
+    closeModal={props.closeModal}
+    selectedPhotoId={props.selectedPhotoId}
   />
 );
 
 const PhotoList = () => {
-  const {
-    photos,
-    hasMore,
-    isLoading,
-    fetchMorePhotos,
-    isBottomLoader,
-    openModal,
-    closeModal,
-    isOpen,
-    selectedPhotoId,
-  } = usePhotoList();
+  const data = usePhotoList();
+
   return (
     <Container>
-      {photos.length === 0 && isLoading ? (
-        <PhotoLoader isBottomLoader={isBottomLoader} />
+      {data.photos.length === 0 && data.isLoading ? (
+        <PhotoLoader isBottomLoader={data.isBottomLoader} />
       ) : (
         <PhotoContent
-          photos={photos}
-          fetchMorePhotos={fetchMorePhotos}
-          hasMore={hasMore}
-          isOpen={isOpen}
-          openModal={openModal}
-          closeModal={closeModal}
-          selectedPhotoId={selectedPhotoId}
+          photos={data.photos}
+          fetchMorePhotos={data.fetchMorePhotos}
+          hasMore={data.hasMore}
+          isOpen={data.isOpen}
+          openModal={data.openModal}
+          closeModal={data.closeModal}
+          selectedPhotoId={data.selectedPhotoId}
         />
       )}
     </Container>
   );
 };
+
 export default PhotoList;

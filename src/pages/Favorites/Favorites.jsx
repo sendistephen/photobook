@@ -4,20 +4,12 @@ import { Container, LoadingSpinner } from '@/styles';
 
 import { useFavorites } from './useFavorites';
 
-const FavoritesContent = ({
-  isLoading,
-  isBottomLoader,
-  photos,
-  fetchPhotos,
-  hasMore,
-  isOpen,
-  openModal,
-  closeModal,
-  selectedPhotoId,
-}) => {
-  if (isLoading) {
+const FavoritesContent = (props) => {
+  if (props.isLoading) {
     return (
-      <LoadingSpinner className={isBottomLoader ? 'is-bottom-loader' : ''}>
+      <LoadingSpinner
+        className={props.isBottomLoader ? 'is-bottom-loader' : ''}
+      >
         <LoaderComponent />
       </LoadingSpinner>
     );
@@ -25,41 +17,32 @@ const FavoritesContent = ({
 
   return (
     <PhotoGallery
-      photos={photos}
-      fetchMore={fetchPhotos}
-      hasMore={hasMore}
-      isOpen={isOpen}
-      openModal={openModal}
-      closeModal={closeModal}
-      selectedPhotoId={selectedPhotoId}
+      photos={props.photos}
+      fetchMore={props.fetchPhotos}
+      hasMore={props.hasMore}
+      isOpen={props.isOpen}
+      openModal={props.openModal}
+      closeModal={props.closeModal}
+      selectedPhotoId={props.selectedPhotoId}
     />
   );
 };
 
 const Favorites = () => {
-  const {
-    photos,
-    hasMore,
-    isLoading,
-    fetchPhotos,
-    openModal,
-    closeModal,
-    isOpen,
-    selectedPhotoId,
-    isBottomLoader,
-  } = useFavorites();
+  const data = useFavorites();
+
   return (
     <Container>
       <FavoritesContent
-        isLoading={isLoading}
-        isBottomLoader={isBottomLoader}
-        photos={photos}
-        fetchPhotos={fetchPhotos}
-        hasMore={hasMore}
-        isOpen={isOpen}
-        openModal={openModal}
-        closeModal={closeModal}
-        selectedPhotoId={selectedPhotoId}
+        isLoading={data.isLoading}
+        isBottomLoader={data.isBottomLoader}
+        photos={data.photos}
+        fetchPhotos={data.fetchPhotos}
+        hasMore={data.hasMore}
+        isOpen={data.isOpen}
+        openModal={data.openModal}
+        closeModal={data.closeModal}
+        selectedPhotoId={data.selectedPhotoId}
       />
     </Container>
   );
