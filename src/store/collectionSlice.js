@@ -70,9 +70,6 @@ const initialState = {
       clearUserCollection: (state) => {
         state.userPhotoCollection = [];
       },
-      openModal: (state, action) => {
-        state.index = action.payload;
-      },
     },
     extraReducers: (builder) => {
       builder
