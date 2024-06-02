@@ -1,5 +1,4 @@
-import { CollectionHeader } from 'components/collection/CollectionHeader';
-
+import { CollectionHeader } from '@/components/collection/CollectionHeader';
 import LoaderComponent from '@/components/LoaderComponent';
 import PhotoGallery from '@/components/PhotoGallery';
 import { Container, LoadingSpinner } from '@/styles';
