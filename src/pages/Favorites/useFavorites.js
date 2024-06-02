@@ -1,8 +1,8 @@
-import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { getFavorites } from '@/store/favoritesSlice';
 import { hideModal, showModal } from '@/store/modalSlice';
+
+import { useFetchFavorites } from './useFetchFavorites';
 
 export const useFavorites = () => {
   const { photos, isLoading, hasMore } = useSelector(
@@ -12,21 +12,12 @@ export const useFavorites = () => {
     user = useSelector((state) => state.auth.user),
     dispatch = useDispatch();
 
-  useEffect(() => {
-    if (user) {
-      dispatch(getFavorites());
-    } else {
-      console.log('User not authenticated');
-    }
-  }, [dispatch, user]);
+  useFetchFavorites(user, dispatch);
 
-  const fetchPhotos = () => {
-      const favoritePhotos = Object.values(photos);
-      return favoritePhotos;
-    },
-    openModal = (photoId) => dispatch(showModal(photoId)),
-    closeModal = () => dispatch(hideModal()),
-    isBottomLoader = true;
+  const fetchPhotos = () => Object.values(photos);
+  const openModal = (photoId) => dispatch(showModal(photoId));
+  const closeModal = () => dispatch(hideModal());
+  const isBottomLoader = true;
 
   return {
     photos,

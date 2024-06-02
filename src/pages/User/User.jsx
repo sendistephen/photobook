@@ -1,6 +1,5 @@
-import { UserAvatarComponent } from 'components/User/UserAvatarComponent';
-
 import LoaderComponent from '@/components/LoaderComponent';
+import { UserAvatarComponent } from '@/components/User/UserAvatarComponent';
 import UserCollection from '@/components/UserCollection';
 import { LoadingSpinner } from '@/pages/Photo/Photo.styles';
 import UserPhotos from '@/pages/UserPhotos';

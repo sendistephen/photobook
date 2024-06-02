@@ -19,6 +19,21 @@ import {
 import { SearchBar } from './SearchBar';
 import { useNavbar } from './useNavbar';
 
+const MenuItems = ({ handleToggle }) => (
+  <>
+    {menu.map((item, index) => (
+      <MenuButton key={index} item={item} />
+    ))}
+    <MenuThemeItem onClick={handleToggle}>
+      <Theme>
+        <Image src={ThemeIcon} alt="Theme Icon" />
+      </Theme>
+      <Label>Theme</Label>
+    </MenuThemeItem>
+    <AuthControls />
+  </>
+);
+
 const Navbar = () => {
   const { isOpen, setIsOpen, handleToggle } = useNavbar();
 
@@ -35,19 +50,7 @@ const Navbar = () => {
             )}
           </BuggerIcon>
           <MenuWrapper isOpen={isOpen}>
-            <>
-              {menu.map((item, index) => (
-                <MenuButton key={index} item={item} />
-              ))}
-              <MenuThemeItem onClick={handleToggle}>
-                <Theme>
-                  <Image src={ThemeIcon} alt="Theme Icon" />
-                </Theme>
-                <Label>Theme</Label>
-              </MenuThemeItem>
-
-              <AuthControls />
-            </>
+            <MenuItems handleToggle={handleToggle} />
           </MenuWrapper>
         </HeaderContainer>
       </Container>

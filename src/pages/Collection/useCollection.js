@@ -6,15 +6,7 @@ import { useParams } from 'react-router-dom';
 import { fetchCollection } from '@/store/collectionSlice';
 import { hideModal, showModal } from '@/store/modalSlice';
 
-export const useCollection = () => {
-  const { collectionId } = useParams();
-  const dispatch = useDispatch();
-  const { userPhotoCollection, collection, isLoading, hasMore } = useSelector(
-    (state) => state.collections,
-  );
-
-  const { isOpen, selectedPhotoId } = useSelector((state) => state.modal);
-
+const useCollectionFetch = (collectionId, dispatch) => {
   useEffect(() => {
     if (collectionId) {
       dispatch(fetchCollection({ collectionId }));
@@ -27,6 +19,20 @@ export const useCollection = () => {
     }, 3000),
     [dispatch, collectionId],
   );
+
+  return fetchMore;
+};
+
+export const useCollection = () => {
+  const { collectionId } = useParams();
+  const dispatch = useDispatch();
+  const { userPhotoCollection, collection, isLoading, hasMore } = useSelector(
+    (state) => state.collections,
+  );
+
+  const { isOpen, selectedPhotoId } = useSelector((state) => state.modal);
+
+  const fetchMore = useCollectionFetch(collectionId, dispatch);
 
   const openModal = (photoId) => dispatch(showModal(photoId));
   const closeModal = () => dispatch(hideModal());
