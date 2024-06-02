@@ -9,12 +9,8 @@ export const useUserPhotos = () => {
   const { username } = useParams();
   const [page, setPage] = useState(1);
   const dispatch = useDispatch();
-  const {
-    photos,
-    hasMore,
-    index: selectedPhotoId,
-  } = useSelector((state) => state.user);
-
+  const { photos, hasMore } = useSelector((state) => state.user);
+  const { isOpen, selectedPhotoId } = useSelector((state) => state.modal);
   useEffect(() => {
     if (username) {
       dispatch(fetchUserPhotos({ username, page }));
@@ -23,5 +19,5 @@ export const useUserPhotos = () => {
 
   const loadMorePhotos = useLoadMorePhotos(setPage);
 
-  return { photos, hasMore, selectedPhotoId, loadMorePhotos };
+  return { photos, hasMore, selectedPhotoId, loadMorePhotos, isOpen, dispatch };
 };

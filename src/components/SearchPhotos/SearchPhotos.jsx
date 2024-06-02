@@ -1,79 +1,24 @@
-import { useEffect } from 'react';
-import InfiniteScroll from 'react-infinite-scroll-component';
-import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import PhotoGallery from '@/components/PhotoGallery';
+import { hideModal, showModal } from '@/store/modalSlice';
+import { Container } from '@/styles';
 
-import LoaderComponent from '@/components/LoaderComponent';
-import Modal from '@/components/Modal';
-import { clearPhotos, fetchPhotos, handleModal } from '@/store/searchSlice';
-import {
-  Container,
-  GalleryImage,
-  GalleryItem,
-  LoadingSpinner,
-  Message,
-} from '@/styles';
-import { breakpointColumns } from '@/utils/helper';
-
-import { Gallery } from './SearchPhotos.styles';
+import { useSearchPhotos } from './useSearchPhotos';
 
 const SearchPhotos = () => {
-  const { searchWord } = useParams(),
-    dispatch = useDispatch(),
-    { photos, hasMore, index } = useSelector((state) => state.search);
-
-  useEffect(() => {
-    if (searchWord) {
-      dispatch(fetchPhotos({ query: searchWord }));
-    }
-
-    return () => {
-      dispatch(clearPhotos());
-    };
-  }, [dispatch, searchWord]);
-
-  const fetchMore = () => {
-    dispatch(fetchPhotos(searchWord));
-  };
+  const { photos, hasMore, isOpen, fetchMore, dispatch, selectedPhotoId } =
+    useSearchPhotos();
 
   return (
     <Container>
-      <InfiniteScroll
-        dataLength={photos.length}
-        next={fetchMore}
+      <PhotoGallery
+        photos={photos}
+        fetchMore={fetchMore}
         hasMore={hasMore}
-        loader={
-          <LoadingSpinner>
-            <LoaderComponent />
-          </LoadingSpinner>
-        }
-        endMessage={
-          <Message>
-            <b>There are no more photos</b>
-          </Message>
-        }
-      >
-        <Gallery
-          breakpointCols={breakpointColumns}
-          columnClassName="masonry-grid_column"
-        >
-          {photos.map((photo, index) => (
-            <GalleryItem
-              key={photo.id}
-              onClick={() => dispatch(handleModal(index))}
-            >
-              <GalleryImage src={photo.urls.small} alt={photo.description} />
-            </GalleryItem>
-          ))}
-        </Gallery>
-        {index > -1 && (
-          <Modal
-            photos={photos}
-            index={index}
-            hideModal={() => dispatch(handleModal(-1))}
-          />
-        )}
-      </InfiniteScroll>
+        isOpen={isOpen}
+        openModal={(photoId) => dispatch(showModal(photoId))}
+        closeModal={() => dispatch(hideModal())}
+        selectedPhotoId={selectedPhotoId}
+      />
     </Container>
   );
 };
