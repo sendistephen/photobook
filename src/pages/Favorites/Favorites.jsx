@@ -4,6 +4,38 @@ import { Container, LoadingSpinner } from '@/styles';
 
 import { useFavorites } from './useFavorites';
 
+const FavoritesContent = ({
+  isLoading,
+  isBottomLoader,
+  photos,
+  fetchPhotos,
+  hasMore,
+  isOpen,
+  openModal,
+  closeModal,
+  selectedPhotoId,
+}) => {
+  if (isLoading) {
+    return (
+      <LoadingSpinner className={isBottomLoader ? 'is-bottom-loader' : ''}>
+        <LoaderComponent />
+      </LoadingSpinner>
+    );
+  }
+
+  return (
+    <PhotoGallery
+      photos={photos}
+      fetchMore={fetchPhotos}
+      hasMore={hasMore}
+      isOpen={isOpen}
+      openModal={openModal}
+      closeModal={closeModal}
+      selectedPhotoId={selectedPhotoId}
+    />
+  );
+};
+
 const Favorites = () => {
   const {
     photos,
@@ -19,21 +51,17 @@ const Favorites = () => {
 
   return (
     <Container>
-      {isLoading ? (
-        <LoadingSpinner className={isBottomLoader ? 'is-bottom-loader' : ''}>
-          <LoaderComponent />
-        </LoadingSpinner>
-      ) : (
-        <PhotoGallery
-          photos={photos}
-          fetchMore={fetchPhotos}
-          hasMore={hasMore}
-          isOpen={isOpen}
-          openModal={openModal}
-          closeModal={closeModal}
-          selectedPhotoId={selectedPhotoId}
-        />
-      )}
+      <FavoritesContent
+        isLoading={isLoading}
+        isBottomLoader={isBottomLoader}
+        photos={photos}
+        fetchPhotos={fetchPhotos}
+        hasMore={hasMore}
+        isOpen={isOpen}
+        openModal={openModal}
+        closeModal={closeModal}
+        selectedPhotoId={selectedPhotoId}
+      />
     </Container>
   );
 };
