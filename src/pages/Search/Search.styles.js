@@ -14,11 +14,12 @@ export const StyledLink = styled(NavLink)`
   font-size: 15px;
 
   &.main-nav-active {
-    background: transparent;
     color: ${(props) => props.theme.text};
     font-weight: 500;
+    background: ${(props) => (props.isActive ? '#a2c8fa' : '#ffb4bc')};
   }
 `;
+
 export const NavWrapper = styled.div`
   max-width: 80%;
   padding-top: 30px;

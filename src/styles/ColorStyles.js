@@ -16,7 +16,7 @@ export const theme = {
     text: '#000000',
     text2: '#707070',
     borderColor: '#EEEEEE',
-    linkColor: '#7B8794',
+    linkColor: '#65D6AD',
     activeLink: '#FFFFFF',
   },
 };

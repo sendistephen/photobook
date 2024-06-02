@@ -1,10 +1,6 @@
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-
 import ThemeIcon from '@/assets/icons/theme.svg';
 import MenuButton from '@/components/Buttons';
 import { menu } from '@/data/menu';
-import { toggleThemeChange } from '@/store/themeSlice';
 import { Container } from '@/styles';
 
 import { AuthControls } from './AuthControls';
@@ -21,14 +17,10 @@ import {
   Theme,
 } from './Navbar.styles';
 import { SearchBar } from './SearchBar';
+import { useNavbar } from './useNavbar';
 
 const Navbar = () => {
-  const dispatch = useDispatch();
-
-  const [isOpen, setIsOpen] = useState(false),
-    handleToggle = () => {
-      dispatch(toggleThemeChange());
-    };
+  const { isOpen, setIsOpen, handleToggle } = useNavbar();
 
   return (
     <Header>

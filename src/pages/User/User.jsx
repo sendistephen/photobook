@@ -1,12 +1,7 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
-
 import LoaderComponent from '@/components/LoaderComponent';
 import UserCollection from '@/components/UserCollection';
 import { LoadingSpinner } from '@/pages/Photo/Photo.styles';
 import UserPhotos from '@/pages/UserPhotos';
-import { clearUserPhotos, fetchUser } from '@/store/userSlice';
 import { Wrapper } from '@/styles';
 import { shortenNumber } from '@/utils/helper';
 
@@ -21,20 +16,10 @@ import {
   Title,
   UserAvatar,
 } from './User.styles';
+import { useUser } from './useUser';
 
 const User = () => {
-  const { username } = useParams(),
-    dispatch = useDispatch(),
-    { user, isLoading } = useSelector((state) => state.user);
-
-  useEffect(() => {
-    if (username) {
-      dispatch(fetchUser(username));
-    }
-    return () => {
-      dispatch(clearUserPhotos());
-    };
-  }, [username, dispatch]);
+  const { user, isLoading } = useUser();
 
   return (
     <Wrapper>

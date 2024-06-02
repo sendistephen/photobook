@@ -29,7 +29,7 @@ export const fetchCollections = createAsyncThunk(
 
     try {
       const response = await axios(getCollections({ query, page, perPage }));
-      console.log(response.data.results);
+
       return response.data.results;
     } catch (error) {
       return rejectWithValue(error.message);

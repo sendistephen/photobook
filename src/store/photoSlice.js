@@ -38,12 +38,7 @@ const photoSlice = createSlice({
     error: '',
     index: -1,
   },
-  reducers: {
-    // Synchronous action for handling modal visibility
-    showModal: (state, action) => {
-      state.index = action.payload;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       // Handling fetchPhoto

@@ -1,14 +1,11 @@
 import moment from 'moment';
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import heartIcon from '@/assets/icons/heart.svg';
 import optionIcon from '@/assets/icons/option.svg';
 import starIcon from '@/assets/icons/star.svg';
 import favIcon from '@/assets/icons/star2.svg';
 import { Collections } from '@/components';
-import { fetchPhoto } from '@/store/photoSlice';
 import { Wrapper } from '@/styles';
 
 import {
@@ -28,19 +25,10 @@ import {
   TextWrapper,
   Title,
 } from './Photo.styles';
+import { usePhoto } from './usePhoto';
 
 const Photo = () => {
-  const { id } = useParams(),
-    dispatch = useDispatch(),
-    photo = useSelector((state) => state.photo.photo),
-    favorited = useSelector((state) =>
-      Boolean(state.favorites.photos[photo.id]),
-    );
-
-  useEffect(() => {
-    dispatch(fetchPhoto(id));
-  }, [id, dispatch]);
-
+  const { photo, favorited } = usePhoto();
   return (
     <Wrapper>
       <Collections />

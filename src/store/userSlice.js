@@ -48,6 +48,62 @@ export const fetchUserCollections = createAsyncThunk(
   },
 );
 
+// Handle fetchUser actions
+export const handleFetchUser = (builder) => {
+  builder
+    .addCase(fetchUser.pending, (state) => {
+      state.isLoading = true;
+    })
+    .addCase(fetchUser.fulfilled, (state, action) => {
+      state.user = action.payload;
+      state.isLoading = false;
+    })
+    .addCase(fetchUser.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    });
+};
+
+// Handle fetchUserPhotos actions
+export const handleFetchUserPhotos = (builder) => {
+  builder
+    .addCase(fetchUserPhotos.pending, (state) => {
+      state.isLoading = true;
+    })
+    .addCase(fetchUserPhotos.fulfilled, (state, action) => {
+      const newPhotos = action.payload,
+        existingPhotoIds = new Set(state.photos.map((photo) => photo.id)),
+        mergedPhotos = [
+          ...state.photos,
+          ...newPhotos.filter((photo) => !existingPhotoIds.has(photo.id)),
+        ];
+      state.photos = mergedPhotos;
+      state.isLoading = false;
+      state.hasMore = newPhotos.length === state.perPage;
+    })
+    .addCase(fetchUserPhotos.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    });
+};
+
+// Handle fetchUserCollections actions
+export const handleFetchUserCollections = (builder) => {
+  builder
+    .addCase(fetchUserCollections.pending, (state) => {
+      state.isLoading = true;
+    })
+    .addCase(fetchUserCollections.fulfilled, (state, action) => {
+      state.collections = [...state.collections, ...action.payload];
+      state.isLoading = false;
+      state.hasMore = Boolean(action.payload.length);
+    })
+    .addCase(fetchUserCollections.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    });
+};
+
 const initialState = {
     user: {},
     photos: [],
@@ -74,51 +130,9 @@ const initialState = {
       },
     },
     extraReducers: (builder) => {
-      builder
-        // Handle fetchUser
-        .addCase(fetchUser.pending, (state) => {
-          state.isLoading = true;
-        })
-        .addCase(fetchUser.fulfilled, (state, action) => {
-          state.user = action.payload;
-          state.isLoading = false;
-        })
-        .addCase(fetchUser.rejected, (state, action) => {
-          state.isLoading = false;
-          state.error = action.payload;
-        })
-        // Handle fetchUserPhotos
-        .addCase(fetchUserPhotos.pending, (state) => {
-          state.isLoading = true;
-        })
-        .addCase(fetchUserPhotos.fulfilled, (state, action) => {
-          const newPhotos = action.payload,
-            existingPhotoIds = new Set(state.photos.map((photo) => photo.id)),
-            mergedPhotos = [
-              ...state.photos,
-              ...newPhotos.filter((photo) => !existingPhotoIds.has(photo.id)),
-            ];
-          state.photos = mergedPhotos;
-          state.isLoading = false;
-          state.hasMore = newPhotos.length === state.perPage;
-        })
-        .addCase(fetchUserPhotos.rejected, (state, action) => {
-          state.isLoading = false;
-          state.error = action.payload;
-        })
-        // Handle fetchUserCollections
-        .addCase(fetchUserCollections.pending, (state) => {
-          state.isLoading = true;
-        })
-        .addCase(fetchUserCollections.fulfilled, (state, action) => {
-          state.collections = [...state.collections, ...action.payload];
-          state.isLoading = false;
-          state.hasMore = Boolean(action.payload.length);
-        })
-        .addCase(fetchUserCollections.rejected, (state, action) => {
-          state.isLoading = false;
-          state.error = action.payload;
-        });
+      handleFetchUser(builder);
+      handleFetchUserPhotos(builder);
+      handleFetchUserCollections(builder);
     },
   });
 
