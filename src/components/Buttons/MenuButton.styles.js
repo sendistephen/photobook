@@ -37,11 +37,8 @@ export const StyledLink = styled(NavLink)`
   height: fit-content;
 
   &.main-nav-active {
-    &:first-child {
-      background: #a2c8fa 0% 0% no-repeat padding-box;
-    }
-    &:nth-child(2) {
-      background: #ffb4bc 0% 0% no-repeat padding-box;
-    }
+    color: ${(props) => props.theme.text};
+    font-weight: 500;
+    background: ${(props) => (props.isActive ? '#a2c8fa' : '#ffb4bc')};
   }
 `;
