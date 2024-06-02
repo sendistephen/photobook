@@ -10,7 +10,7 @@ import {
   Stats,
   Title,
   UserAvatar,
-} from './User.styles';
+} from '../../pages/User/User.styles';
 
 export const UserAvatarComponent = ({ user }) => (
   <UserAvatar>
