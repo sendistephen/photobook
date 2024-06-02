@@ -4,6 +4,12 @@ import { Container, LoadingSpinner } from '@/styles';
 
 import { usePhotoList } from './usePhotoList';
 
+const PhotoLoader = ({ isBottomLoader }) => (
+  <LoadingSpinner className={isBottomLoader ? 'is-bottom-loader' : ''}>
+    <LoaderComponent />
+  </LoadingSpinner>
+);
+
 const PhotoList = () => {
   const {
     photos,
@@ -20,9 +26,7 @@ const PhotoList = () => {
   return (
     <Container>
       {photos.length === 0 && isLoading ? (
-        <LoadingSpinner className={isBottomLoader ? 'is-bottom-loader' : ''}>
-          <LoaderComponent />
-        </LoadingSpinner>
+        <PhotoLoader isBottomLoader={isBottomLoader} />
       ) : (
         <PhotoGallery
           photos={photos}
