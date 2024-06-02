@@ -38,66 +38,64 @@ export const fetchCollections = createAsyncThunk(
 );
 
 const initialState = {
-    photos: [],
-    collections: [],
-    activeTab: '',
-    page: 1,
-    perPage: 50,
-    isLoading: false,
-    error: null,
-    hasMore: true,
+  photos: [],
+  collections: [],
+  activeTab: '',
+  page: 1,
+  perPage: 50,
+  isLoading: false,
+  error: null,
+  hasMore: true,
+};
+
+const handlePending = (state) => {
+  state.isLoading = true;
+};
+
+const handleFulfilled = (state, action, key) => {
+  state[key] = [...state[key], ...action.payload];
+  state.page += 1;
+  state.isLoading = false;
+  state.hasMore = Boolean(action.payload.length);
+  state.error = null;
+};
+
+const handleRejected = (state, action) => {
+  state.isLoading = false;
+  state.error = action.payload;
+};
+
+const searchSlice = createSlice({
+  name: 'search',
+  initialState,
+  reducers: {
+    clearPhotos: (state) => {
+      state.photos = [];
+    },
+    clearCollections: (state) => {
+      state.collections = [];
+    },
+    handleModal: (state, action) => {
+      state.index = action.payload;
+    },
+    handleTabClick: (state, action) => {
+      state.activeTab = action.payload;
+    },
   },
-  searchSlice = createSlice({
-    name: 'search',
-    initialState,
-    reducers: {
-      clearPhotos: (state) => {
-        state.photos = [];
-      },
-      clearCollections: (state) => {
-        state.collections = [];
-      },
-      handleModal: (state, action) => {
-        state.index = action.payload;
-      },
-      handleTabClick: (state, action) => {
-        state.activeTab = action.payload;
-      },
-    },
-    extraReducers: (builder) => {
-      builder
-        // Handle fetchPhotos
-        .addCase(fetchPhotos.pending, (state) => {
-          state.isLoading = true;
-        })
-        .addCase(fetchPhotos.fulfilled, (state, action) => {
-          state.photos = [...state.photos, ...action.payload];
-          state.page += 1;
-          state.isLoading = false;
-          state.hasMore = Boolean(action.payload.length);
-          state.error = null;
-        })
-        .addCase(fetchPhotos.rejected, (state, action) => {
-          state.isLoading = false;
-          state.error = action.payload;
-        })
-        // Handle fetchCollections
-        .addCase(fetchCollections.pending, (state) => {
-          state.isLoading = true;
-        })
-        .addCase(fetchCollections.fulfilled, (state, action) => {
-          state.collections = [...state.collections, ...action.payload];
-          state.page += 1;
-          state.isLoading = false;
-          state.hasMore = Boolean(action.payload.length);
-          state.error = null;
-        })
-        .addCase(fetchCollections.rejected, (state, action) => {
-          state.isLoading = false;
-          state.error = action.payload;
-        });
-    },
-  });
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchPhotos.pending, handlePending)
+      .addCase(fetchPhotos.fulfilled, (state, action) =>
+        handleFulfilled(state, action, 'photos'),
+      )
+      .addCase(fetchPhotos.rejected, handleRejected)
+      .addCase(fetchCollections.pending, handlePending)
+      .addCase(fetchCollections.fulfilled, (state, action) =>
+        handleFulfilled(state, action, 'collections'),
+      )
+      .addCase(fetchCollections.rejected, handleRejected);
+  },
+});
 
 // Export actions and reducer
 export const { clearPhotos, clearCollections, handleModal, handleTabClick } =
