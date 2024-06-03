@@ -5,14 +5,14 @@ import { useParams } from 'react-router-dom';
 import { clearPhotos, fetchPhotos } from '@/store/searchSlice';
 
 export const useSearchPhotos = () => {
-  const { searchWord } = useParams(),
-    dispatch = useDispatch(),
-    { photos, hasMore } = useSelector((state) => state.search),
-    { isOpen, selectedPhotoId } = useSelector((state) => state.modal);
+  const { searchWord } = useParams();
+  const dispatch = useDispatch();
+  const { photos, hasMore, page } = useSelector((state) => state.search);
+  const { isOpen, selectedPhotoId } = useSelector((state) => state.modal);
 
   useEffect(() => {
     if (searchWord) {
-      dispatch(fetchPhotos({ query: searchWord }));
+      dispatch(fetchPhotos({ query: searchWord, page: 1 }));
     }
     return () => {
       dispatch(clearPhotos());
@@ -20,7 +20,8 @@ export const useSearchPhotos = () => {
   }, [dispatch, searchWord]);
 
   const fetchMore = () => {
-    dispatch(fetchPhotos(searchWord));
+    dispatch(fetchPhotos({ query: searchWord, page }));
   };
+
   return { photos, hasMore, fetchMore, isOpen, selectedPhotoId, dispatch };
 };

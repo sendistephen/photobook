@@ -3,38 +3,38 @@ import axios from 'axios';
 
 import { getCollections, getSearchResults } from '@/utils/api';
 
+// Generic async thunk for fetching search results
+const createFetchThunk = (type, apiCall) => {
+  return createAsyncThunk(
+    type,
+    async ({ query, page = 1, perPage = 50 }, { rejectWithValue }) => {
+      if (!query) {
+        return [];
+      }
+      try {
+        const response = await axios(apiCall({ query, page, perPage }));
+        return {
+          results: Array.isArray(response.data.results)
+            ? response.data.results
+            : [],
+          page,
+        };
+      } catch (error) {
+        return rejectWithValue(error.message);
+      }
+    },
+  );
+};
 // Async thunk for fetching search results for photos
-export const fetchPhotos = createAsyncThunk(
+export const fetchPhotos = createFetchThunk(
   'search/fetchPhotos',
-  async ({ query, page = 1, perPage = 50 }, { rejectWithValue }) => {
-    if (!query) {
-      return;
-    }
-    try {
-      const response = await axios(getSearchResults({ query, page, perPage }));
-      return response.data.results;
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  },
+  getSearchResults,
 );
 
 // Async thunk for fetching search results for collections
-export const fetchCollections = createAsyncThunk(
+export const fetchCollections = createFetchThunk(
   'search/fetchCollections',
-  async ({ query, page = 1, perPage = 50 }, { rejectWithValue }) => {
-    if (!query) {
-      return;
-    }
-
-    try {
-      const response = await axios(getCollections({ query, page, perPage }));
-
-      return response.data.results;
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  },
+  getCollections,
 );
 
 const initialState = {
@@ -53,10 +53,10 @@ const handlePending = (state) => {
 };
 
 const handleFulfilled = (state, action, key) => {
-  state[key] = [...state[key], ...action.payload];
-  state.page += 1;
+  state[key] = [...state[key], ...action.payload.results];
+  state.page = action.payload.page + 1;
   state.isLoading = false;
-  state.hasMore = Boolean(action.payload.length);
+  state.hasMore = Boolean(action.payload.results.length);
   state.error = null;
 };
 
