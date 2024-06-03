@@ -12,6 +12,12 @@ import {
   UserAvatar,
 } from '../../pages/User/User.styles';
 
+const StatItem = ({ count, label }) => (
+  <>
+    <Number>{shortenNumber(count)}</Number>
+    <SmallText>{label}</SmallText>
+  </>
+);
 export const UserAvatarComponent = ({ user }) => (
   <UserAvatar>
     <Avatar src={user.profile_image.large} alt={user.first_name} />
@@ -21,16 +27,13 @@ export const UserAvatarComponent = ({ user }) => (
     </a>
     <Stats>
       <Posts>
-        <Number>{shortenNumber(user.downloads)}</Number>
-        <SmallText>Total Downloads</SmallText>
+        <StatItem count={user.downloads} label="Downloads" />
       </Posts>
       <Followers>
-        <Number>{shortenNumber(user.followers_count)}</Number>
-        <SmallText>Followers</SmallText>
+        <StatItem count={user.followers_count} label="Followers" />
       </Followers>
       <Following>
-        <Number>{shortenNumber(user.following_count)}</Number>
-        <SmallText>Following</SmallText>
+        <StatItem count={user.following_count} label="Following" />
       </Following>
     </Stats>
   </UserAvatar>
