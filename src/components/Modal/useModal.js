@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
 
-import { useFetchFavorites } from '@/pages/Favorites/useFetchFavorites';
 import { handleOverlayClick, handleSaveFavoritePhoto } from '@/utils/helper';
 
 import { useBodyScrollLock } from './useBodyScrollLock';
@@ -13,7 +12,6 @@ export const useModal = (photos, selectedPhotoId) => {
     (photo) => photo.id === selectedPhotoId,
   );
 
-  useFetchFavorites(user, favorites, dispatch);
   useBodyScrollLock();
 
   return {
