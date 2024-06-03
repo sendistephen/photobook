@@ -1,25 +1,25 @@
-import PhotoGallery from '@/components/PhotoGallery';
+import { useDispatch } from 'react-redux';
+
+import { GalleryLoaderContent } from '@/components/Common/GalleryLoaderContent';
 import { hideModal, showModal } from '@/store/modalSlice';
-import { Container } from '@/styles';
 
 import { useSearchPhotos } from './useSearchPhotos';
 
 const SearchPhotos = () => {
-  const { photos, hasMore, isOpen, fetchMore, dispatch, selectedPhotoId } =
-    useSearchPhotos();
-
+  const data = useSearchPhotos();
+  const dispatch = useDispatch();
   return (
-    <Container>
-      <PhotoGallery
-        photos={photos}
-        fetchMore={fetchMore}
-        hasMore={hasMore}
-        isOpen={isOpen}
-        openModal={(photoId) => dispatch(showModal(photoId))}
-        closeModal={() => dispatch(hideModal())}
-        selectedPhotoId={selectedPhotoId}
-      />
-    </Container>
+    <GalleryLoaderContent
+      photos={data.photos}
+      isLoading={data.isLoading}
+      fetchMorePhotos={data.fetchMore}
+      hasMore={data.hasMore}
+      isOpen={data.isOpen}
+      openModal={(photoId) => dispatch(showModal(photoId))}
+      closeModal={() => dispatch(hideModal())}
+      selectedPhotoId={data.selectedPhotoId}
+      isBottomLoader={data.isBottomLoader}
+    />
   );
 };
 

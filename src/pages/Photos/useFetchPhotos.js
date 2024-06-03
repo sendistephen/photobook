@@ -14,7 +14,7 @@ export const useFetchPhotos = () => {
   const photos = useSelector(selectPhotos);
   const hasMore = useSelector(selectHasMore);
   const isLoading = useSelector(selectIsLoading);
-  const isBottomLoader = true;
+  const isbottomloader = true;
 
   useEffect(() => {
     dispatch(fetchPhotos());
@@ -27,5 +27,5 @@ export const useFetchPhotos = () => {
     [dispatch],
   );
 
-  return { photos, hasMore, isLoading, fetchMorePhotos, isBottomLoader };
+  return { photos, hasMore, isLoading, fetchMorePhotos, isbottomloader };
 };

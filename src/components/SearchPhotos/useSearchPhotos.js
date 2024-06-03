@@ -7,8 +7,11 @@ import { clearPhotos, fetchPhotos } from '@/store/searchSlice';
 export const useSearchPhotos = () => {
   const { searchWord } = useParams();
   const dispatch = useDispatch();
-  const { photos, hasMore, page } = useSelector((state) => state.search);
+  const { photos, hasMore, page, isLoading } = useSelector(
+    (state) => state.search,
+  );
   const { isOpen, selectedPhotoId } = useSelector((state) => state.modal);
+  const isbottomloader = true;
 
   useEffect(() => {
     if (searchWord) {
@@ -23,5 +26,14 @@ export const useSearchPhotos = () => {
     dispatch(fetchPhotos({ query: searchWord, page }));
   };
 
-  return { photos, hasMore, fetchMore, isOpen, selectedPhotoId, dispatch };
+  return {
+    photos,
+    hasMore,
+    fetchMore,
+    isOpen,
+    selectedPhotoId,
+    dispatch,
+    isLoading,
+    isbottomloader,
+  };
 };
