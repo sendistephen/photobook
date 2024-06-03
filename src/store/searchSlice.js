@@ -3,6 +3,11 @@ import axios from 'axios';
 
 import { getCollections, getSearchResults } from '@/utils/api';
 
+const fetchApiData = async (apiCall, { query, page, perPage }) => {
+  const response = await axios(apiCall({ query, page, perPage }));
+  return Array.isArray(response.data.results) ? response.data.results : [];
+};
+
 // Generic async thunk for fetching search results
 const createFetchThunk = (type, apiCall) => {
   return createAsyncThunk(
@@ -12,13 +17,12 @@ const createFetchThunk = (type, apiCall) => {
         return [];
       }
       try {
-        const response = await axios(apiCall({ query, page, perPage }));
-        return {
-          results: Array.isArray(response.data.results)
-            ? response.data.results
-            : [],
+        const results = await fetchApiData(apiCall, {
+          query,
           page,
-        };
+          perPage,
+        });
+        return { results, page };
       } catch (error) {
         return rejectWithValue(error.message);
       }
