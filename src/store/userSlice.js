@@ -20,7 +20,7 @@ export const fetchUser = createAsyncThunk(
 // Async thunk for fetching user photos
 export const fetchUserPhotos = createAsyncThunk(
   'user/fetchUserPhotos',
-  async ({ username, page, perPage = 5 }, { rejectWithValue }) => {
+  async ({ username, page, perPage = 30 }, { rejectWithValue }) => {
     try {
       const response = await axios(
         getUserPhotosUrl({ username, page, perPage }),

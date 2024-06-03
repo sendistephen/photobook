@@ -1,23 +1,12 @@
-import { useCommonPhotoData } from '@/components/Common/useCommonPhotoData';
+import { createPhotoDataHook } from '@/components/Common/useCommonPhotoData';
 
 import { useFetchPhotos } from './useFetchPhotos';
 import { useModalManagement } from './useModalManagement';
 
-export const usePhotoList = () => {
-  const { photos, hasMore, isLoading, fetchMorePhotos, isbottomloader } =
-    useFetchPhotos();
-  const { isOpen, selectedPhotoId, openModal, closeModal } =
-    useModalManagement();
+const fetchData = useFetchPhotos;
 
-  return useCommonPhotoData({
-    photos,
-    hasMore,
-    isLoading,
-    fetchMorePhotos,
-    isbottomloader,
-    openModal,
-    closeModal,
-    isOpen,
-    selectedPhotoId,
-  });
-};
+export const usePhotoList = createPhotoDataHook(
+  fetchData,
+  useModalManagement,
+  () => ({}),
+);
