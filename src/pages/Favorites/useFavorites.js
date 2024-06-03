@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { useCommonPhotoData } from '@/components/Common/useCommonPhotoData';
 import { getFavorites } from '@/store/favoritesSlice';
 import { hideModal, showModal } from '@/store/modalSlice';
 
@@ -33,15 +34,15 @@ export const useFavorites = () => {
   const closeModal = () => dispatch(hideModal());
   const isbottomloader = true;
 
-  return {
+  return useCommonPhotoData({
     photos,
     hasMore,
     isLoading,
     fetchPhotos,
+    isbottomloader,
     openModal,
     closeModal,
     isOpen,
     selectedPhotoId,
-    isbottomloader,
-  };
+  });
 };

@@ -3,6 +3,7 @@ import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
+import { useCommonPhotoData } from '@/components/Common/useCommonPhotoData';
 import { fetchCollection } from '@/store/collectionSlice';
 import { hideModal, showModal } from '@/store/modalSlice';
 
@@ -37,15 +38,15 @@ export const useCollection = () => {
   const openModal = (photoId) => dispatch(showModal(photoId));
   const closeModal = () => dispatch(hideModal());
 
-  return {
-    userPhotoCollection,
+  return useCommonPhotoData({
+    photos: userPhotoCollection,
     collection,
-    isOpen,
     isLoading,
     hasMore,
-    fetchMore,
+    fetchMorePhotos: fetchMore,
+    isOpen,
     openModal,
     closeModal,
     selectedPhotoId,
-  };
+  });
 };

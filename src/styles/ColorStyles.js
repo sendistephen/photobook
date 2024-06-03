@@ -1,5 +1,8 @@
 const baseTheme = {
-  linkColor: '#65D6AD',
+  linkColor: {
+    dark: '#65D6AD',
+    light: '#65D6AD',
+  },
   text2: {
     dark: '#7B8794',
     light: '#707070',
@@ -22,6 +25,7 @@ export const theme = {
     text: '#FFFFFF',
     text2: baseTheme.text2.dark,
     borderColor: baseTheme.borderColor.dark,
+    linkColor: baseTheme.linkColor.dark,
     activeLink: baseTheme.activeLink.dark,
   },
   light: {
@@ -31,7 +35,7 @@ export const theme = {
     text: '#000000',
     text2: baseTheme.text2.light,
     borderColor: baseTheme.borderColor.light,
-    linkColor: baseTheme.linkColor,
+    linkColor: baseTheme.linkColor.light,
     activeLink: baseTheme.activeLink.light,
   },
 };
