@@ -9,6 +9,7 @@ import { useUser } from './useUser';
 
 const User = () => {
   const { user, isLoading } = useUser();
+  // TODO: use tab menu to show user collections and photos
   return (
     <Wrapper>
       {isLoading && (

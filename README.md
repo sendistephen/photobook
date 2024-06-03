@@ -15,15 +15,12 @@ Welcome to Photobook, a dynamic web application inspired by the Unsplash platfor
 
 ## Future Features and Roadmap
 
-- Credits System:
-  Allow users to buy credits to be able to download photos
-- Social Media Integration:
-  Integrate social media sharing buttons to allow users to share photos on various platforms.
-- User-generated Content:
-  Enable users to create and share their own content, such as photos, videos, and stories.
-- Advanced Search Functionality:
-  Implement advanced search features, such as filtering by date, location, and more.
-
+- GET /collections/:id/related - Get related collections for a given collection ID.
+- POST /collections - Create a new collection.
+- PUT /collections/:id - Update an existing collection belonging to the logged-in user. This requires the write_collections scope.
+- DELETE /collections/:id - Delete an existing collection belonging to the logged-in user.
+- POST /collections/:collection_id/add -Add a photo to one of the logged-in user’s collections. Requires the write_collections scope.
+- DELETE /collections/:collection_id/remove - Remove a photo from one of the logged-in user’s collections.
 - Improvements and Bug Fixes:
 
 -[✕] Prevent background scrolling when the modal is open.
