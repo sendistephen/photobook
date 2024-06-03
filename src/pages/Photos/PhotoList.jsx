@@ -1,9 +1,8 @@
 import { GalleryLoaderContent } from '@/components/Common/GalleryLoaderContent';
-
-import { usePhotoList } from './usePhotoList';
+import { useGalleryLoader } from '@/components/Common/useGalleryLoader';
 
 const PhotoList = () => {
-  const data = usePhotoList();
+  const data = useGalleryLoader('photos');
 
   return (
     <GalleryLoaderContent
@@ -15,7 +14,7 @@ const PhotoList = () => {
       openModal={data.openModal}
       closeModal={data.closeModal}
       selectedPhotoId={data.selectedPhotoId}
-      isBottomLoader={data.isBottomLoader}
+      isBottomLoader={data.isbottomloader}
     />
   );
 };
