@@ -2,22 +2,42 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
+import { useModalManagement } from '@/pages/Photos/useModalManagement';
 import { fetchUserPhotos } from '@/store/userSlice';
 import { useLoadMorePhotos } from '@/useLoadMorePhotos';
 
-export const useUserPhotos = () => {
+const useFetchUserPhotos = (page) => {
   const { username } = useParams();
-  const [page, setPage] = useState(1);
   const dispatch = useDispatch();
-  const { photos, hasMore } = useSelector((state) => state.user);
-  const { isOpen, selectedPhotoId } = useSelector((state) => state.modal);
+  const { photos, hasMore, isLoading } = useSelector((state) => state.user);
+
   useEffect(() => {
     if (username) {
       dispatch(fetchUserPhotos({ username, page }));
     }
   }, [username, page, dispatch]);
 
+  return { photos, hasMore, isLoading };
+};
+
+export const useUserPhotos = () => {
+  const [page, setPage] = useState(1);
+  const { photos, hasMore, isLoading } = useFetchUserPhotos(page);
+  const { isOpen, selectedPhotoId, openModal, closeModal } =
+    useModalManagement();
+  const isbottomloader = true;
+
   const loadMorePhotos = useLoadMorePhotos(setPage);
 
-  return { photos, hasMore, selectedPhotoId, loadMorePhotos, isOpen, dispatch };
+  return {
+    photos,
+    hasMore,
+    selectedPhotoId,
+    loadMorePhotos,
+    isOpen,
+    isbottomloader,
+    isLoading,
+    openModal,
+    closeModal,
+  };
 };

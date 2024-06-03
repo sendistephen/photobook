@@ -31,7 +31,7 @@ export const useFavorites = () => {
   const fetchPhotos = () => Object.values(photos);
   const openModal = (photoId) => dispatch(showModal(photoId));
   const closeModal = () => dispatch(hideModal());
-  const isBottomLoader = true;
+  const isbottomloader = true;
 
   return {
     photos,
@@ -42,6 +42,6 @@ export const useFavorites = () => {
     closeModal,
     isOpen,
     selectedPhotoId,
-    isBottomLoader,
+    isbottomloader,
   };
 };
