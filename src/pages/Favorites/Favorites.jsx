@@ -1,9 +1,8 @@
 import { GalleryLoaderContent } from '@/components/Common/GalleryLoaderContent';
-
-import { useFavorites } from './useFavorites';
+import { useGalleryLoader } from '@/components/Common/useGalleryLoader';
 
 const Favorites = () => {
-  const data = useFavorites();
+  const data = useGalleryLoader('favorites');
 
   return (
     <GalleryLoaderContent
