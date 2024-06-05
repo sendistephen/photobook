@@ -10,6 +10,7 @@ import {
 } from '@/pages/Collection/Collection.styles';
 
 export const CollectionHeader = ({ collection }) => {
+  console.log(collection);
   if (!collection.user) return null;
 
   return (

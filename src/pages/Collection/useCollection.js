@@ -1,26 +1,47 @@
 import { throttle } from 'lodash';
+import { useCallback, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
-import {
-  createFetchData,
-  createPhotoDataHook,
-} from '@/components/Common/useCommonPhotoData';
-import { useModalManagement } from '@/pages/Photos/useModalManagement';
-import { fetchCollection } from '@/store/collectionSlice';
+import { clearUserCollection, fetchCollection } from '@/store/collectionSlice';
+import { hideModal, showModal } from '@/store/modalSlice';
 
-const fetchData = createFetchData(
-  fetchCollection,
-  (state) => state.collections,
-  'collectionId',
-);
+export const useCollection = () => {
+  const { collectionId } = useParams();
+  const dispatch = useDispatch();
+  const { userPhotoCollection, collection, isLoading, hasMore } = useSelector(
+    (state) => state.collections,
+  );
+  const { isOpen, selectedPhotoId } = useSelector((state) => state.modal);
 
-const loadMorePhotos = (setPage) => ({
-  fetcMorePhotos: throttle(() => {
-    setPage((prev) => prev + 1);
-  }, 3000),
-});
+  const [page, setPage] = useState(1);
 
-export const useCollection = createPhotoDataHook(
-  fetchData,
-  useModalManagement,
-  loadMorePhotos,
-);
+  useEffect(() => {
+    if (collectionId) {
+      dispatch(fetchCollection({ collectionId, page }));
+    }
+  }, [collectionId, page, dispatch]);
+
+  useEffect(() => {
+    dispatch(clearUserCollection());
+  }, [collectionId, dispatch]);
+
+  const fetchMore = useCallback(
+    throttle(() => {
+      setPage((prevPage) => prevPage + 1);
+    }, 3000),
+    [],
+  );
+
+  return {
+    userPhotoCollection,
+    collection,
+    isOpen,
+    isLoading,
+    hasMore,
+    fetchMore,
+    openModal: (photoId) => dispatch(showModal(photoId)),
+    closeModal: () => dispatch(hideModal()),
+    selectedPhotoId,
+  };
+};
