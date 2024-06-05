@@ -1,19 +1,17 @@
-import { throttle } from 'lodash';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
+import { useModalManagement } from '@/pages/Photos/useModalManagement';
 import { clearUserCollection, fetchCollection } from '@/store/collectionSlice';
-import { hideModal, showModal } from '@/store/modalSlice';
+import { usePagination } from '@/usePagination';
 
-export const useCollection = () => {
+const useFetchCollection = () => {
   const { collectionId } = useParams();
   const dispatch = useDispatch();
   const { userPhotoCollection, collection, isLoading, hasMore } = useSelector(
     (state) => state.collections,
   );
-  const { isOpen, selectedPhotoId } = useSelector((state) => state.modal);
-
   const [page, setPage] = useState(1);
 
   useEffect(() => {
@@ -26,22 +24,30 @@ export const useCollection = () => {
     dispatch(clearUserCollection());
   }, [collectionId, dispatch]);
 
-  const fetchMore = useCallback(
-    throttle(() => {
-      setPage((prevPage) => prevPage + 1);
-    }, 3000),
-    [],
-  );
-
   return {
     userPhotoCollection,
     collection,
-    isOpen,
     isLoading,
     hasMore,
+    page,
+    setPage,
+  };
+};
+
+export const useCollection = () => {
+  const modal = useModalManagement();
+  const collectionProps = useFetchCollection();
+  const fetchMore = usePagination(collectionProps.setPage);
+
+  return {
+    userPhotoCollection: collectionProps.userPhotoCollection,
+    collection: collectionProps.collection,
+    isOpen: modal.isOpen,
+    isLoading: collectionProps.isLoading,
+    hasMore: collectionProps.hasMore,
     fetchMore,
-    openModal: (photoId) => dispatch(showModal(photoId)),
-    closeModal: () => dispatch(hideModal()),
-    selectedPhotoId,
+    openModal: modal.openModal,
+    closeModal: modal.closeModal,
+    selectedPhotoId: modal.selectedPhotoId,
   };
 };
