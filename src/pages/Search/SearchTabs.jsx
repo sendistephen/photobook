@@ -6,32 +6,40 @@ import { handleTabClick } from '@/store/searchSlice';
 
 import { NavWrapper, StyledLink } from './Search.styles';
 
-export const SearchTabs = () => {
+const SearchTabLink = ({ to, searchWord, tabName, handleTabClick }) => {
   const dispatch = useDispatch();
   const theme = useTheme();
-  //   const location = useLocation();
+
+  return (
+    <StyledLink
+      to={`${to}/${searchWord}`}
+      style={({ isActive }) => ({
+        color: isActive ? theme.linkColor : '',
+      })}
+      onClick={() => dispatch(handleTabClick(tabName))}
+    >
+      {tabName}
+    </StyledLink>
+  );
+};
+
+export const SearchTabs = () => {
   const { searchWord } = useParams();
 
   return (
     <NavWrapper>
-      <StyledLink
-        to={`/search/photos/${searchWord}`}
-        style={({ isActive }) => ({
-          color: isActive ? theme.linkColor : '',
-        })}
-        onClick={() => dispatch(handleTabClick('photos'))}
-      >
-        Photos
-      </StyledLink>
-      <StyledLink
-        to={`/search/collections/${searchWord}`}
-        style={({ isActive }) => ({
-          color: isActive ? theme.linkColor : '',
-        })}
-        onClick={() => dispatch(handleTabClick('collections'))}
-      >
-        Collections
-      </StyledLink>
+      <SearchTabLink
+        to="/search/photos"
+        searchWord={searchWord}
+        tabName="Photos"
+        handleTabClick={handleTabClick}
+      />
+      <SearchTabLink
+        to="/search/collections"
+        searchWord={searchWord}
+        tabName="Collections"
+        handleTabClick={handleTabClick}
+      />
     </NavWrapper>
   );
 };
