@@ -1,11 +1,11 @@
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 
-import heartIcon from '@/assets/icons/heart.svg';
 import optionIcon from '@/assets/icons/option.svg';
 import starIcon from '@/assets/icons/star.svg';
 import favIcon from '@/assets/icons/star2.svg';
 import { Collections } from '@/components';
+import { PhotoLikes } from '@/components/Modal/PhotoLikes';
 import { Wrapper } from '@/styles';
 
 import {
@@ -14,7 +14,6 @@ import {
   Description,
   FavIcon,
   Icon,
-  IconWrapper,
   OptionsMenu,
   PhotoFooter,
   PhotoHeader,
@@ -46,11 +45,7 @@ const PhotoHeaderComponent = ({ user }) => (
 
 const PhotoFooterComponent = ({ photo, favorited, handleFavorite }) => (
   <PhotoFooter>
-    <IconWrapper>
-      <Icon src={heartIcon} alt="heart icon" />
-      <span>{photo.likes}</span>
-    </IconWrapper>
-    <div></div>
+    <PhotoLikes likes={photo.likes} />
     <FavIcon>
       <Icon
         src={favorited ? favIcon : starIcon}
