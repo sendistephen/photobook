@@ -23,11 +23,13 @@ export const fetchSingleCollection = createAsyncThunk(
 export const fetchCollection = createAsyncThunk(
   'collections/fetchCollection',
   async ({ collectionId, page = 1, perPage = 50 }, { rejectWithValue }) => {
+    console.log(collectionId);
     const data = await fetchData(
       getCollection,
       { collectionId, page, perPage },
       rejectWithValue,
     );
+
     return data;
   },
 );

@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
 
 export const useCommonPhotoData = ({
   photos,
@@ -33,16 +32,17 @@ export const createPhotoDataHook = (
   modalManagement,
   loadMorePhotos,
 ) => {
-  return () => {
-    const data = fetchData();
+  return (identifier) => {
+    const [page, setPage] = useState(1);
+    const data = fetchData(identifier, page);
     const modal = modalManagement();
-    const loader = loadMorePhotos(data.setPage);
+    const loader = loadMorePhotos(setPage);
 
     return useCommonPhotoData({
       ...data,
       ...modal,
       loadMorePhotos: loader.loadMorePhotos,
-      isbottomloader: loadMorePhotos.isbottomloader,
+      isbottomloader: loader.isbottomloader,
     });
   };
 };
@@ -52,20 +52,16 @@ export const createFetchData = (
   stateSelector,
   identifierKey = 'id',
 ) => {
-  return () => {
-    const { [identifierKey]: identifier } = useParams() || {};
-    const [page, setPage] = useState(1);
+  return (identifier, page) => {
     const dispatch = useDispatch();
     const stateData = useSelector(stateSelector);
 
     useEffect(() => {
       if (identifier !== undefined) {
         dispatch(fetchAction({ [identifierKey]: identifier, page }));
-      } else {
-        dispatch(fetchAction({ page }));
       }
     }, [identifier, page, dispatch]);
 
-    return { ...stateData, page, setPage };
+    return { ...stateData };
   };
 };

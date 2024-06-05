@@ -6,6 +6,7 @@ import { useCollection } from './useCollection';
 
 const Collection = () => {
   const data = useCollection();
+
   return (
     <Container>
       <CollectionHeader collection={data.collection} />
