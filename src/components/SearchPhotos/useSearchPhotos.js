@@ -2,16 +2,15 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
+import { useModalManagement } from '@/pages/Photos/useModalManagement';
 import { clearPhotos, fetchPhotos } from '@/store/searchSlice';
 
-export const useSearchPhotos = () => {
+const useFetchSearchPhotos = () => {
   const { searchWord } = useParams();
   const dispatch = useDispatch();
   const { photos, hasMore, page, isLoading } = useSelector(
     (state) => state.search,
   );
-  const { isOpen, selectedPhotoId } = useSelector((state) => state.modal);
-  const isbottomloader = true;
 
   useEffect(() => {
     if (searchWord) {
@@ -22,6 +21,17 @@ export const useSearchPhotos = () => {
     };
   }, [dispatch, searchWord]);
 
+  return { photos, hasMore, page, isLoading, dispatch, searchWord };
+};
+
+export const useSearchPhotos = () => {
+  const { photos, hasMore, page, isLoading, dispatch, searchWord } =
+    useFetchSearchPhotos();
+
+  const { openModal, closeModal, isOpen, selectedPhotoId } =
+    useModalManagement();
+  const isbottomloader = true;
+
   const fetchMore = () => {
     dispatch(fetchPhotos({ query: searchWord, page }));
   };
@@ -31,6 +41,8 @@ export const useSearchPhotos = () => {
     hasMore,
     fetchMore,
     isOpen,
+    openModal,
+    closeModal,
     selectedPhotoId,
     dispatch,
     isLoading,
