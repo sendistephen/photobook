@@ -1,16 +1,16 @@
 import { throttle } from 'lodash';
+import { useModalManagement } from 'pages/Photos/useModalManagement';
 import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-
-import { hideModal, showModal } from '@/store/modalSlice';
 
 export const useFetchData = (fetchAction, stateSelector, idKey) => {
   const dispatch = useDispatch();
   const params = useParams();
   const id = params[idKey];
   const { data, isLoading, hasMore } = useSelector(stateSelector);
-  const { isOpen, selectedPhotoId } = useSelector((state) => state.modal);
+  const { isOpen, selectedPhotoId, openModal, closeModal } =
+    useModalManagement();
 
   useEffect(() => {
     if (id) {
@@ -24,9 +24,6 @@ export const useFetchData = (fetchAction, stateSelector, idKey) => {
     }, 3000),
     [dispatch, id, fetchAction],
   );
-
-  const openModal = (photoId) => dispatch(showModal(photoId));
-  const closeModal = () => dispatch(hideModal());
 
   return {
     data,
