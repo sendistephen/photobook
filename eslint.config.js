@@ -1,16 +1,17 @@
 import babelParser from '@babel/eslint-parser';
-import importPlugin from 'eslint-plugin-import';
 import js from '@eslint/js';
+import importPlugin from 'eslint-plugin-import';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
 import prettier from 'eslint-plugin-prettier';
 import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
+import vitest from 'eslint-plugin-vitest';
 
 export default [
   js.configs.recommended,
   {
-    files: ['**/*.{js,jsx}'],
+    files: ['**/*.{js,jsx}', '**/*.test.{js}'],
     ignores: ['node_modules/**', 'dist/**', 'eslint.config.js'],
     languageOptions: {
       parser: babelParser,
@@ -18,13 +19,16 @@ export default [
         ecmaFeatures: {
           jsx: true,
         },
-        ecmaVersion: 2021,
+        ecmaVersion: 2022,
         requireConfigFile: false,
         sourceType: 'module',
       },
       globals: {
         console: 'readonly',
         document: 'readonly',
+        describe: 'readonly',
+        it: 'readonly',
+        expect: 'readonly',
       },
     },
     plugins: {
@@ -34,6 +38,7 @@ export default [
       react,
       reactHooks,
       'simple-import-sort': simpleImportSort,
+      vitest,
     },
     rules: {
       'import/first': 'error',
