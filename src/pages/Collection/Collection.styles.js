@@ -4,7 +4,9 @@ import styled from 'styled-components';
 import { StyledMasonry } from '@/styles';
 import { MediumText, NormalText } from '@/styles/TextStyles';
 
-export const Gallery = styled(StyledMasonry)``;
+export const Gallery = styled(StyledMasonry)`
+  margin-top: 100px;
+`;
 export const Wrapper = styled.div`
   margin-left: 15px;
   margin-top: 50px;

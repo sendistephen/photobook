@@ -27,6 +27,10 @@ Welcome to Photobook, a dynamic web application inspired by the Unsplash platfor
 
 -[✓] Close the modal when clicking outside the modal content.
 
+-[✕] Add CI/CD pipeline for continuous integration and deployment.
+
+-[✕] Add unit tests for the application and travis-ci integration.
+
 ## Getting Started
 
 ### Prerequisites

@@ -7,6 +7,11 @@ export const Header = styled.header`
   border-bottom: 2px solid ${(props) => props.theme.secondary};
   background: ${(props) => props.theme.secondary};
   box-shadow: 0 4px 6px -4px rgba(0, 0, 0, 0.08);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
 `;
 export const HeaderContainer = styled.div`
   margin-left: 15px;

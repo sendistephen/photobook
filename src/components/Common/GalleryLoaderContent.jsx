@@ -1,8 +1,8 @@
-import React from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
+import LoaderComponent from '@/components/LoaderComponent';
 import { PhotoGallery } from '@/components/PhotoGallery';
-import { Container, LoadingSpinner } from '@/styles';
+import { Container } from '@/styles';
 
 import { EndMessage } from './EndMessage';
 
@@ -11,7 +11,7 @@ const InfinitePhotoGallery = (props) => (
     dataLength={props.photos.length}
     next={props.fetchMorePhotos}
     hasMore={props.hasMore}
-    loader={<LoadingSpinner />}
+    loader={<LoaderComponent />}
     endMessage={<EndMessage />}
   >
     <PhotoGallery
@@ -27,7 +27,7 @@ const InfinitePhotoGallery = (props) => (
 export const GalleryLoaderContent = (props) => (
   <Container>
     {props.photos.length === 0 && props.isLoading ? (
-      <LoadingSpinner isBottomLoader={props.isbottomloader} />
+      <LoaderComponent />
     ) : (
       <InfinitePhotoGallery
         photos={props.photos}

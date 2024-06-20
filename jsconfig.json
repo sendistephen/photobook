@@ -9,7 +9,8 @@
       "utils/*": ["src/utils/*"],
       "assets/*": ["src/assets/*"],
       "data/*": ["src/data/*"]
-    }
+    },
+    "types": ["vitest/globals"]
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "tests/**/*"]
 }
