@@ -14,7 +14,7 @@ export const Container = styled.div`
 `;
 export const Wrapper = styled.div`
   max-width: 680px;
-  margin: 0 auto;
+  margin: 100px auto;
 `;
 
 export const GalleryItem = styled.div`
