@@ -8,7 +8,7 @@ import {
   setDoc,
 } from 'firebase/firestore';
 
-import { handleAsyncThunkCases } from '@/utils/helper';
+import { handleAsyncThunkCases } from '../utils/helper';
 
 // Async thunk for fetching favorite photos
 export const getFavorites = createAsyncThunk(

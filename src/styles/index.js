@@ -4,12 +4,12 @@ import styled from 'styled-components';
 export const Container = styled.div`
   max-width: 960px;
   margin: 0px auto;
-  opacity: 1;
+  padding: 16px;
 
   @media (max-width: 568px) {
     max-width: 100%;
-    margin-left: 15px;
-    margin-right: 15px;
+    /* margin-left: 15px;
+    margin-right: 15px; */
   }
 `;
 export const Wrapper = styled.div`
@@ -57,6 +57,7 @@ export const StyledMasonry = styled(Masonry)`
   display: flex;
   max-width: 100%;
   margin: 50px auto;
+
   @media (max-width: 568px) {
     max-width: 100%;
   }

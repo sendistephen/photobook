@@ -1,10 +1,10 @@
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Link } from 'react-router-dom';
 
-import LoaderComponent from '@/components/LoaderComponent';
-import { Container, LoadingSpinner, Message } from '@/styles';
-import { breakpointColumns } from '@/utils/helper';
+import { Container, LoadingSpinner, Message } from '../../styles';
+import { breakpointColumnObj } from '../../utils/helper';
 
+import LoaderComponent from '../LoaderComponent';
 import {
   CollectionImage,
   CollectionItem,
@@ -27,7 +27,7 @@ const CollectionItemComponent = ({ collection }) => (
 
 const CollectionGallery = ({ collections }) => (
   <Gallery
-    breakpointCols={breakpointColumns}
+    breakpointCols={breakpointColumnObj}
     columnClassName="masonry-grid_column"
   >
     {collections.map((collection, index) => (

@@ -1,7 +1,7 @@
-import { Modal } from '@/components';
-import { Gallery } from '@/pages/Collection/Collection.styles';
-import { GalleryImage, GalleryItem } from '@/styles';
-import { breakpointColumns } from '@/utils/helper';
+import { Modal } from '../components';
+import { Gallery } from '../pages/Collection/Collection.styles';
+import { GalleryImage, GalleryItem } from '../styles';
+import { breakpointColumnObj } from '../utils/helper';
 
 export const PhotoGallery = ({
   photos,
@@ -11,7 +11,7 @@ export const PhotoGallery = ({
   closeModal,
 }) => (
   <Gallery
-    breakpointCols={breakpointColumns}
+    breakpointCols={breakpointColumnObj}
     columnClassName="masonry-grid_column"
   >
     {photos.map((photo, idx) => (

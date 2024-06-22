@@ -3,7 +3,7 @@ import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import { clearCollections, fetchCollections } from '@/store/searchSlice';
+import { clearCollections, fetchCollections } from '../../store/searchSlice';
 
 const useFetchInitialCollections = (searchWord, dispatch) => {
   useEffect(() => {

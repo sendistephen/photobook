@@ -8,8 +8,8 @@ import {
   Image,
   ImageHolder,
   Title,
-} from '@/components/Collections/Collections.styles';
-import { fetchCollections } from '@/store/collectionSlice';
+} from '../../components/Collections/Collections.styles';
+import { fetchCollections } from '../../store/collectionSlice';
 
 const Collections = () => {
   const dispatch = useDispatch(),

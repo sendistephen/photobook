@@ -1,9 +1,9 @@
 import InfiniteScroll from 'react-infinite-scroll-component';
 
-import LoaderComponent from '@/components/LoaderComponent';
-import { PhotoGallery } from '@/components/PhotoGallery';
-import { Container } from '@/styles';
+import LoaderComponent from '../../components/LoaderComponent';
+import { PhotoGallery } from '../../components/PhotoGallery';
 
+import { Container } from '../../styles';
 import { EndMessage } from './EndMessage';
 
 const InfinitePhotoGallery = (props) => (

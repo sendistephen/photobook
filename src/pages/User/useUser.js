@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import { clearUserPhotos, fetchUser } from '@/store/userSlice';
+import { clearUserPhotos, fetchUser } from '../../store/userSlice';
 
 export const useUser = () => {
   const { username } = useParams(),

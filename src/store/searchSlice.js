@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-import { getCollections, getSearchResults } from '@/utils/api';
+import { getCollections, getSearchResults } from '../utils/api';
 
 const fetchApiData = async (apiCall, { query, page, perPage }) => {
   const response = await axios(apiCall({ query, page, perPage }));

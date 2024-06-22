@@ -1,9 +1,9 @@
 import {
   createFetchData,
   createPhotoDataHook,
-} from '@/components/Common/useCommonPhotoData';
-import { useModalManagement } from '@/pages/Photos/useModalManagement';
-import { getFavorites } from '@/store/favoritesSlice';
+} from '../../components/Common/useCommonPhotoData';
+import { getFavorites } from '../../store/favoritesSlice';
+import { useModalManagement } from '../Explore/useModalManagement';
 
 const fetchData = createFetchData(
   getFavorites,

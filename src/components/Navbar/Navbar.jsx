@@ -1,7 +1,7 @@
-import ThemeIcon from '@/assets/icons/theme.svg';
-import MenuButton from '@/components/Buttons';
-import { menu } from '@/data/menu';
-import { Container } from '@/styles';
+import ThemeIcon from '../../assets/icons/theme.svg';
+import MenuButton from '../../components/Buttons';
+import { menu } from '../../data/menu';
+import { Container } from '../../styles';
 
 import { AuthControls } from './AuthControls';
 import {

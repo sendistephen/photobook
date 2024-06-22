@@ -1,8 +1,7 @@
 import { getAuth, signOut } from '@firebase/auth';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { signInWithGoogle } from '@/firebase/firebaseAuth';
-
+import { signInWithGoogle } from '../../firebase/firebaseAuth';
 import { Login, Logout } from './Navbar.styles';
 
 export const AuthControls = () => {

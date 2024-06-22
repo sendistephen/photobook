@@ -1,10 +1,20 @@
 const createTheme = (mode, colors) => ({
   ...colors[mode],
   linkColor: colors.linkColor,
+  skeletonBase: colors.skeletonBase[mode],
+  skeltonHighlight: colors.skeltonHighlight[mode],
 });
 
 const baseColors = {
   linkColor: '#65D6AD',
+  skeletonBase: {
+    dark: '#222222',
+    light: '#e0e0e0',
+  },
+  skeltonHighlight: {
+    dark: '#292929',
+    light: '#f0f0f0',
+  },
   dark: {
     main: '#181A1A',
     secondary: '#242626',

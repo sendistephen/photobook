@@ -1,9 +1,9 @@
 import {
   createFetchData,
   createPhotoDataHook,
-} from '@/components/Common/useCommonPhotoData';
-import { useModalManagement } from '@/pages/Photos/useModalManagement';
-import { fetchUserPhotos } from '@/store/userSlice';
+} from '../../components/Common/useCommonPhotoData';
+import { fetchUserPhotos } from '../../store/userSlice';
+import { useModalManagement } from '../Explore/useModalManagement';
 
 const fetchData = createFetchData(
   fetchUserPhotos,

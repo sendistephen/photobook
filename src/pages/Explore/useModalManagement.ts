@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { hideModal, showModal } from '@/store/modalSlice';
+import { hideModal, showModal } from '../../store/modalSlice';
 
 export const useModalManagement = () => {
   const dispatch = useDispatch();

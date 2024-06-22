@@ -2,7 +2,7 @@ import 'react-magic-slider-dots/dist/magic-dots.css';
 
 import MagicSliderDots from 'react-magic-slider-dots';
 
-import closeIcon from '@/assets/icons/cross.svg';
+import closeIcon from '../../assets/icons/cross.svg';
 
 import { ModalAvatar } from './Avatar';
 import {

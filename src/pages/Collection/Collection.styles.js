@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { StyledMasonry } from '@/styles';
-import { MediumText, NormalText } from '@/styles/TextStyles';
+import { StyledMasonry } from '../../styles';
+import { MediumText, NormalText } from '../../styles/TextStyles';
 
 export const Gallery = styled(StyledMasonry)`
-  margin-top: 100px;
+  margin-top: 90px;
 `;
 export const Wrapper = styled.div`
   margin-left: 15px;
@@ -14,10 +14,12 @@ export const Wrapper = styled.div`
   grid-template-rows: reapeat(4, 1fr);
   gap: 20px;
 `;
+
 export const ImageWrapper = styled.div`
   display: flex;
   align-items: center;
 `;
+
 export const Image = styled.img`
   border-radius: 50%;
   margin-right: 10px;

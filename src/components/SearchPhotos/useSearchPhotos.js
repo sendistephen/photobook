@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import { useModalManagement } from '@/pages/Photos/useModalManagement';
-import { clearPhotos, fetchPhotos } from '@/store/searchSlice';
+import { useModalManagement } from '../../pages/Explore/useModalManagement';
+import { clearPhotos, fetchPhotos } from '../../store/searchSlice';
 
 const useFetchSearchPhotos = () => {
   const { searchWord } = useParams();

@@ -5,8 +5,8 @@ import {
   getUserCollections,
   getUserPhotosUrl,
   getUserUrl,
-} from '@/utils/api';
-import { handleAsyncThunkCases } from '@/utils/helper';
+} from '../utils/api';
+import { handleAsyncThunkCases } from '../utils/helper';
 
 // Async thunk for fetching user details
 export const fetchUser = createAsyncThunk(

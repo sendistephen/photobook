@@ -129,4 +129,4 @@ yarn-error.log*
 server/
 .vercel
 
-/playground.js
+/playground.yml

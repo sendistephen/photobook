@@ -1,5 +1,4 @@
-import { PhotoTopic } from '@/components';
-
+import PhotoTopic from '../../components/PhotoTopic';
 import { SearchTabs } from './SearchTabs';
 import { useToggleTabs } from './useToggleTabs';
 

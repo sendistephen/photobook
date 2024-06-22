@@ -1,5 +1,5 @@
-import heartIcon from '@/assets/icons/heart.svg';
-import { IconWrapper } from '@/pages/Photo/Photo.styles';
+import heartIcon from '../../assets/icons/heart.svg';
+import { IconWrapper } from '../../pages/Photo/Photo.styles';
 
 import { Icon } from './Modal.styles';
 
