@@ -1,14 +1,14 @@
 import { signInWithRedirect } from '@firebase/auth';
 import toast from 'react-hot-toast';
 
-import { auth, googleAuthProvider } from '@/firebase/firebase-config';
+import { auth, googleAuthProvider } from '../firebase/firebase-config';
 import {
   addFavoritePhoto,
   addFavoritePhotoOptimistic,
   removeFavoritePhoto,
   removeFavoritePhotoOptmistic,
-} from '@/store/favoritesSlice';
-import { hideModal } from '@/store/modalSlice';
+} from '../store/favoritesSlice';
+import { hideModal } from '../store/modalSlice';
 
 const PREFIXES = [
   { value: 1, symbol: '' },
@@ -28,12 +28,10 @@ export const shortenNumber = (number) => {
 
   return `${truncatedNumber}${divisor.symbol}`;
 };
-export const breakpointColumns = {
+export const breakpointColumnObj = {
   default: 3,
-  1200: 3,
-  992: 3,
-  768: 2,
-  576: 1,
+  1100: 2,
+  700: 1,
 };
 
 // Handles async thunk add case for common actions

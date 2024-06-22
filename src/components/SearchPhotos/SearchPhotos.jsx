@@ -1,8 +1,8 @@
 import { useDispatch } from 'react-redux';
 
-import { GalleryLoaderContent } from '@/components/Common/GalleryLoaderContent';
-import { hideModal, showModal } from '@/store/modalSlice';
+import { hideModal, showModal } from '../../store/modalSlice';
 
+import { GalleryLoaderContent } from '../Common/GalleryLoaderContent';
 import { useSearchPhotos } from './useSearchPhotos';
 
 const SearchPhotos = () => {

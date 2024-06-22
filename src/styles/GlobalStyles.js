@@ -1,4 +1,6 @@
-import { createGlobalStyle } from 'styled-components';
+import { SkeletonWrapper } from '@/components/Gallery/Gallery.styles';
+import styled, { createGlobalStyle } from 'styled-components';
+import { Container } from '.';
 
 export const GlobalStyles = createGlobalStyle`
 
@@ -15,7 +17,7 @@ a{
   font-family: inherit;
 }
 html{
-     min-height:100%;
+    min-height:100%;
     box-sizing: border-box;
 }
 body{
@@ -24,22 +26,36 @@ body{
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     transition: all 0.50s linear;
 }
-/* Masonry Grid */
-.masonry-grid_column {
-  padding-left: 15px; 
-  padding-right: 15px;
+
+.my-masory-grid {
+  display: flex;
+  width: 100%;
+  margin-left: -16px; /* gutter size offset */
+}
+.my-masory-grid_column {
+  padding-left: 30px; /* gutter size */
   background-clip: padding-box;
+}
+.my-masory-grid_column > div {
+  margin-bottom: 30px;
+}
+`;
 
-@media (max-width: 568px) {
-    max-width: 100%;
-    padding-left: 15px;
-    padding-right: 15px;
-    margin: auto;
+export const SuspenseSkeletonContainer = styled(Container)`
+  margin-top: 200px;
+`;
+export const SuspenseSkeletonWrapper = styled(SkeletonWrapper)`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-between;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 10px;
   }
-}
-
-.masonry-grid_column > div {
-  margin: 15px auto;
-}
-
+`;
+export const SuspenseSkeleton = styled(SkeletonWrapper)`
+  max-width: 200px;
+  width: 100%;
 `;

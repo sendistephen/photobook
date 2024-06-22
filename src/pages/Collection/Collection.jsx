@@ -1,6 +1,6 @@
-import { CollectionHeader } from '@/components/collection/CollectionHeader';
-import { GalleryLoaderContent } from '@/components/Common/GalleryLoaderContent';
-import { Container } from '@/styles';
+import { CollectionHeader } from '../../components/collection/CollectionHeader';
+import { GalleryLoaderContent } from '../../components/Common/GalleryLoaderContent';
+import { Container } from '../../styles';
 
 import { useCollection } from './useCollection';
 

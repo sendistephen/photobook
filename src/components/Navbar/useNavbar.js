@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { toggleThemeChange } from '@/store/themeSlice';
+import { toggleThemeChange } from '../../store/themeSlice';
 
 export const useNavbar = () => {
   const dispatch = useDispatch();

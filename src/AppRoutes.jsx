@@ -1,18 +1,17 @@
 import { lazy, Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
+import ProtectedRoute from './components/ProtectedRoute';
 
-import ProtectedRoute from '@/components/ProtectedRoute';
-
-const Photos = lazy(() => import('@/pages/Photos')),
-  Photo = lazy(() => import('@/pages/Photo')),
-  User = lazy(() => import('@/pages/User')),
-  Search = lazy(() => import('@/pages/Search')),
-  Collection = lazy(() => import('@/pages/Collection')),
-  Favorites = lazy(() => import('@/pages/Favorites')),
+const Explore = lazy(() => import('./pages/Explore')),
+  Photo = lazy(() => import('./pages/Photo')),
+  User = lazy(() => import('./pages/User')),
+  Search = lazy(() => import('./pages/Search')),
+  Collection = lazy(() => import('./pages/Collection')),
+  Favorites = lazy(() => import('./pages/Favorites')),
   AppRoutes = () => (
-    <Suspense fallback={<>...</>}>
+    <Suspense fallback={null}>
       <Routes>
-        <Route path="/" element={<Photos />} />
+        <Route path="/" element={<Explore />} />
         <Route path="/photos/:id" element={<Photo />} />
         <Route path="/users/:username" element={<User />} />
         <Route path="/search/photos/:searchWord" element={<Search />} />

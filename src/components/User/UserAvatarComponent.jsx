@@ -1,4 +1,4 @@
-import { shortenNumber } from '@/utils/helper';
+import { shortenNumber } from '../../utils/helper';
 
 import {
   Avatar,

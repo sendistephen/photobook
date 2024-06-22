@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { StyledMasonry } from '@/styles';
+import { StyledMasonry } from '../../styles';
 
 export const Gallery = styled(StyledMasonry)``;
 
@@ -21,8 +21,8 @@ export const StyledLink = styled(NavLink)`
 `;
 
 export const NavWrapper = styled.div`
-  max-width: 80%;
-  padding-top: 30px;
+  max-width: 82%;
+  padding-top: 120px;
   display: grid;
   grid-template-columns: 50px 50px;
   justify-content: flex-end;

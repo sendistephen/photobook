@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { fetchData, getPhotoUrl, getSingleTopic } from '@/utils/api';
+import { fetchData, getPhotoUrl, getSingleTopic } from '../utils/api';
 
 // Async thunk for fetching a single photo
 export const fetchPhoto = createAsyncThunk(

@@ -1,5 +1,5 @@
-import { GalleryLoaderContent } from '@/components/Common/GalleryLoaderContent';
-import { Message } from '@/styles';
+import { GalleryLoaderContent } from '../../components/Common/GalleryLoaderContent';
+import { Message } from '../../styles';
 
 import { useUserPhotos } from './useUserPhotos';
 

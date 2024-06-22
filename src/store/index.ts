@@ -13,7 +13,7 @@ import searchReducer from './searchSlice';
 import themeReducer from './themeSlice';
 import userReducer from './userSlice';
 
-const reducers = combineReducers({
+const rootReducer = combineReducers({
     photos: photosReducer,
     photo: photoReducer,
     user: userReducer,
@@ -29,7 +29,7 @@ const reducers = combineReducers({
     storage,
     whitelist: ['theme'],
   },
-  persistedReducer = persistReducer(persistConfig, reducers);
+  persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
   reducer: persistedReducer,
@@ -49,3 +49,7 @@ export const store = configureStore({
 });
 
 export const persistor = persistStore(store);
+
+// Define a type for the Redux store
+export type RootState = ReturnType<typeof rootReducer>;
+export type AppDispatch = typeof store.dispatch;

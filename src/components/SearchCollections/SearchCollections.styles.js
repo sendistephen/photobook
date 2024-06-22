@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { GalleryImage, GalleryItem, StyledMasonry } from '@/styles';
+import { GalleryImage, GalleryItem, StyledMasonry } from '../../styles';
 
 export const CollectionItem = styled(GalleryItem)`
   position: relative;

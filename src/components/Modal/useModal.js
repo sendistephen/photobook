@@ -1,6 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
 
-import { handleOverlayClick, handleSaveFavoritePhoto } from '@/utils/helper';
+import {
+  handleOverlayClick,
+  handleSaveFavoritePhoto,
+} from '../../utils/helper';
 
 import { useBodyScrollLock } from './useBodyScrollLock';
 

@@ -2,9 +2,12 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import { useModalManagement } from '@/pages/Photos/useModalManagement';
-import { clearUserCollection, fetchCollection } from '@/store/collectionSlice';
-import { usePagination } from '@/usePagination';
+import {
+  clearUserCollection,
+  fetchCollection,
+} from '../../store/collectionSlice';
+import { usePagination } from '../../usePagination';
+import { useModalManagement } from '../Explore/useModalManagement';
 
 const useFetchCollection = () => {
   const { collectionId } = useParams();

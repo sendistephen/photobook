@@ -1,6 +1,6 @@
 import { useLocation } from 'react-router-dom';
 
-import { SearchCollections, SearchPhotos } from '@/components/index';
+import { SearchCollections, SearchPhotos } from '../../components/index';
 
 export const useToggleTabs = () => {
   const location = useLocation();

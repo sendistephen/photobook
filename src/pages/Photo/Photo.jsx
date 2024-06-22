@@ -1,12 +1,12 @@
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 
-import optionIcon from '@/assets/icons/option.svg';
-import starIcon from '@/assets/icons/star.svg';
-import favIcon from '@/assets/icons/star2.svg';
-import { Collections } from '@/components';
-import { PhotoLikes } from '@/components/Modal/PhotoLikes';
-import { Wrapper } from '@/styles';
+import optionIcon from '../../assets/icons/option.svg';
+import starIcon from '../../assets/icons/star.svg';
+import favIcon from '../../assets/icons/star2.svg';
+import { Collections } from '../../components';
+import { PhotoLikes } from '../../components/Modal/PhotoLikes';
+import { Wrapper } from '../../styles';
 
 import {
   Avatar,

@@ -7,7 +7,7 @@ import {
   selectHasMore,
   selectIsLoading,
   selectPhotos,
-} from '@/store/photosSlice';
+} from '../../store/photosSlice';
 
 export const useFetchPhotos = () => {
   const dispatch = useDispatch();

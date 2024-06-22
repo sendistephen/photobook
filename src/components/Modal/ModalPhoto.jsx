@@ -1,8 +1,7 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 
-import starIcon from '@/assets/icons/star.svg';
-import favIcon from '@/assets/icons/star2.svg';
+import starIcon from '../../assets/icons/star.svg';
+import favIcon from '../../assets/icons/star2.svg';
 
 import {
   FavIcon,

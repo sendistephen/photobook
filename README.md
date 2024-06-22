@@ -31,6 +31,8 @@ Welcome to Photobook, a dynamic web application inspired by the Unsplash platfor
 
 -[✕] Add unit tests for the application and travis-ci integration.
 
+-[✕] Add typescript support
+
 ## Getting Started
 
 ### Prerequisites

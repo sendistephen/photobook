@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { useTheme } from 'styled-components';
 
-import { handleTabClick } from '@/store/searchSlice';
+import { handleTabClick } from '../../store/searchSlice';
 
 import { NavWrapper, StyledLink } from './Search.styles';
 

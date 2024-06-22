@@ -2,7 +2,7 @@ import { signInWithRedirect } from '@firebase/auth';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
-import { auth, googleAuthProvider } from '@/firebase/firebase-config';
+import { auth, googleAuthProvider } from '../firebase/firebase-config';
 
 function ProtectedRoute({ children }) {
   const { user, loading } = useSelector((state) => state.auth);

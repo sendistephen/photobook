@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { MediumText, NormalText } from '@/styles/TextStyles';
+import { MediumText, NormalText } from '../../styles/TextStyles';
 
 export const UserAvatar = styled.div`
   margin-top: 30px;
