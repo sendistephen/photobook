@@ -7,9 +7,11 @@ import { Gallery as GalleryWrapper } from './Gallery.styles';
 
 const Gallery = (props: GalleryProps) => {
   return (
-    <Container>
+    <Container data-testid="gallery">
       {props.isInitialLoading ? (
         <Skeletons count={12} />
+      ) : props.photos.length === 0 ? (
+        <div>No photos found</div>
       ) : (
         <GalleryWrapper>
           <InfiniteScroll

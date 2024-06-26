@@ -13,7 +13,7 @@ const SkeletonLoader = ({ count }: SkeletonProps) => {
     <SkeletonContainer>
       {[...Array(count)].map((_, index) => (
         <SkeletonWrapper key={index}>
-          <StyledSkeleton />
+          <StyledSkeleton data-testid="skeleton" />
         </SkeletonWrapper>
       ))}
     </SkeletonContainer>

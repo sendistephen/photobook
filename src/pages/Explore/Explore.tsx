@@ -2,11 +2,18 @@ import Gallery from '@/components/Gallery/Gallery';
 import usePhotos from './usePhotos';
 
 const Explore = () => {
-  const { photos, fetchNextPage, hasMore, isLoading, isInitialLoading, error } =
-    usePhotos();
+  const {
+    photos,
+    fetchNextPage,
+    hasMore,
+    isLoading,
+    isInitialLoading,
+    isError,
+  } = usePhotos();
 
-  if (error) return <div>Error, {error.message}</div>;
-
+  if (isError) {
+    return <div>Error fetching photos</div>;
+  }
   return (
     <Gallery
       photos={photos}
