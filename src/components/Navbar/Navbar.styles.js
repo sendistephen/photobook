@@ -4,14 +4,13 @@ import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const Header = styled.header`
-  border-bottom: 2px solid ${(props) => props.theme.secondary};
-  background: ${(props) => props.theme.secondary};
-  box-shadow: 0 4px 6px -4px rgba(0, 0, 0, 0.08);
+  background-color: ${({ theme }) => theme.colors.background};
+  box-shadow: 0 4px 6px -4px rgba(0, 0, 0, 0.1);
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 1000;
+  z-index: 10;
 `;
 export const HeaderContainer = styled.div`
   margin-left: 15px;
@@ -21,7 +20,6 @@ export const HeaderContainer = styled.div`
   align-items: center;
   grid-template-columns: 1fr auto;
   gap: 50px;
-  padding: 12px 0px 20px;
 `;
 export const FormGroup = styled.div`
   position: relative;
@@ -29,9 +27,9 @@ export const FormGroup = styled.div`
   align-items: center;
 `;
 export const Input = styled.input`
-  background-color: ${(props) => props.theme.main};
-  color: ${(props) => props.theme.neutral};
-  border: 1px solid ${(props) => props.theme.borderColor};
+  background-color: ${(props) => props.theme.colors.background};
+  color: ${(props) => props.theme.colors.textPrimary};
+  border: 1px solid ${(props) => props.theme.colors.borderDark};
   padding: 12px 60px;
   width: 100%;
   border-radius: 8px;
@@ -49,7 +47,6 @@ export const Input = styled.input`
 `;
 const shouldNotForwardProp = (prop) => !['isOpen'].includes(prop);
 
-// Using the utility function with styled-components' .withConfig
 export const MenuWrapper = styled.div.withConfig({
   shouldForwardProp: shouldNotForwardProp,
 })`
@@ -106,14 +103,11 @@ export const StyledLink = styled(NavLink)`
   }
 `;
 
-export const MenuThemeItem = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+export const MenuThemeItem = styled.button`
+  background: transparent;
+  border: none;
+  cursor: pointer;
   align-items: center;
-  @media (max-width: 768px) {
-    flex-direction: row;
-  }
 `;
 export const Theme = styled.div`
   display: flex;
@@ -132,43 +126,68 @@ export const Image = styled.img`
 export const Label = styled.span`
   margin-top: 2px;
   font-size: 13px;
-  color: #999999;
+  color: ${(props) => props.theme.colors.textSecondary};
+
   @media (max-width: 768px) {
     margin-left: 12px;
   }
 `;
 export const Login = styled.div`
-  padding: 8px;
-  margin-top: -17px;
+  padding: 10px 20px;
   display: flex;
   justify-content: center;
   color: black;
   align-items: center;
-  background: ${(props) => props.theme.activeLink};
-  border: 1px solid black;
+  font-size: ${({ theme }) => theme.fonts.sm};
+  background-color: ${({ theme }) => theme.colors.secondary};
+  color: ${({ theme }) => theme.colors.onSecondary};
+  border: none;
   border-radius: 5px;
   cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition:
+    background-color 0.3s,
+    box-shadow 0.3s,
+    opacity 0.3s;
+
   &:hover {
-    background-color: black;
-    color: white;
+    background-color: ${({ theme }) => theme.colors.secondaryVariant};
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+    opacity: 0.9;
+  }
+  &:active {
+    background-color: ${({ theme }) => theme.colors.secondaryVariant};
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+    opacity: 1;
   }
 `;
 export const Logout = styled.button`
-  padding: 8px 10px;
-  margin-top: -17px;
+  padding: 10px 20px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${(props) => props.theme.linkColor};
-  color: ${(props) => props.theme.text};
-  border: 2px solid ${(props) => props.theme.borderColor};
+  font-size: ${({ theme }) => theme.fonts.sm};
+  background-color: ${({ theme }) => theme.colors.secondary};
+  color: ${({ theme }) => theme.colors.onSecondary};
+  border: none;
   border-radius: 5px;
   border-style: none;
   cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition:
+    background-color 0.3s,
+    box-shadow 0.3s,
+    opacity 0.3s;
 
   &:hover {
-    background-color: ${(props) => props.theme.linkColor};
-    opacity: 0.8;
+    background-color: ${({ theme }) => theme.colors.secondaryVariant};
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+    opacity: 0.9;
+  }
+  &:active {
+    background-color: ${({ theme }) => theme.colors.secondaryVariant};
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+    opacity: 1;
   }
 `;
 export const Title = styled.h4`

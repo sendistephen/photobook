@@ -1,5 +1,5 @@
+import { Navbar, PhotoModal } from '@/components';
 import AppRoutes from './AppRoutes';
-import { Navbar } from './components';
 import Providers from './providers';
 import { useAuthState } from './useAuthState';
 
@@ -9,6 +9,7 @@ const App = () => {
   return (
     <Providers>
       <Navbar />
+      <PhotoModal />
       <AppRoutes />
     </Providers>
   );

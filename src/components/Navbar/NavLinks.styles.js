@@ -26,8 +26,9 @@ export const MenuItem = styled.div`
 `;
 
 export const StyledLink = styled(NavLink)`
-  background: ${(props) => props.theme.activeLink};
+  background: ${(props) => props.theme.colors.surface};
   border-radius: 5px;
+  font-size: ${({ theme }) => theme.fonts.sm};
   padding: 5px;
   display: flex;
   flex-direction: column;
@@ -35,10 +36,22 @@ export const StyledLink = styled(NavLink)`
   align-items: center;
   width: fit-content;
   height: fit-content;
+  text-decoration: none;
+  color: ${(props) => props.theme.colors.linkColor};
 
   &.main-nav-active {
-    color: ${(props) => props.theme.text};
-    font-weight: 500;
-    background: ${(props) => (props.isActive ? '#a2c8fa' : '#ffb4bc')};
+    background: ${(props) => props.theme.colors.activeLinkBackground};
+    color: ${(props) => props.theme.colors.activeLinkColor};
+  }
+
+  &:hover {
+    background: ${(props) => props.theme.colors.hoverLinkBackground};
+    color: ${(props) => props.theme.colors.hoverLinkColor};
+  }
+
+  &:focus {
+    outline: 2px solid ${(props) => props.theme.colors.secondary};
+    background: ${(props) => props.theme.colors.focusLinkBackground};
+    color: ${(props) => props.theme.colors.focusLinkColor};
   }
 `;

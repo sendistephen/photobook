@@ -21,7 +21,8 @@ html{
     box-sizing: border-box;
 }
 body{
-    background: ${(props) => props.theme.main};
+    background: ${(props) => props.theme.colors.background};
+    color: ${(props) => props.theme.colors.textPrimary};
     height:100%;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     transition: all 0.50s linear;

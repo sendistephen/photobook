@@ -13,3 +13,13 @@ export const fetchPhotos = async (page: number, perPage: number = 20) => {
   });
   return response.data;
 };
+
+export const fetchPhoto = async (photoId: string) => {
+  const response = await axios.get(`${BASE_URL}/photos/${photoId}`, {
+    params: {
+      client_id: ACCESS_KEY,
+    },
+  });
+
+  return response.data;
+};

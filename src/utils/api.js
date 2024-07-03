@@ -15,53 +15,53 @@ export const getURL = (config) => {
     },
     '',
   );
-  return `${base}photos?${query}&client_id=${key}`;
+  return `${base}/photos?${query}&client_id=${key}`;
 };
 
 export const getPhotoUrl = (photoId) => {
   const id = photoId ? `${photoId}` : null;
-  return `${base}photos/${id}?client_id=${key}`;
+  return `${base}/photos/${id}?client_id=${key}`;
 };
 
 export const getUserUrl = (username) => {
   if (!username) {
     return null;
   }
-  return `${base}users/${username}?client_id=${key}`;
+  return `${base}/users/${username}?client_id=${key}`;
 };
 
 export const getUserPhotosUrl = ({ username, page, perPage }) =>
-  `${base}users/${username}/photos?page=${page}&per_page=${perPage}&client_id=${key}`;
+  `${base}/users/${username}/photos?page=${page}&per_page=${perPage}&client_id=${key}`;
 
 export const getUserCollections = ({ username, page, perPage }) => {
   if (!username) {
     return null;
   }
-  return `${base}users/${username}/collections?page=${page}&per_page=${perPage}&client_id=${key}`;
+  return `${base}/users/${username}/collections?page=${page}&per_page=${perPage}&client_id=${key}`;
 };
 
 export const getSearchResults = ({ query, page, perPage }) =>
-  `${base}search/photos?page=${page}&query=${query}&per_page=${perPage}&client_id=${key}`;
+  `${base}/search/photos?page=${page}&query=${query}&per_page=${perPage}&client_id=${key}`;
 
 export const getCollections = ({ query, page, perPage }) =>
-  `${base}search/collections?page=${page}&query=${query}&per_page=${perPage}&client_id=${key}`;
+  `${base}/search/collections?page=${page}&query=${query}&per_page=${perPage}&client_id=${key}`;
 export const getAllCollections = ({ page, perPage }) =>
-  `${base}/collections?page=${page}&per_page=${perPage}&client_id=${key}`;
+  `${base}//collections?page=${page}&per_page=${perPage}&client_id=${key}`;
 export const getSingleTopic = ({ slug }) =>
-  `${base}topics/${slug}?client_id=${key}`;
+  `${base}/topics/${slug}?client_id=${key}`;
 
 export const getCollection = ({ collectionId, page, perPage }) => {
   if (!collectionId) {
     return;
   }
-  return `${base}collections/${collectionId}/photos?page=${page}&per_page=${perPage}&client_id=${key}`;
+  return `${base}/collections/${collectionId}/photos?page=${page}&per_page=${perPage}&client_id=${key}`;
 };
 
 export const getSingleCollection = ({ collectionId }) => {
   if (!collectionId) {
     return;
   }
-  return `${base}collections/${collectionId}?client_id=${key}`;
+  return `${base}/collections/${collectionId}?client_id=${key}`;
 };
 export const getFavorites = () => `${server}photos/favorites`;
 export const savePhoto = () => `${server}photos/favorites`;

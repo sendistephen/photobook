@@ -5,7 +5,7 @@ import { Provider as ReduxProvider, useSelector } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { RootState, store } from './store';
-import { theme } from './styles/ColorStyles';
+import { theme } from './styles/theme';
 import { GlobalStyles } from './styles/GlobalStyles';
 
 const client = new QueryClient({

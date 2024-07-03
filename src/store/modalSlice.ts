@@ -1,6 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { RootState } from '.';
 
-const initialState = {
+interface ModalState {
+  isOpen: boolean;
+  selectedPhotoId: string | null;
+}
+
+const initialState: ModalState = {
     isOpen: false,
     selectedPhotoId: null,
   },
@@ -19,5 +25,10 @@ const initialState = {
       },
     },
   });
+
 export const { showModal, hideModal } = modalSlice.actions;
+export const selectIsModalOpen = (state: RootState) => state.modal.isOpen;
+export const selectActivePhotoId = (state: RootState) =>
+  state.modal.selectedPhotoId;
+
 export default modalSlice.reducer;

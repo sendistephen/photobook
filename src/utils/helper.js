@@ -91,3 +91,16 @@ export const handleOverlayClick = (e, dispatch) => {
     dispatch(hideModal());
   }
 };
+
+export const generateSrcSet = (photo) => {
+  if (!photo || !photo.urls) return '';
+
+  const { thumb, small, regular, full } = photo.urls;
+  return `${thumb} 200w, ${small} 400w, ${regular} 800w, ${full} 1600w`;
+};
+
+export const imageSize = `
+(max-width:599px) 100vw,
+(min-width:600px) and (max-width:1199px) 50vw,,
+(min-width:1200px) 33vw
+`;

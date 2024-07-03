@@ -8,12 +8,14 @@ const Explore = lazy(() => import('./pages/Explore')),
   Search = lazy(() => import('./pages/Search')),
   Collection = lazy(() => import('./pages/Collection')),
   Favorites = lazy(() => import('./pages/Favorites')),
+  PhotoModal = lazy(() => import('./components/PhotoModal')),
   AppRoutes = () => (
     <Suspense fallback={null}>
       <Routes>
         <Route path="/" element={<Explore />} />
-        <Route path="/photos/:id" element={<Photo />} />
         <Route path="/users/:username" element={<User />} />
+        <Route path="/photo/:id" element={<Photo />} />
+        <Route path="/photos/:photoId" element={<PhotoModal />} />
         <Route path="/search/photos/:searchWord" element={<Search />} />
         <Route path="/search/collections/:searchWord" element={<Search />} />
         <Route

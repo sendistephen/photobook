@@ -17,7 +17,8 @@
     "isolatedModules": true,
     "allowJs": true, // Allow JavaScript files
     "checkJs": false, // Don't type-check JavaScript files
-    "types": ["vitest/globals"],
+    "typeRoots": ["./types", "./node_modules/@types"],
+    "types": ["vitest/globals", "styled-components"],
     "noEmit": true,
     "noUnusedLocals": true,
     "noUnusedParameters": false,
@@ -31,8 +32,10 @@
     "**/*.tsx",
     "**/*.js",
     "**/*.jsx",
-    "types.d.ts",
-    "src/types/componentPropTypes.d.ts"
+    "src/**/*",
+    "types/types.d.ts",
+    "src/types/types.d.ts",
+    "src/types/theme.d.ts"
   ],
   "exclude": ["node_modules"],
   "references": [{ "path": "./tsconfig.node.json" }]

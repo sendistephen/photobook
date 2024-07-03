@@ -23,7 +23,7 @@ export const SearchBar = () => {
           value={query}
           onChange={handleSearch}
           type="text"
-          placeholder="Search..."
+          placeholder="Search photos and illustrations..."
         />
       </FormGroup>
     </form>

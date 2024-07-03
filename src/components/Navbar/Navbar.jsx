@@ -1,20 +1,18 @@
-import ThemeIcon from '../../assets/icons/theme.svg';
-import MenuButton from '../../components/Buttons';
+import { SunMoon } from 'lucide-react';
 import { menu } from '../../data/menu';
 import { Container } from '../../styles';
+import IconWrapper from '../Common/IconWrapper';
+import NavLinks from '../NavLinks';
 
 import { AuthControls } from './AuthControls';
 import {
   BuggerIcon,
   Header,
   HeaderContainer,
-  Image,
-  Label,
   MenuThemeItem,
   MenuWrapper,
   StyledBars3Icon,
   StyledXMarkIcon,
-  Theme,
 } from './Navbar.styles';
 import { SearchBar } from './SearchBar';
 import { useNavbar } from './useNavbar';
@@ -22,13 +20,10 @@ import { useNavbar } from './useNavbar';
 const MenuItems = ({ handleToggle }) => (
   <>
     {menu.map((item, index) => (
-      <MenuButton key={index} item={item} />
+      <NavLinks key={index} item={item} />
     ))}
     <MenuThemeItem onClick={handleToggle}>
-      <Theme>
-        <Image src={ThemeIcon} alt="Theme Icon" />
-      </Theme>
-      <Label>Theme</Label>
+      <IconWrapper icon={SunMoon} color="onSurface" />
     </MenuThemeItem>
     <AuthControls />
   </>

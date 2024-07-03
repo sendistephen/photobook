@@ -8,7 +8,6 @@ export const ImageWrapper = styled.div`
   overflow: hidden;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-top: 16px;
 `;
 
 export const Image = styled.img`
@@ -31,19 +30,19 @@ export const SkeletonWrapper = styled.div`
   overflow: hidden;
 
   @media (max-width: 1100px) {
-    flex: 1 1 calc(50% - 16px); /* Adjust the percentage for two columns with a gap */
+    flex: 1 1 calc(50% - 16px);
   }
 
   @media (max-width: 700px) {
-    flex: 1 1 100%; /* Full width for single column */
+    flex: 1 1 100%;
   }
 
   > div {
     width: 100%;
     display: block;
-    background-color: ${(props) => props.theme.skeletonBase};
+    background-color: ${(props) => props.theme.colors.skeletonBase};
     &::before {
-      background-color: ${(props) => props.theme.skeletonHighlight};
+      background-color: ${(props) => props.theme.colors.skeltonHighlight};
     }
   }
 `;
@@ -51,12 +50,12 @@ export const StyledSkeleton = styled.div`
   width: 30%;
   height: 300px;
   border-radius: 8px;
-  background-color: ${(props) => props.theme.skeletonBase};
+  background-color: ${(props) => props.theme.colors.skeletonBase};
   background-image: linear-gradient(
     90deg,
-    ${(props) => props.theme.skeletonBase},
-    ${(props) => props.theme.skeletonHighlight},
-    ${(props) => props.theme.skeletonBase}
+    ${(props) => props.theme.colors.skeletonBase},
+    ${(props) => props.theme.colors.skeltonHighlight},
+    ${(props) => props.theme.colors.skeletonBase}
   );
   animation: shine 1.6s infinite linear;
 
@@ -70,23 +69,8 @@ export const StyledSkeleton = styled.div`
   }
 `;
 export const StyledMasonry = styled(Masonry)`
-  width: auto;
-  margin-right: -8px;
-  margin-left: -16px; /* gutter size offset */
-
   @media (max-width: 568px) {
     margin-left: 0;
     margin-right: 0;
-  }
-
-  .my-masonry-grid_column {
-    padding-left: 16px; /* gutter size */
-    padding-right: 16px;
-    background-clip: padding-box;
-  }
-
-  .my-masonry-grid_column > div {
-    /* change div to reference your elements you put in <Masonry> */
-    margin-bottom: 16px;
   }
 `;

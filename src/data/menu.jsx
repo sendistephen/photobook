@@ -3,5 +3,5 @@ import FavoriteIcon from '../assets/icons/favorite.svg';
 
 export const menu = [
   { title: 'Photos', icon: CameraIcon, link: '/' },
-  { title: 'Saved', icon: FavoriteIcon, link: '/favorites' },
+  { title: 'Favorites', icon: FavoriteIcon, link: '/favorites' },
 ];
