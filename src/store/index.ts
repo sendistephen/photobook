@@ -11,12 +11,10 @@ import photoReducer from './photoSlice';
 import photosReducer from './photosSlice';
 import searchReducer from './searchSlice';
 import themeReducer from './themeSlice';
-import userReducer from './userSlice';
 
 const rootReducer = combineReducers({
     photos: photosReducer,
     photo: photoReducer,
-    user: userReducer,
     collections: collectionsReducer,
     search: searchReducer,
     favorites: favoritesReducer,

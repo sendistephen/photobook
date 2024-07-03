@@ -3,5 +3,5 @@ export { default as Explore } from './Explore';
 export { default as Favorite } from './Favorites';
 export { default as Photo } from './Photo';
 export { default as Search } from './Search';
-export { default as User } from './User';
 export { default as UserPhoto } from './UserPhotos';
+export { default as User } from './UserProfile';

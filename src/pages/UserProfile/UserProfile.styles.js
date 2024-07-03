@@ -1,7 +1,7 @@
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
-export const UserAvatar = styled.div`
+export const AvatarContainer = styled.div`
   margin-top: 30px;
   display: flex;
   flex-direction: column;
@@ -23,7 +23,7 @@ export const UserAvatar = styled.div`
 export const UserInfo = styled.div`
   display: flex;
   flex-direction: column;
-  gap: ${({ theme }) => theme.spacing.sm};
+  gap: ${({ theme }) => theme.spacing.md};
 `;
 export const Avatar = styled.img`
   width: 150px;
@@ -84,4 +84,33 @@ export const Following = styled.div`
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing.sm};
+`;
+
+export const Tabs = styled.div`
+  padding: 16px 0;
+  margin-top: 100px;
+  margin-bottom: 30px;
+  display: flex;
+  gap: ${({ theme }) => theme.spacing.xl};
+  background-color: ${({ theme }) => theme.colors.background};
+  position: sticky;
+  top: 70px;
+  z-index: 1000;
+`;
+
+export const TabLink = styled(NavLink)`
+  text-decoration: none;
+  color: ${({ theme }) => theme.colors.textSecondary};
+  font-size: ${({ theme }) => theme.fonts.sm};
+  transition:
+    color 0.3s,
+    border-bottom 0.3s;
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.hoverLinkColor};
+  }
+  &.active {
+    color: ${({ theme }) => theme.colors.linkColor};
+    border-bottom: 2px solid ${({ theme }) => theme.colors.linkColor};
+  }
 `;

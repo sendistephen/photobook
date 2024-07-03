@@ -9,3 +9,5 @@ export { default as PhotoTopic } from './PhotoTopic';
 export { default as SearchCollections } from './SearchCollections';
 export { default as SearchPhotos } from './SearchPhotos';
 export { default as Skeleton } from './Skeletons';
+export { default as UserAvatar } from './User/UserAvatar';
+export { default as UsersPhotos } from './User/UserPhotos';

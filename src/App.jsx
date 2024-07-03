@@ -1,6 +1,7 @@
 import { Navbar, PhotoModal } from '@/components';
 import AppRoutes from './AppRoutes';
 import Providers from './providers';
+import { Container } from './styles';
 import { useAuthState } from './useAuthState';
 
 const App = () => {
@@ -8,9 +9,11 @@ const App = () => {
 
   return (
     <Providers>
-      <Navbar />
-      <PhotoModal />
-      <AppRoutes />
+      <Container>
+        <Navbar />
+        <PhotoModal />
+        <AppRoutes />
+      </Container>
     </Providers>
   );
 };

@@ -29,6 +29,8 @@ interface User {
   username: string;
   profile_image: {
     small: string;
+    large: string;
+    medium: string;
   };
   bio: string;
   portfolio_url: string;
@@ -36,4 +38,9 @@ interface User {
   following_count: number;
   downloads: number;
   instagram_username: string;
+  tags: {
+    custom: {
+      title: string;
+    }[];
+  };
 }

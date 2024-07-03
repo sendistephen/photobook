@@ -10,11 +10,9 @@ export const useUser = ({ username }: UserProps) => {
     data: user,
     isLoading,
     error,
-  } = useQuery<User | Error>(
-    ['user', username],
-    () => fetchUser(username as string),
-    { enabled: !!username },
-  );
+  } = useQuery<User | Error>(['user', username], () => fetchUser(username!), {
+    enabled: !!username,
+  });
 
   return {
     user,

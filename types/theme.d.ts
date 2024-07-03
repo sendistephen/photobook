@@ -84,7 +84,7 @@ type FontSizeKey = keyof Theme['fonts'];
 type ColorKey = keyof Theme['colors'];
 
 export interface LabelProps {
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl';
   weight?:
     | 'bold'
     | 'normal'
