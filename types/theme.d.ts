@@ -44,6 +44,8 @@ interface FontSize {
   md: string;
   lg: string;
   xl: string;
+  '2xl': string;
+  '3xl': string;
   [key: string]: string;
 }
 interface Breakpoints {

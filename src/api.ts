@@ -23,3 +23,35 @@ export const fetchPhoto = async (photoId: string) => {
 
   return response.data;
 };
+
+export const fetchUser = async (username: string) => {
+  const response = await axios.get(`${BASE_URL}/users/${username}`, {
+    params: {
+      client_id: ACCESS_KEY,
+    },
+  });
+  return response.data;
+};
+
+export const fetchUserPhotos = async (username: string, page: number) => {
+  const response = await axios.get(`${BASE_URL}/users/${username}/photos`, {
+    params: {
+      client_id: ACCESS_KEY,
+      page,
+    },
+  });
+  return response.data;
+};
+
+export const fetchUserCollections = async (username: string, page: number) => {
+  const response = await axios.get(
+    `${BASE_URL}/users/${username}/collections`,
+    {
+      params: {
+        client_id: ACCESS_KEY,
+        page,
+      },
+    },
+  );
+  return response.data;
+};

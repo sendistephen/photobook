@@ -1,58 +1,87 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-
-import { MediumText, NormalText } from '../../styles/TextStyles';
 
 export const UserAvatar = styled.div`
   margin-top: 30px;
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  gap: 15px;
+  text-align: center;
+  gap: ${({ theme }) => theme.spacing['3xl']};
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    flex-direction: row;
+    align-items: start;
+    text-align: start;
+  }
   a {
     color: ${(props) => props.theme.linkColor};
     justify-self: center;
   }
 `;
+export const UserInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing.sm};
+`;
 export const Avatar = styled.img`
   width: 150px;
   height: 150px;
   object-fit: cover;
-  border-radius: 8px;
+  border-radius: 50%;
   justify-self: center;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    width: 200px;
+    height: 200px;
+  }
 `;
-export const Title = styled(MediumText)`
-  color: ${(props) => props.theme.text};
-  justify-self: center;
+export const StyledLink = styled(Link)`
+  display: flex;
+  align-items: start;
+  gap: 5px;
+`;
+
+export const TagsContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: ${({ theme }) => theme.spacing.sm};
+`;
+
+export const Tag = styled.div`
+  padding: 4px 8px;
+  background-color: ${({ theme }) => theme.colors.cardSurface};
+  border-radius: 4px;
+  font-size: ${({ theme }) => theme.fonts.sm};
+  color: ${({ theme }) => theme.colors.textSecondary};
+  text-transform: capitalize;
 `;
 
 export const Stats = styled.div`
-  display: grid;
-  justify-content: center;
-  grid-template-columns: auto auto auto;
+  display: flex;
   gap: 50px;
+  justify-content: center;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    flex-direction: row;
+    justify-content: start;
+    gap: 10px;
+  }
 `;
 export const Posts = styled.div`
-  display: grid;
-  grid-template-rows: auto auto;
-  justify-items: center;
-  gap: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing.sm};
 `;
-export const Number = styled(MediumText)`
-  color: ${(props) => props.theme.text};
-`;
-export const SmallText = styled(NormalText)`
-  font-weight: 200;
-  color: ${(props) => props.theme.neutral};
-`;
+
 export const Followers = styled.div`
-  display: grid;
-  grid-template-rows: auto auto;
-  justify-items: center;
-  gap: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing.sm};
 `;
 export const Following = styled.div`
-  display: grid;
-  grid-template-rows: auto auto;
-  justify-items: center;
-  align-content: center;
-  gap: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing.sm};
 `;
