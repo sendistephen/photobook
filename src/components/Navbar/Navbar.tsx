@@ -17,7 +17,11 @@ import {
 import { SearchBar } from './SearchBar';
 import { useNavbar } from './useNavbar';
 
-const MenuItems = ({ handleToggle }) => (
+interface NavbarProps {
+  handleToggle: () => void;
+}
+
+const MenuItems = ({ handleToggle }: NavbarProps) => (
   <>
     {menu.map((item, index) => (
       <NavLinks key={index} item={item} />

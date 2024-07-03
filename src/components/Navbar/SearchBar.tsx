@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { FormGroup, Input, SearchIcon } from './Navbar.styles';
@@ -6,10 +6,10 @@ import { FormGroup, Input, SearchIcon } from './Navbar.styles';
 export const SearchBar = () => {
   const [query, setQuery] = useState(''),
     navigate = useNavigate(),
-    handleSearch = (e) => {
+    handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
       setQuery(e.target.value);
     },
-    handleSubmit = (e) => {
+    handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       navigate(`/search/photos/${query}`);
       setQuery('');

@@ -3,6 +3,10 @@ import { BiSearch } from 'react-icons/bi';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
+interface MenuWrapperProps {
+  isOpen: boolean;
+}
+
 export const Header = styled.header`
   background-color: ${({ theme }) => theme.colors.background};
   box-shadow: 0 4px 6px -4px rgba(0, 0, 0, 0.1);
@@ -45,11 +49,11 @@ export const Input = styled.input`
     width: 100%;
   }
 `;
-const shouldNotForwardProp = (prop) => !['isOpen'].includes(prop);
+const shouldNotForwardProp = (prop: string) => !['isOpen'].includes(prop);
 
 export const MenuWrapper = styled.div.withConfig({
   shouldForwardProp: shouldNotForwardProp,
-})`
+})<MenuWrapperProps>`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   justify-content: center;
@@ -92,15 +96,6 @@ export const StyledLink = styled(NavLink)`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
-  &.main-nav-active {
-    &:first-child {
-      background: #a2c8fa 0% 0% no-repeat padding-box;
-    }
-    &:last-of-type {
-      background: #ffb4bc 0% 0% no-repeat padding-box;
-    }
-  }
 `;
 
 export const MenuThemeItem = styled.button`
