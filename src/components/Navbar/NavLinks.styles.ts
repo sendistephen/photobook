@@ -39,7 +39,7 @@ export const StyledLink = styled(NavLink)`
   text-decoration: none;
   color: ${(props) => props.theme.colors.linkColor};
 
-  &.main-nav-active {
+  &.active {
     background: ${(props) => props.theme.colors.activeLinkBackground};
     color: ${(props) => props.theme.colors.activeLinkColor};
   }
