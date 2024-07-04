@@ -1,15 +1,10 @@
-import usePhotos from '@/pages/Explore/usePhotos';
-import { AppDispatch } from '@/store';
-import {
-  hideModal,
-  selectActivePhotoId,
-  selectIsModalOpen,
-  showModal,
-} from '@/store/modalSlice';
+import { RootState } from '@/store';
+import { hideModal } from '@/store/modalSlice';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import SkeletonModal from '../Common/SkeletonModal';
+import useOpenModal from '../Modal/useOpenModal';
 import PhotoDetails from './PhotoDetails';
 import PhotoModalHeader from './PhotoHeader';
 import { CloseButton, ModalContainer, Overlay } from './PhotoModal.styles';
@@ -18,39 +13,40 @@ import useBodyScrollLock from './useBodyScrollLock';
 import usePhoto from './usePhoto';
 
 const PhotoModal = () => {
-  const isOpen = useSelector(selectIsModalOpen);
+  const { photos, isOpen, selectedPhotoId } = useSelector(
+    (state: RootState) => state.modal,
+  );
+
   useBodyScrollLock(isOpen);
-  const activePhotoId = useSelector(selectActivePhotoId);
-
-  const dispatch: AppDispatch = useDispatch();
+  const openModal = useOpenModal();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { photos } = usePhotos();
-  const { isLoading, isError, photo } = usePhoto(activePhotoId as string);
 
-  const currentIndex = photos.findIndex((p) => p.id === activePhotoId);
+  const { isLoading, isError, photo } = usePhoto(selectedPhotoId as string);
+
+  const currentIndex = photos.findIndex((p) => p.id === selectedPhotoId);
 
   const handleNavigation = (offset: number) => {
     const newIndex = currentIndex + offset;
     if (newIndex >= 0 && newIndex < photos.length) {
-      const newPhotoId = photos[newIndex].id;
+      const newPhotoId = photos[newIndex];
       navigate(`/photos/${newPhotoId}`, { replace: true });
-      dispatch(showModal(newPhotoId));
+      openModal(newPhotoId, photos);
     }
   };
 
   useEffect(() => {
-    if (activePhotoId) {
-      navigate(`/photos/${activePhotoId}`);
+    if (selectedPhotoId) {
+      navigate(`/photos/${selectedPhotoId}`);
     }
-  }, [activePhotoId, navigate]);
+  }, [selectedPhotoId, navigate]);
 
   if (isError) return <div>Error fetching photo</div>;
 
-  if (!isOpen || !activePhotoId) return null;
+  if (!isOpen || !selectedPhotoId) return null;
 
   const handleClose = () => {
     dispatch(hideModal());
-    navigate('/');
   };
 
   return (

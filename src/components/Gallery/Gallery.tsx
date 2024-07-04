@@ -23,6 +23,7 @@ const Gallery = (props: GalleryProps) => {
             <MasonryGallery
               photos={props.photos}
               breakpointColumnObj={breakpointColumnObj}
+              handleOpenPhoto={props.handleOpenPhoto}
             />
           </InfiniteScroll>
         </GalleryWrapper>

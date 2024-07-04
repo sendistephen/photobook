@@ -1,4 +1,5 @@
 import Gallery from '@/components/Gallery/Gallery';
+import useOpenModal from '@/components/Modal/useOpenModal';
 import usePhotos from './usePhotos';
 
 const Explore = () => {
@@ -10,6 +11,7 @@ const Explore = () => {
     isInitialLoading,
     isError,
   } = usePhotos();
+  const openModal = useOpenModal();
 
   if (isError) {
     return <div>Error fetching photos</div>;
@@ -21,6 +23,7 @@ const Explore = () => {
       hasMore={hasMore}
       isInitialLoading={isInitialLoading}
       isLoading={isLoading}
+      handleOpenPhoto={openModal}
     />
   );
 };
