@@ -38,6 +38,11 @@ interface User {
   following_count: number;
   downloads: number;
   instagram_username: string;
+  social: {
+    instagram_username: string;
+    portfolio_url: string;
+    twitter_username: string;
+  };
   tags: {
     custom: {
       title: string;

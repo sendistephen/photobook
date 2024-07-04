@@ -1,6 +1,6 @@
 import { shortenNumber } from '../../utils/helper';
 
-import { Instagram } from 'lucide-react';
+import { Instagram, Twitter } from 'lucide-react';
 import {
   Avatar,
   AvatarContainer,
@@ -46,10 +46,24 @@ const UserAvatar = ({ user }: { user: User }) => {
             <StatItem count={user.following_count} label="Following" />
           </Following>
         </Stats>
-        <StyledLink to={`https://instagram.com/${user.instagram_username}`}>
-          <IconWrapper icon={Instagram} color="textSecondary" />
-          <Label color="textSecondary">{user.instagram_username}</Label>
-        </StyledLink>
+        {user.social.instagram_username && (
+          <StyledLink
+            to={`https://instagram.com/${user.social.instagram_username}`}
+          >
+            <IconWrapper icon={Instagram} color="textSecondary" />
+            <Label color="textSecondary">
+              {user.social.instagram_username}
+            </Label>
+          </StyledLink>
+        )}
+        {user.social.twitter_username && (
+          <StyledLink
+            to={`https://twitter.com/${user.social.twitter_username}`}
+          >
+            <IconWrapper icon={Twitter} color="textSecondary" />
+            <Label color="textSecondary">{user.social.twitter_username}</Label>
+          </StyledLink>
+        )}
 
         <Label>Interests</Label>
         <TagsContainer>
