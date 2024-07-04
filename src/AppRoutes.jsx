@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
 
 const Explore = lazy(() => import('./pages/Explore')),
@@ -17,13 +17,10 @@ const Explore = lazy(() => import('./pages/Explore')),
       <Routes>
         <Route path="/" element={<Explore />} />
         <Route path="/users/:username" element={<UserProfile />}>
-          <Route path="/users/:username/photos" element={<UserPhotos />} />
-          <Route
-            path="/users/:username/collections"
-            element={<UserCollections />}
-          />
-          <Route path="/users/:username/likes" element={<UserLikes />} />
-          <Route index element={<UserPhotos />} />
+          <Route index element={<Navigate replace to="photos" />} />
+          <Route path="photos" element={<UserPhotos />} />
+          <Route path="collections" element={<UserCollections />} />
+          <Route path="likes" element={<UserLikes />} />
         </Route>
 
         <Route path="/photo/:id" element={<Photo />} />
