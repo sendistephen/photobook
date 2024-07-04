@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import useOpenModal from '../Modal/useOpenModal';
 import useUserLikes from './useUserLikes';
 import { Photo, PhotoCard, PhotoGrid } from './user.styles';
+import Skeletons from '../Skeletons';
 
 const UserLikes = () => {
   const { username } = useParams<{ username: string }>();
@@ -12,7 +13,7 @@ const UserLikes = () => {
     page: 1,
   });
 
-  if (isLoading) return <div>Loading...</div>;
+ if (isLoading) return <Skeletons count={12} />;
   if (error) return <div>Error: {error.message}</div>;
 
   const allPhotos = data!.pages!.flat();

@@ -1,6 +1,7 @@
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useParams } from 'react-router-dom';
 import useOpenModal from '../Modal/useOpenModal';
+import Skeletons from '../Skeletons';
 import { Photo, PhotoCard, PhotoGrid } from './user.styles';
 import useUserCollections from './useUserCollections';
 
@@ -13,7 +14,7 @@ const UserCollections = () => {
       page: 1,
     });
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Skeletons count={12} />;
   if (error) return <div>Error: {error.message}</div>;
 
   const allPhotos = data!.pages!.flat();

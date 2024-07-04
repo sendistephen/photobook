@@ -1,8 +1,8 @@
 import { Outlet, useParams } from 'react-router-dom';
 import { Wrapper } from '../../styles';
 
-// import { UserAvatar } from '@/components';
 import { UserAvatar } from '@/components';
+import Spinner from '@/components/Spinner';
 import { TabLink, Tabs } from './UserProfile.styles';
 import { useUser } from './useUser';
 
@@ -11,7 +11,7 @@ const UserProfile = () => {
 
   const { user, isLoading, error } = useUser({ username: username ?? null });
 
-  if (isLoading) return <span>Loading</span>;
+  if (isLoading) return <Spinner />;
 
   if (error) {
     return <span>Error</span>;

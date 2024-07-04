@@ -1,6 +1,7 @@
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useParams } from 'react-router-dom';
 import useOpenModal from '../Modal/useOpenModal';
+import Skeletons from '../Skeletons';
 import { Photo, PhotoCard, PhotoGrid } from './user.styles';
 import useUserPhotos from './useUserPhotos';
 
@@ -12,7 +13,7 @@ const UserPhotos = () => {
     page: 1,
   });
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Skeletons count={12} />;
   if (error) return <div>Error: {error.message}</div>;
 
   const allPhotos = data!.pages!.flat();
@@ -22,7 +23,7 @@ const UserPhotos = () => {
       dataLength={allPhotos.length}
       next={fetchNextPage}
       hasMore={!!hasNextPage}
-      loader={<div>Loading...</div>}
+      loader={isLoading ? <Skeletons count={3} /> : null}
       endMessage={<p>No more photos</p>}
     >
       <PhotoGrid>

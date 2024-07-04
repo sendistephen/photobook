@@ -20,7 +20,7 @@ export const SkeletonContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
-  margin-top: 150px;
+  margin-top: 100px;
 `;
 
 export const SkeletonWrapper = styled.div`

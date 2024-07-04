@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Container, LoadingSpinner, Message } from '../../styles';
 import { breakpointColumnObj } from '../../utils/helper';
 
-import LoaderComponent from '../LoaderComponent';
+import LoaderComponent from '../Spinner';
 import {
   CollectionImage,
   CollectionItem,
