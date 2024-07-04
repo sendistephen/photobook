@@ -1,15 +1,24 @@
+import { AppDispatch } from '@/store';
+import { showModal } from '@/store/modalSlice';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import useUserPhotos from './useUserPhotos';
 
 const UserPhotos = () => {
   const { username } = useParams<{ username: string }>();
-
+  const dispatch: AppDispatch = useDispatch();
+  const navigate = useNavigate();
   const { data, isLoading, hasNextPage, fetchNextPage, error } = useUserPhotos({
     username: username!,
     page: 1,
   });
+
+  const handleOpen = (photo: Photo) => {
+    navigate(`/photos/${photo.slug}`, { replace: true });
+    dispatch(showModal(photo.id));
+  };
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
@@ -26,7 +35,11 @@ const UserPhotos = () => {
       <PhotoGrid>
         {allPhotos!.map((photo, index) => (
           <PhotoCard key={photo.id + index}>
-            <Photo src={photo.urls.regular} alt={photo.alt_description} />
+            <Photo
+              onClick={() => handleOpen(photo)}
+              src={photo.urls.regular}
+              alt={photo.alt_description}
+            />
           </PhotoCard>
         ))}
       </PhotoGrid>

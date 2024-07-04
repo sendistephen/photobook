@@ -13,13 +13,13 @@ const Photo = ({ photo }: PhotoProps) => {
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
 
-  const handleOpen = () => {
+  const handleOpen = (photo: Photo) => {
     navigate(`/photos/${photo.slug}`, { replace: true });
     dispatch(showModal(photo.id));
   };
 
   return (
-    <ImageWrapper onClick={handleOpen}>
+    <ImageWrapper onClick={() => handleOpen(photo)}>
       <Image
         src={photo.urls.regular}
         alt={photo.alt_description}
