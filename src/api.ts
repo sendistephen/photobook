@@ -23,6 +23,14 @@ const fetchData = async (
   return response.data;
 };
 
+export const fetchUserData = async (
+  username: string,
+  dataType: string,
+  page?: number,
+) => {
+  return fetchData(`users/${username}/${dataType}`, page ? { page } : {});
+};
+
 export const fetchPhotos = async (page: number, perPage: number = 20) => {
   return fetchData('photos', { page, per_page: perPage });
 };
@@ -31,14 +39,11 @@ export const fetchPhoto = async (photoId: string) => {
   return fetchData(`photos/${photoId}`);
 };
 
-export const fetchUser = async (username: string) => {
-  return fetchData(`users/${username}`);
-};
+export const fetchUser = async (username: string) =>
+  fetchData(`users/${username}`);
 
-export const fetchUserPhotos = async (username: string, page: number) => {
-  return fetchData(`users/${username}/photos`, { page });
-};
+export const fetchUserPhotos = (username: string, page: number) =>
+  fetchUserData(username, 'photos', page);
 
-export const fetchUserCollections = async (username: string, page: number) => {
-  return fetchData(`users/${username}/collections`, { page });
-};
+export const fetchUserCollections = (username: string, page: number) =>
+  fetchUserData(username, 'collections', page);
