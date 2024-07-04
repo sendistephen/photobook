@@ -29,7 +29,7 @@ const UserProfile = () => {
         <TabLink to="collections">Collections</TabLink>
       </Tabs>
       <Outlet />
-      <Navigate to={`/users/${username}/photos`} replace />
+      {/* <Navigate to={`/users/${username}/photos`} replace /> */}
     </Wrapper>
   );
 };

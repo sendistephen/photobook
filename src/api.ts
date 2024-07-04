@@ -47,3 +47,6 @@ export const fetchUserPhotos = (username: string, page: number) =>
 
 export const fetchUserCollections = (username: string, page: number) =>
   fetchUserData(username, 'collections', page);
+
+export const fetchUserLikes = (username: string, page: number) =>
+  fetchUserData(username, 'likes', page);
