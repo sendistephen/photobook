@@ -3,55 +3,42 @@ import axios from 'axios';
 const BASE_URL = import.meta.env.VITE_APP_UNSPLASH_API_URL;
 const ACCESS_KEY = import.meta.env.VITE_APP_UNSPLASH_ACCESS_KEY;
 
-export const fetchPhotos = async (page: number, perPage: number = 20) => {
-  const response = await axios.get(`${BASE_URL}/photos`, {
+/**
+ * Generic function to perform GET requests from the API
+ * @param endpoint
+ * @param params
+ * @returns response data
+ */
+
+const fetchData = async (
+  endpoint: string,
+  params: Record<string, any> = {},
+) => {
+  const response = await axios.get(`${BASE_URL}/${endpoint}`, {
     params: {
       client_id: ACCESS_KEY,
-      page,
-      per_page: perPage,
+      ...params,
     },
   });
   return response.data;
+};
+
+export const fetchPhotos = async (page: number, perPage: number = 20) => {
+  return fetchData('photos', { page, per_page: perPage });
 };
 
 export const fetchPhoto = async (photoId: string) => {
-  const response = await axios.get(`${BASE_URL}/photos/${photoId}`, {
-    params: {
-      client_id: ACCESS_KEY,
-    },
-  });
-
-  return response.data;
+  return fetchData(`photos/${photoId}`);
 };
 
 export const fetchUser = async (username: string) => {
-  const response = await axios.get(`${BASE_URL}/users/${username}`, {
-    params: {
-      client_id: ACCESS_KEY,
-    },
-  });
-  return response.data;
+  return fetchData(`users/${username}`);
 };
 
 export const fetchUserPhotos = async (username: string, page: number) => {
-  const response = await axios.get(`${BASE_URL}/users/${username}/photos`, {
-    params: {
-      client_id: ACCESS_KEY,
-      page,
-    },
-  });
-  return response.data;
+  return fetchData(`users/${username}/photos`, { page });
 };
 
 export const fetchUserCollections = async (username: string, page: number) => {
-  const response = await axios.get(
-    `${BASE_URL}/users/${username}/collections`,
-    {
-      params: {
-        client_id: ACCESS_KEY,
-        page,
-      },
-    },
-  );
-  return response.data;
+  return fetchData(`users/${username}/collections`, { page });
 };
