@@ -3,8 +3,8 @@ import { showModal } from '@/store/modalSlice';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import styled from 'styled-components';
 import useUserLikes from './useUserLikes';
+import { Photo, PhotoCard, PhotoGrid } from './user.styles';
 
 const UserLikes = () => {
   const { username } = useParams<{ username: string }>();
@@ -48,24 +48,3 @@ const UserLikes = () => {
 };
 
 export default UserLikes;
-
-const PhotoGrid = styled.div`
-  display: grid;
-  gap: ${({ theme }) => theme.spacing.md};
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-`;
-const PhotoCard = styled.div`
-  overflow: hidden;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-`;
-const Photo = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.3s;
-
-  &:hover {
-    transform: scale(1.05);
-  }
-`;

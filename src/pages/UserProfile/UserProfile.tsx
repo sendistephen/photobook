@@ -1,4 +1,4 @@
-import { Navigate, Outlet, useParams } from 'react-router-dom';
+import { Outlet, useParams } from 'react-router-dom';
 import { Wrapper } from '../../styles';
 
 // import { UserAvatar } from '@/components';
@@ -29,7 +29,6 @@ const UserProfile = () => {
         <TabLink to="collections">Collections</TabLink>
       </Tabs>
       <Outlet />
-      {/* <Navigate to={`/users/${username}/photos`} replace /> */}
     </Wrapper>
   );
 };
