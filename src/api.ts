@@ -10,11 +10,11 @@ const ACCESS_KEY = import.meta.env.VITE_APP_UNSPLASH_ACCESS_KEY;
  * @returns response data
  */
 
-const fetchData = async (
+const fetchData = async <T>(
   endpoint: string,
   params: Record<string, any> = {},
-) => {
-  const response = await axios.get(`${BASE_URL}/${endpoint}`, {
+): Promise<T> => {
+  const response = await axios.get<T>(`${BASE_URL}/${endpoint}`, {
     params: {
       client_id: ACCESS_KEY,
       ...params,
@@ -23,12 +23,14 @@ const fetchData = async (
   return response.data;
 };
 
-export const fetchUserData = async (
+export const fetchUserData = async <T extends UserDataType>(
   username: string,
-  dataType: string,
-  page?: number,
-) => {
-  return fetchData(`users/${username}/${dataType}`, page ? { page } : {});
+  dataType: T,
+  page: number = 1,
+): Promise<UserDataTypeReturn[T]> => {
+  return fetchData<UserDataTypeReturn[T]>(`users/${username}/${dataType}`, {
+    page,
+  });
 };
 
 export const fetchPhotos = async (page: number, perPage: number = 20) => {
@@ -39,14 +41,19 @@ export const fetchPhoto = async (photoId: string) => {
   return fetchData(`photos/${photoId}`);
 };
 
+export const searchPhotos = async (
+  query: string,
+  page: number,
+  perPage: number = 20,
+) =>
+  fetchData<ApiResponse>('search/photos', { query, page, per_page: perPage });
+
+export const searchCollections = async (
+  query: string,
+  page: number,
+  perPage: number = 20,
+) =>
+  fetchData<ApiResponse>('search/photos', { query, page, per_page: perPage });
+
 export const fetchUser = async (username: string) =>
-  fetchData(`users/${username}`);
-
-export const fetchUserPhotos = (username: string, page: number) =>
-  fetchUserData(username, 'photos', page);
-
-export const fetchUserCollections = (username: string, page: number) =>
-  fetchUserData(username, 'collections', page);
-
-export const fetchUserLikes = (username: string, page: number) =>
-  fetchUserData(username, 'likes', page);
+  fetchData<User>(`users/${username}`);

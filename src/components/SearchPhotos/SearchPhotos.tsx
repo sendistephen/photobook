@@ -1,22 +1,31 @@
+import { Photo, PhotoCard, PhotoGrid } from '@/components/User/user.styles';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import useOpenModal from '../Modal/useOpenModal';
 import Skeletons from '../Skeletons';
-import { Photo, PhotoCard, PhotoGrid } from './user.styles';
-import useUserPhotos from './useUserPhotos';
+import Spinner from '../Spinner';
+import useSearch from './useSearch';
 
-const UserPhotos = () => {
-  const { username } = useParams<{ username: string }>();
+const SearchPhotos = () => {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const query = searchParams.get('query') ?? '';
+
   const openModal = useOpenModal();
-  const { data, isLoading, hasNextPage, fetchNextPage, error } = useUserPhotos({
-    username: username!,
-    page: 1,
-  });
 
-  if (isLoading) return <Skeletons count={12} />;
-  if (error) return <div>Error: {error.message}</div>;
+  const { data, error, fetchNextPage, hasNextPage, isLoading } = useSearch(
+    query,
+    'photos',
+  );
 
-  const allPhotos = data!.pages!.flat() as Photo[];
+  if (isLoading) return <Spinner />;
+  if (error) return <div>Error loading photos</div>;
+
+  // Extract all photo results into a single flat array...
+  const allPhotos = data!.pages.reduce<Photo[]>(
+    (acc, page) => acc.concat(page.results as Photo[]),
+    [],
+  );
 
   return (
     <InfiniteScroll
@@ -41,4 +50,4 @@ const UserPhotos = () => {
   );
 };
 
-export default UserPhotos;
+export default SearchPhotos;

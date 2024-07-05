@@ -8,15 +8,11 @@ import collectionsReducer from './collectionSlice';
 import favoritesReducer from './favoritesSlice';
 import modalReducer from './modalSlice';
 import photoReducer from './photoSlice';
-import photosReducer from './photosSlice';
-import searchReducer from './searchSlice';
 import themeReducer from './themeSlice';
 
 const rootReducer = combineReducers({
-    photos: photosReducer,
     photo: photoReducer,
     collections: collectionsReducer,
-    search: searchReducer,
     favorites: favoritesReducer,
     theme: themeReducer,
     auth: authReducer,

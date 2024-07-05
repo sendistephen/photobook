@@ -1,4 +1,4 @@
-import { fetchUserLikes } from '@/api';
+import { fetchUserData } from '@/api';
 import { useInfiniteQuery } from 'react-query';
 
 interface Props {
@@ -8,7 +8,7 @@ interface Props {
 const useUserLikes = ({ username, page }: Props) => {
   return useInfiniteQuery<Photo[], Error>(
     ['userLikes', username],
-    ({ pageParam = 1 }) => fetchUserLikes(username, pageParam),
+    ({ pageParam = 1 }) => fetchUserData(username, 'likes', pageParam),
     {
       getNextPageParam: (lastPage, pages) => {
         if (lastPage.length === 0) return false;

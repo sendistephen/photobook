@@ -5,15 +5,17 @@ import { FormGroup, Input, SearchIcon } from './Navbar.styles';
 
 export const SearchBar = () => {
   const [query, setQuery] = useState(''),
-    navigate = useNavigate(),
-    handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-      setQuery(e.target.value);
-    },
-    handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      navigate(`/search/photos/${query}`);
-      setQuery('');
-    };
+    navigate = useNavigate();
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQuery(e.target.value);
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    navigate(`/search/photos?query=${encodeURIComponent(query)}`);
+    setQuery('');
+  };
 
   return (
     <form onSubmit={handleSubmit}>

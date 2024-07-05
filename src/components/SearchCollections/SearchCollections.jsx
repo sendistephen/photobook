@@ -11,7 +11,6 @@ import {
   Gallery,
   TotalPhotos,
 } from './SearchCollections.styles';
-import { useSearchCollection } from './useSearchCollection';
 
 const CollectionItemComponent = ({ collection }) => (
   <Link to={`/collections/${collection.id}/photos`}>
@@ -40,8 +39,12 @@ const CollectionGallery = ({ collections }) => (
 );
 
 const SearchCollections = () => {
-  const { collections, hasMore, fetchMoreCollections, isBottomLoader } =
-    useSearchCollection();
+  const collections = [];
+  const hasMore = true;
+  const fetchMoreCollections = () => {
+    return;
+  };
+  const isBottomLoader = false;
 
   return (
     <Container>

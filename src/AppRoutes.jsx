@@ -12,6 +12,10 @@ const Explore = lazy(() => import('./pages/Explore')),
   UserPhotos = lazy(() => import('./components/User/UserPhotos')),
   UserCollections = lazy(() => import('./components/User/UserCollections')),
   UserLikes = lazy(() => import('./components/User/UserLikes')),
+  SearchPhotos = lazy(() => import('./components/SearchPhotos/SearchPhotos')),
+  SearchCollections = lazy(
+    () => import('./components/SearchCollections/SearchCollections'),
+  ),
   AppRoutes = () => (
     <Suspense fallback={null}>
       <Routes>
@@ -22,11 +26,14 @@ const Explore = lazy(() => import('./pages/Explore')),
           <Route path="collections" element={<UserCollections />} />
           <Route path="likes" element={<UserLikes />} />
         </Route>
-
         <Route path="/photo/:id" element={<Photo />} />
         <Route path="/photos/:photoId" element={<PhotoModal />} />
-        <Route path="/search/photos/:searchWord" element={<Search />} />
-        <Route path="/search/collections/:searchWord" element={<Search />} />
+        <Route path="/search" element={<Search />}>
+          <Route index element={<Navigate to="photos" />} />
+          <Route path="photos" element={<SearchPhotos />} />
+          <Route path="collections" element={<SearchCollections />} />
+        </Route>
+
         <Route
           path="/collections/:collectionId/photos"
           element={<Collection />}

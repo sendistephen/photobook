@@ -5,7 +5,6 @@ export { default as Modal } from './Modal';
 export { default as Navbar } from './Navbar';
 export { default as MenuButton } from './NavLinks';
 export { default as PhotoModal } from './PhotoModal';
-export { default as PhotoTopic } from './PhotoTopic';
 export { default as SearchCollections } from './SearchCollections';
 export { default as SearchPhotos } from './SearchPhotos';
 export { default as Skeleton } from './Skeletons';

@@ -15,8 +15,8 @@ const usePhotos = () => {
     ['photos'],
     ({ pageParam = 1 }) => fetchPhotos(pageParam),
     {
-      getNextPageParam: (lastePage, pages) =>
-        lastePage.length ? pages.length + 1 : undefined,
+      getNextPageParam: (lastPage, pages) =>
+        lastPage.length ? pages.length + 1 : undefined,
     },
   );
   const photos = data ? data.pages.flat() : [];
