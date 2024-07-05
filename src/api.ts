@@ -53,7 +53,11 @@ export const searchCollections = async (
   page: number,
   perPage: number = 20,
 ) =>
-  fetchData<ApiResponse>('search/photos', { query, page, per_page: perPage });
+  fetchData<ApiResponse>('search/collections', {
+    query,
+    page,
+    per_page: perPage,
+  });
 
 export const fetchUser = async (username: string) =>
   fetchData<User>(`users/${username}`);

@@ -53,12 +53,23 @@ interface User {
 interface Collection {
   id: string;
   description: string;
+  title: string;
+  total_photos: number;
   user: User;
   links: {
     self: string;
     html: string;
     photos: string;
     likes: string;
+  };
+  tags: {
+    title: string;
+  }[];
+  cover_photo: {
+    urls: {
+      small: string;
+      regular: string;
+    };
   };
 }
 urls: {
