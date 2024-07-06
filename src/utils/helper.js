@@ -104,3 +104,8 @@ export const imageSize = `
 (min-width:600px) and (max-width:1199px) 50vw,,
 (min-width:1200px) 33vw
 `;
+
+export const getImageSrc = (urls) => {
+  console.log(urls);
+  return urls.regular || urls.small || urls.thumb || urls.raw || urls.full;
+};

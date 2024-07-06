@@ -1,4 +1,3 @@
-export { default as Collections } from './Collections';
 export { default as Gallery } from './Gallery';
 export { default as MasonryGallery } from './MasonryGallery';
 export { default as Modal } from './Modal';

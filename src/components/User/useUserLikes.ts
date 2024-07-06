@@ -11,7 +11,7 @@ const useUserLikes = ({ username, page }: Props) => {
     ({ pageParam = 1 }) => fetchUserData(username, 'likes', pageParam),
     {
       getNextPageParam: (lastPage, pages) => {
-        if (lastPage.length === 0) return false;
+        if (!lastPage || lastPage.length === 0) return undefined;
         return pages.length + 1;
       },
     },

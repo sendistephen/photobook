@@ -1,3 +1,4 @@
+import { getImageSrc } from '@/utils/helper';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useParams } from 'react-router-dom';
 import useOpenModal from '../Modal/useOpenModal';
@@ -11,28 +12,31 @@ const UserCollections = () => {
   const { data, isLoading, hasNextPage, fetchNextPage, error } =
     useUserCollections({
       username: username!,
-      page: 1,
     });
 
   if (isLoading) return <Skeletons count={12} />;
   if (error) return <div>Error: {error.message}</div>;
 
-  const allPhotos = data!.pages!.flat();
+  // Flatten the nested array of collections
+  const allCollections = data?.pages
+    ? data?.pages.reduce((acc, page) => [...acc, ...page], [])
+    : [];
+
   return (
     <InfiniteScroll
-      dataLength={allPhotos.length}
+      dataLength={allCollections.length}
       next={fetchNextPage}
       hasMore={!!hasNextPage}
-      loader={<div>Loading...</div>}
+      loader={isLoading ? <Skeletons count={3} /> : null}
       endMessage={<p>No more photos</p>}
     >
       <PhotoGrid>
-        {allPhotos!.map((photo, index) => (
-          <PhotoCard key={photo.id + index}>
+        {allCollections!.map((collection, index) => (
+          <PhotoCard key={collection.id + index}>
             <Photo
-              onClick={() => openModal(photo, allPhotos)}
-              src={photo.urls.regular}
-              alt={photo.alt_description}
+              onClick={() => openModal(collection, allCollections)}
+              src={getImageSrc(collection!.cover_photo.urls)}
+              alt={collection.cover_photo.alt_description}
             />
           </PhotoCard>
         ))}

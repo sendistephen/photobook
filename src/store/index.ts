@@ -4,7 +4,6 @@ import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
 import authReducer from './authSlice';
-import collectionsReducer from './collectionSlice';
 import favoritesReducer from './favoritesSlice';
 import modalReducer from './modalSlice';
 import photoReducer from './photoSlice';
@@ -12,7 +11,6 @@ import themeReducer from './themeSlice';
 
 const rootReducer = combineReducers({
     photo: photoReducer,
-    collections: collectionsReducer,
     favorites: favoritesReducer,
     theme: themeReducer,
     auth: authReducer,

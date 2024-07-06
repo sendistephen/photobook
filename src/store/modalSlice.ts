@@ -4,12 +4,12 @@ import { RootState } from '.';
 interface ModalState {
   isOpen: boolean;
   selectedPhotoId: string | null;
-  photos: Photo[];
+  photos: Photo[] | Collection[];
 }
 
 interface ModalPayload {
   photoId: string;
-  photos: Photo[];
+  photos: Photo[] | Collection[];
 }
 
 const initialState: ModalState = {

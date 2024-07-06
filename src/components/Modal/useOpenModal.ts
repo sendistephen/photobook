@@ -6,7 +6,10 @@ export const useOpenModal = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  return function openModal(photo: Photo, photos: Photo[]) {
+  return function openModal(
+    photo: Photo | Collection,
+    photos: Photo[] | Collection[],
+  ) {
     navigate(`/photos/${photo.id}`, { replace: true });
     dispatch(showModal({ photoId: photo.id, photos }));
   };

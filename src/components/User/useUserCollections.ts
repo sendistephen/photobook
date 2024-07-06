@@ -3,15 +3,14 @@ import { useInfiniteQuery } from 'react-query';
 
 interface Props {
   username: string;
-  page: number;
 }
-const useUserCollections = ({ username, page }: Props) => {
+const useUserCollections = ({ username }: Props) => {
   return useInfiniteQuery<Collection[], Error>(
-    ['userLikes', username],
+    ['userCollections', username],
     ({ pageParam = 1 }) => fetchUserData(username, 'collections', pageParam),
     {
       getNextPageParam: (lastPage, pages) => {
-        if (lastPage.length === 0) return false;
+        if (!lastPage || lastPage.length === 0) return undefined;
         return pages.length + 1;
       },
     },

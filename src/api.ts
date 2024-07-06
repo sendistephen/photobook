@@ -23,22 +23,28 @@ const fetchData = async <T>(
   return response.data;
 };
 
-export const fetchUserData = async <T extends UserDataType>(
+/**
+ * Fetches user-related data like photos, collections, likes based on the provided type.
+ * @param username - The username of the user.
+ * @param dataType - The type of data to fetch (photos, collections, likes).
+ * @param page - Pagination support, defaulting to page 1.
+ * @returns The specific data type related to the user.
+ */
+
+export async function fetchUserData<T>(
   username: string,
-  dataType: T,
+  dataType: 'photos' | 'collections' | 'likes',
   page: number = 1,
-): Promise<UserDataTypeReturn[T]> => {
-  return fetchData<UserDataTypeReturn[T]>(`users/${username}/${dataType}`, {
-    page,
-  });
-};
+): Promise<T> {
+  return fetchData<T>(`users/${username}/${dataType}`, { page });
+}
 
 export const fetchPhotos = async (page: number, perPage: number = 20) => {
-  return fetchData('photos', { page, per_page: perPage });
+  return fetchData<Photo[]>('photos', { page, per_page: perPage });
 };
 
 export const fetchPhoto = async (photoId: string) => {
-  return fetchData(`photos/${photoId}`);
+  return fetchData<Photo>(`photos/${photoId}`);
 };
 
 export const searchPhotos = async (

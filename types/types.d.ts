@@ -1,6 +1,7 @@
 interface Photo {
   id: string;
   urls: {
+    raw: string;
     small: string;
     full: string;
     thumb: string;
@@ -66,9 +67,13 @@ interface Collection {
     title: string;
   }[];
   cover_photo: {
+    alt_description: string;
     urls: {
       small: string;
       regular: string;
+      full: string;
+      raw: string;
+      thumb: string;
     };
   };
 }

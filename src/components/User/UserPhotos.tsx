@@ -1,3 +1,4 @@
+import { getImageSrc } from '@/utils/helper';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useParams } from 'react-router-dom';
 import useOpenModal from '../Modal/useOpenModal';
@@ -31,7 +32,7 @@ const UserPhotos = () => {
           <PhotoCard key={photo.id + index}>
             <Photo
               onClick={() => openModal(photo, allPhotos)}
-              src={photo.urls.regular}
+              src={getImageSrc(photo.urls)}
               alt={photo.alt_description}
             />
           </PhotoCard>

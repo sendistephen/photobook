@@ -1,4 +1,4 @@
-import { generateSrcSet, imageSize } from '@/utils/helper';
+import { generateSrcSet, getImageSrc, imageSize } from '@/utils/helper';
 import { Image, ImageWrapper } from './Gallery.styles';
 
 interface PhotoProps {
@@ -9,7 +9,7 @@ const Photo = ({ photo }: PhotoProps) => {
   return (
     <ImageWrapper>
       <Image
-        src={photo.urls.regular}
+        src={getImageSrc(photo.urls)}
         alt={photo.alt_description}
         srcSet={generateSrcSet(photo)}
         sizes={imageSize}

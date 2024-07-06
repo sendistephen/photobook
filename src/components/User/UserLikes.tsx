@@ -1,9 +1,10 @@
+import { getImageSrc } from '@/utils/helper';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useParams } from 'react-router-dom';
 import useOpenModal from '../Modal/useOpenModal';
+import Skeletons from '../Skeletons';
 import useUserLikes from './useUserLikes';
 import { Photo, PhotoCard, PhotoGrid } from './user.styles';
-import Skeletons from '../Skeletons';
 
 const UserLikes = () => {
   const { username } = useParams<{ username: string }>();
@@ -13,16 +14,19 @@ const UserLikes = () => {
     page: 1,
   });
 
- if (isLoading) return <Skeletons count={12} />;
+  if (isLoading) return <Skeletons count={12} />;
   if (error) return <div>Error: {error.message}</div>;
 
-  const allPhotos = data!.pages!.flat();
+  const allPhotos = data?.pages
+    ? data.pages.reduce((acc, page) => [...acc, ...page], [])
+    : [];
+
   return (
     <InfiniteScroll
       dataLength={allPhotos.length}
       next={fetchNextPage}
       hasMore={!!hasNextPage}
-      loader={<div>Loading...</div>}
+      loader={isLoading ? <Skeletons count={3} /> : null}
       endMessage={<p>No more photos</p>}
     >
       <PhotoGrid>
@@ -30,7 +34,7 @@ const UserLikes = () => {
           <PhotoCard key={photo.id + index}>
             <Photo
               onClick={() => openModal(photo, allPhotos)}
-              src={photo.urls.regular}
+              src={getImageSrc(photo.urls)}
               alt={photo.alt_description}
             />
           </PhotoCard>
