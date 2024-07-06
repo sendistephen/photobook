@@ -10,7 +10,6 @@ import {
   PhotoImage,
   PhotoImageWrapper,
 } from './Modal.styles';
-import { PhotoLikes } from './PhotoLikes';
 
 export const ModalPhoto = ({ photo, favorited, handleSaveFavoritePhoto }) => (
   <>
@@ -20,7 +19,6 @@ export const ModalPhoto = ({ photo, favorited, handleSaveFavoritePhoto }) => (
       </Link>
     </PhotoImageWrapper>
     <PhotoFooter>
-      <PhotoLikes likes={photo.likes} />
       <FavIcon>
         <Icon
           onClick={() => handleSaveFavoritePhoto(photo)}

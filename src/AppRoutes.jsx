@@ -3,7 +3,6 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
 
 const Explore = lazy(() => import('./pages/Explore')),
-  Photo = lazy(() => import('./pages/Photo')),
   UserProfile = lazy(() => import('./pages/UserProfile/UserProfile')),
   Search = lazy(() => import('./pages/Search')),
   Collection = lazy(() => import('./pages/Collection')),
@@ -26,7 +25,7 @@ const Explore = lazy(() => import('./pages/Explore')),
           <Route path="collections" element={<UserCollections />} />
           <Route path="likes" element={<UserLikes />} />
         </Route>
-        <Route path="/photo/:id" element={<Photo />} />
+        {/* TODO: Add photos/:photoId route */}
         <Route path="/photos/:photoId" element={<PhotoModal />} />
         <Route path="/search" element={<Search />}>
           <Route index element={<Navigate to="photos" />} />
