@@ -48,7 +48,7 @@ const SearchCollections = () => {
       <CollectionGrid>
         {allCollections.map((collection, index) => (
           <StyledLink
-            to={`/collections/${collection.id}/photos`}
+            to={`/collections/${collection.id}/${collection.title}`}
             key={collection.id + index}
           >
             <CollectionCard>

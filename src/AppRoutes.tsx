@@ -34,7 +34,7 @@ const Explore = lazy(() => import('./pages/Explore')),
         </Route>
 
         <Route
-          path="/collections/:collectionId/photos"
+          path="/collections/:collectionId/:collectionTitle"
           element={<Collection />}
         />
         <Route

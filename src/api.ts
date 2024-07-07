@@ -43,6 +43,17 @@ export const fetchPhotos = async (page: number, perPage: number = 20) => {
   return fetchData<Photo[]>('photos', { page, per_page: perPage });
 };
 
+export const fetchCollectionPhotos = async (
+  collectionId: string,
+  page: number,
+  perPage: number = 20,
+) => {
+  return fetchData<Photo[]>(`collections/${collectionId}/photos`, {
+    page,
+    per_page: perPage,
+  });
+};
+
 export const fetchPhoto = async (photoId: string) => {
   return fetchData<Photo>(`photos/${photoId}`);
 };
