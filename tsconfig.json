@@ -1,13 +1,13 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
+    "moduleResolution": "node",
     "incremental": true,
     "module": "ESNext",
     "useDefineForClassFields": true,
     "strict": true,
     "jsx": "react-jsx",
     "target": "ESNext",
-    "moduleResolution": "node",
     "esModuleInterop": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
@@ -17,7 +17,12 @@
     "isolatedModules": true,
     "allowJs": true, // Allow JavaScript files
     "checkJs": false, // Don't type-check JavaScript files
-    "typeRoots": ["./types", "./node_modules/@types"],
+    "typeRoots": [
+      "./types",
+      "./types/interfaces",
+      "./node_modules/@types",
+      "./node_modules"
+    ],
     "types": ["vitest/globals", "styled-components"],
     "noEmit": true,
     "noUnusedLocals": true,
@@ -31,9 +36,7 @@
     "**/*.ts",
     "**/*.tsx",
     "**/*.js",
-    "**/*.jsx",
     "src/**/*",
-    "types/types.d.ts",
     "src/types/types.d.ts",
     "src/types/theme.d.ts"
   ],

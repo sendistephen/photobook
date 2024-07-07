@@ -1,3 +1,12 @@
+interface GalleryProps {
+  photos: Photo[];
+  fetchNextPage: () => void;
+  hasMore: boolean;
+  isLoading: boolean;
+  isInitialLoading: boolean;
+  handleOpenPhoto: (photo: Photo, photos: Photo[]) => void;
+}
+
 interface Photo {
   id: string;
   urls: {
@@ -18,10 +27,6 @@ interface Photo {
   };
   tags: Tag[];
   user: User;
-}
-
-interface Tag {
-  title: string;
 }
 
 interface User {
@@ -51,6 +56,10 @@ interface User {
   };
 }
 
+interface Tag {
+  title: string;
+}
+
 interface Collection {
   id: string;
   description: string;
@@ -77,23 +86,16 @@ interface Collection {
     };
   };
 }
-urls: {
-  raw: string;
-  full: string;
-  regular: string;
-  small: string;
-  thumb: string;
-}
-links: {
-  self: string;
-  html: string;
-  download: string;
-}
 
 interface ApiResponse {
   total: number;
   total_pages: number;
   results: Photo[] | Collection[];
+}
+interface UserDataTypeReturn {
+  photos: Photo[];
+  likes: Photo[];
+  collections: Collection[];
 }
 
 interface SearchParams {
@@ -119,11 +121,3 @@ interface SearchParams {
 }
 
 type UserDataType = 'photos' | 'likes' | 'collections';
-
-// return types for each user data type
-
-interface UserDataTypeReturn {
-  photos: Photo[];
-  likes: Photo[];
-  collections: Collection[];
-}

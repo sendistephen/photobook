@@ -10,6 +10,7 @@ describe('Gallery component', () => {
         hasMore={false}
         isLoading={false}
         isInitialLoading={false}
+        handleOpenPhoto={vi.fn()}
       />,
     );
     expect(screen.getByTestId('gallery')).toBeInTheDocument();

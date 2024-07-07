@@ -1,13 +1,15 @@
-import { PropsWithChildren } from 'react';
 import { Toaster } from 'react-hot-toast';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Provider as ReduxProvider, useSelector } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { RootState, store } from './store';
-import { theme } from './styles/theme';
 import { GlobalStyles } from './styles/GlobalStyles';
+import { theme } from './styles/theme';
 
+interface ProviderProps {
+  children: React.ReactNode;
+}
 const client = new QueryClient({
   defaultOptions: {
     queries: {
@@ -19,7 +21,7 @@ const client = new QueryClient({
   },
 });
 
-const Providers: React.FC = ({ children }: PropsWithChildren) => {
+const Providers = ({ children }: ProviderProps) => {
   const darkThemeEnabled = useSelector(
     (state: RootState) => state.theme.darkThemeEnabled,
   );

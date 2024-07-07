@@ -6,11 +6,9 @@ import storage from 'redux-persist/lib/storage';
 import authReducer from './authSlice';
 import favoritesReducer from './favoritesSlice';
 import modalReducer from './modalSlice';
-import photoReducer from './photoSlice';
 import themeReducer from './themeSlice';
 
 const rootReducer = combineReducers({
-    photo: photoReducer,
     favorites: favoritesReducer,
     theme: themeReducer,
     auth: authReducer,

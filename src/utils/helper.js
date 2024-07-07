@@ -106,6 +106,5 @@ export const imageSize = `
 `;
 
 export const getImageSrc = (urls) => {
-  console.log(urls);
   return urls.regular || urls.small || urls.thumb || urls.raw || urls.full;
 };
