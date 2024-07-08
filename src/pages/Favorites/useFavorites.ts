@@ -9,6 +9,7 @@ const useFavorites = () => {
       getNextPageParam: (lastPage) => lastPage?.lastDoc || undefined,
     },
   );
+  
 };
 
 export default useFavorites;

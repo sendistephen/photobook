@@ -16,9 +16,15 @@ import {
 
 interface PhotoModalHeaderProps {
   photo: Photo | null;
+  onFavorite: () => void;
+  isFavorited: boolean;
 }
 
-const PhotoModalHeader = ({ photo }: PhotoModalHeaderProps) => {
+const PhotoModalHeader = ({
+  photo,
+  onFavorite,
+  isFavorited,
+}: PhotoModalHeaderProps) => {
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
 
@@ -28,6 +34,8 @@ const PhotoModalHeader = ({ photo }: PhotoModalHeaderProps) => {
     dispatch(hideModal());
     navigate(`/users/${photo.user.username}`, { replace: true });
   };
+
+  const isFavoriteIconColor = isFavorited ? 'error' : 'textSecondary';
 
   return (
     <PhotoHeaderContainer>
@@ -44,8 +52,12 @@ const PhotoModalHeader = ({ photo }: PhotoModalHeaderProps) => {
         </PhotoHeaderInfo>
       </PhotoHeaderUser>
       <PhotoHeaderCTA>
-        <StyledButton>
-          <IconWrapper icon={HeartIcon} size="1.5em" />
+        <StyledButton onClick={onFavorite}>
+          <IconWrapper
+            icon={HeartIcon}
+            size="1.5em"
+            color={isFavoriteIconColor}
+          />
         </StyledButton>
         <StyledButton>
           <IconWrapper icon={Plus} size="1.5em" />

@@ -17,6 +17,7 @@ const StyledIconWrapper = styled.span<{
   color?: keyof Theme['colors'];
 }>`
   color: ${({ color, theme }) => (color ? theme.colors[color] : 'inherit')};
+
   svg {
     width: ${({ size }) => size || '1em'};
     height: ${({ size }) => size || '1em'};

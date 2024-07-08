@@ -1,6 +1,5 @@
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useLocation } from 'react-router-dom';
-import { Message } from '../../styles';
 import { Label } from '../PhotoModal/PhotoModal.styles';
 import useSearch from '../SearchPhotos/useSearch';
 import Skeletons from '../Skeletons';
@@ -39,11 +38,7 @@ const SearchCollections = () => {
       next={fetchNextPage}
       hasMore={!!hasNextPage}
       loader={<Skeletons count={3} />}
-      endMessage={
-        <Message>
-          <b>There are no more photo collections to show.</b>
-        </Message>
-      }
+      endMessage={<p>There are no more photo collections to show.</p>}
     >
       <CollectionGrid>
         {allCollections.map((collection, index) => (

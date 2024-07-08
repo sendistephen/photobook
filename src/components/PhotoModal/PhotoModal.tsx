@@ -1,6 +1,9 @@
+import useFavoriteMutation from '@/pages/Favorites/useFavoriteMutation';
+import useFavorites from '@/pages/Favorites/useFavorites';
 import { RootState } from '@/store';
 import { hideModal } from '@/store/modalSlice';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import SkeletonModal from '../Common/SkeletonModal';
@@ -13,9 +16,21 @@ import useBodyScrollLock from './useBodyScrollLock';
 import usePhoto from './usePhoto';
 
 const PhotoModal = () => {
+  const [isFavorited, setIsFavorited] = useState(false);
   const { photos, isOpen, selectedPhotoId } = useSelector(
     (state: RootState) => state.modal,
   );
+
+  const { data } = useFavorites();
+
+  const favorites = data?.pages
+    ? data.pages.reduce(
+        (acc, page) => [...acc, ...page.favorites],
+        [] as Photo[],
+      )
+    : [];
+
+  const { addMutation, removeMutation } = useFavoriteMutation();
 
   useBodyScrollLock(isOpen);
   const openModal = useOpenModal();
@@ -41,12 +56,30 @@ const PhotoModal = () => {
     }
   }, [selectedPhotoId, navigate]);
 
+  useEffect(() => {
+    // check if current photo is in user's favorites list and set isFavorited
+    const favoriteStatus = favorites.some((p) => p.id === selectedPhotoId);
+
+    setIsFavorited(favoriteStatus);
+  }, [selectedPhotoId, photos]);
+
   if (isError) return <div>Error fetching photo</div>;
 
   if (!isOpen || !selectedPhotoId) return null;
 
   const handleClose = () => {
     dispatch(hideModal());
+  };
+
+  const toggleFavorite = () => {
+    if (isFavorited) {
+      removeMutation.mutate(selectedPhotoId);
+      toast.success('Removed from favorites');
+    } else {
+      addMutation.mutate(photo as Photo);
+      toast.success('Added to favorites');
+    }
+    setIsFavorited(!isFavorited); // optmistically update isFavorited
   };
 
   return (
@@ -57,7 +90,11 @@ const PhotoModal = () => {
           <SkeletonModal />
         ) : (
           <>
-            <PhotoModalHeader photo={photo || null} />
+            <PhotoModalHeader
+              photo={photo || null}
+              onFavorite={toggleFavorite}
+              isFavorited={isFavorited}
+            />
             <CloseButton onClick={handleClose}>&times;</CloseButton>
             <PhotoDetails photo={photo} />
           </>

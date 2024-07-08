@@ -1,40 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import {
-  collection,
-  deleteDoc,
-  doc,
-  getDocs,
-  getFirestore,
-  setDoc,
-} from 'firebase/firestore';
+import { deleteDoc, doc, getFirestore, setDoc } from 'firebase/firestore';
 
 import { handleAsyncThunkCases } from '../utils/helper';
-
-// Async thunk for fetching favorite photos
-export const getFavorites = createAsyncThunk(
-  'favorites/getFavorites',
-  async (_, { getState, rejectWithValue }) => {
-    const { user } = getState().auth;
-
-    if (!user) {
-      return rejectWithValue('User not authenticated');
-    }
-
-    const db = getFirestore(),
-      favoritesCollectionRef = collection(db, `users/${user.uid}/favorites`);
-    try {
-      const querySnapShot = await getDocs(favoritesCollectionRef),
-        favorites = [];
-      querySnapShot.forEach((doc) => {
-        // Push each favorite into the array with the document ID included
-        favorites.push({ id: doc.id, ...doc.data() });
-      });
-      return favorites;
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  },
-);
 
 // Async thunk for adding a favorite photo
 export const addFavoritePhoto = createAsyncThunk(
@@ -103,11 +70,7 @@ const initialState = {
     },
     extraReducers: (builder) => {
       builder;
-      handleAsyncThunkCases(builder, getFavorites, {
-        fulfilled: (state, action) => {
-          state.photos = action.payload;
-        },
-      });
+
       handleAsyncThunkCases(builder, addFavoritePhoto, {
         fulfilled: (state, action) => {
           const index = state.photos.findIndex(
