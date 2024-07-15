@@ -121,3 +121,11 @@ interface SearchParams {
 }
 
 type UserDataType = 'photos' | 'likes' | 'collections';
+
+interface PhotoModalContentProps {
+  isLoading: boolean;
+  photo: Photo | null;
+  isFavorited: boolean;
+  onFavorite: () => void;
+  onClose: () => void;
+}

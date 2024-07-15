@@ -189,3 +189,12 @@ export const StyledSliderButton = styled.button`
     color: ${({ theme }) => theme.colors.skeltonHighlight};
   }
 `;
+export const NavigationWrapper = styled.div`
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  display: flex;
+  justify-content: space-between;
+  transform: translateY(-50%);
+  z-index: 200;
+`;
