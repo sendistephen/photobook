@@ -1,19 +1,28 @@
+// usePhotoNavigation.ts
 import { useNavigate } from 'react-router-dom';
 import useOpenModal from '../Modal/useOpenModal';
 
-const usePhotoNavigation = (photos: Photo[], selectedPhotoId: string) => {
+const usePhotoNavigation = (
+  photos: (Photo | Collection)[] | undefined,
+  selectedPhotoId: string | undefined,
+) => {
   const openModal = useOpenModal();
   const navigate = useNavigate();
-  const currentIndex = photos.findIndex((p) => p.id === selectedPhotoId);
 
   const handleNavigation = (offset: number) => {
+    if (!photos || !selectedPhotoId) return;
+
+    const currentIndex = photos.findIndex((p) => p.id === selectedPhotoId);
     const newIndex = currentIndex + offset;
+
     if (newIndex >= 0 && newIndex < photos.length) {
-      const newPhotoId = photos[newIndex];
-      navigate(`/photos/${newPhotoId}`, { replace: true });
-      openModal(newPhotoId, photos);
+      const newPhoto = photos[newIndex]; // Get the full photo or collection object
+      navigate(`/photos/${newPhoto.id}`, { replace: true });
+      openModal(newPhoto, photos as any);
     }
   };
+
   return { handleNavigation };
 };
+
 export default usePhotoNavigation;
