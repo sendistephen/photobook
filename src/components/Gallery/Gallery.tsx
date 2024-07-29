@@ -10,12 +10,12 @@ const Gallery = (props: GalleryProps) => {
     <Container data-testid="gallery">
       {props.isInitialLoading ? (
         <Skeletons count={12} />
-      ) : props.photos.length === 0 ? (
+      ) : props.photos?.length === 0 ? ( // Use optional chaining
         <div>No photos found</div>
       ) : (
         <GalleryWrapper>
           <InfiniteScroll
-            dataLength={props.photos.length}
+            dataLength={props.photos?.length || 0} // Handle potential undefined photos
             next={props.fetchNextPage}
             hasMore={props.hasMore}
             loader={props.isLoading ? <Skeletons count={3} /> : null}
