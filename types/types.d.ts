@@ -15,6 +15,7 @@ interface Photo {
     full: string;
     thumb: string;
     regular: string;
+    small_s3: string;
   };
   slug: string;
   alt_description: string;

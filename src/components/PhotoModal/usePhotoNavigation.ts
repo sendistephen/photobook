@@ -1,6 +1,6 @@
 // usePhotoNavigation.ts
+import useOpenModal from '@/components/PhotoModal/useOpenModal';
 import { useNavigate } from 'react-router-dom';
-import useOpenModal from '../Modal/useOpenModal';
 
 const usePhotoNavigation = (
   photos: (Photo | Collection)[] | undefined,

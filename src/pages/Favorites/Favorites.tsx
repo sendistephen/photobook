@@ -1,6 +1,6 @@
 import { Skeleton } from '@/components';
-import useOpenModal from '@/components/Modal/useOpenModal';
 import { Label } from '@/components/PhotoModal/PhotoModal.styles';
+import useOpenModal from '@/components/PhotoModal/useOpenModal';
 import Skeletons from '@/components/Skeletons';
 import {
   Photo as Image,

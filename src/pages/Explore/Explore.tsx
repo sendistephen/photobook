@@ -1,5 +1,5 @@
 import Gallery from '@/components/Gallery/Gallery';
-import useOpenModal from '@/components/Modal/useOpenModal';
+import useOpenModal from '@/components/PhotoModal/useOpenModal';
 import usePhotos from './usePhotos';
 
 const Explore = () => {

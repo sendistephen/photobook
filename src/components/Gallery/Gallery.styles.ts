@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 export const Gallery = styled.div`
   margin-top: 100px;
+  cursor: pointer;
 `;
 export const ImageWrapper = styled.div`
   overflow: hidden;

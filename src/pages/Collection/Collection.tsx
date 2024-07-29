@@ -1,5 +1,5 @@
 import { Skeleton } from '@/components';
-import useOpenModal from '@/components/Modal/useOpenModal';
+import useOpenModal from '@/components/PhotoModal/useOpenModal';
 import Skeletons from '@/components/Skeletons';
 import { Photo, PhotoCard, PhotoGrid } from '@/components/User/user.styles';
 import { getImageSrc } from '@/utils/helper';

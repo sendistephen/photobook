@@ -1,7 +1,8 @@
+import useOpenModal from '@/components/PhotoModal/useOpenModal';
 import { getImageSrc } from '@/utils/helper';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useParams } from 'react-router-dom';
-import useOpenModal from '../Modal/useOpenModal';
+
 import Skeletons from '../Skeletons';
 import useUserLikes from './useUserLikes';
 import { Photo, PhotoCard, PhotoGrid } from './user.styles';

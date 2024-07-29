@@ -15,6 +15,7 @@ const Explore = lazy(() => import('./pages/Explore')),
   SearchCollections = lazy(
     () => import('./components/SearchCollections/SearchCollections'),
   ),
+  Photo = lazy(() => import('./pages/Photo')),
   AppRoutes = () => (
     <Suspense fallback={null}>
       <Routes>

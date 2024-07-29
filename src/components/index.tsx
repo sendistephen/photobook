@@ -1,6 +1,5 @@
 export { default as Gallery } from './Gallery';
 export { default as MasonryGallery } from './MasonryGallery';
-export { default as Modal } from './Modal';
 export { default as Navbar } from './Navbar';
 export { default as MenuButton } from './NavLinks';
 export { default as PhotoModal } from './PhotoModal';

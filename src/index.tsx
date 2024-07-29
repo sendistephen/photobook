@@ -11,7 +11,7 @@ import App from './App';
 import { store } from './store';
 
 const container = document.getElementById('root'),
-  root = ReactDOM.createRoot(container);
+  root = ReactDOM.createRoot(container as HTMLElement);
 
 root.render(
   <React.StrictMode>

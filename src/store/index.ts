@@ -4,12 +4,10 @@ import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
 import authReducer from './authSlice';
-import favoritesReducer from './favoritesSlice';
 import modalReducer from './modalSlice';
 import themeReducer from './themeSlice';
 
 const rootReducer = combineReducers({
-    favorites: favoritesReducer,
     theme: themeReducer,
     auth: authReducer,
     modal: modalReducer,

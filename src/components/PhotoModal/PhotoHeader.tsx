@@ -32,7 +32,9 @@ const PhotoModalHeader = ({
 
   const handleUserClick = () => {
     dispatch(hideModal());
-    navigate(`/users/${photo.user.username}`, { replace: true });
+    navigate(`/users/${photo.user.username}`, {
+      state: { backgroundLocation: '/' },
+    });
   };
 
   const isFavoriteIconColor = isFavorited ? 'error' : 'textSecondary';
@@ -41,8 +43,8 @@ const PhotoModalHeader = ({
     <PhotoHeaderContainer>
       <PhotoHeaderUser onClick={handleUserClick}>
         <PhotoHeaderImage
-          src={photo?.user.profile_image.small}
-          alt="Carl Dunn"
+          src={photo?.user.profile_image.medium}
+          alt={photo?.user.name}
         />
         <PhotoHeaderInfo>
           <Label weight="bold">{photo?.user.name}</Label>

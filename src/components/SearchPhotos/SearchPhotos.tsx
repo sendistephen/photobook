@@ -1,7 +1,7 @@
+import useOpenModal from '@/components/PhotoModal/useOpenModal';
 import { Photo, PhotoCard, PhotoGrid } from '@/components/User/user.styles';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useLocation } from 'react-router-dom';
-import useOpenModal from '../Modal/useOpenModal';
 import Skeletons from '../Skeletons';
 import Spinner from '../Spinner';
 import useSearch from './useSearch';

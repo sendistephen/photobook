@@ -18,9 +18,9 @@ const PhotoDetails = ({ photo }: PhotoDetailsProps) => {
     <>
       <ImageContainer>
         <PhotoImage
-          src={photo?.urls.small}
+          src={photo?.urls.small_s3}
           alt={photo?.alt_description}
-          srcSet={generateSrcSet(photo)}
+          srcSet={generateSrcSet(photo as Photo)}
           sizes={imageSize}
           loading="lazy"
         />
