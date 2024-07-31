@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Provider as ReduxProvider, useSelector } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
@@ -6,6 +6,7 @@ import { ThemeProvider } from 'styled-components';
 import { RootState, store } from '@/store';
 import { GlobalStyles } from '@/styles/GlobalStyles';
 import { theme } from '@/styles/theme';
+import '../tests/mocks/firebaseConfigTest';
 
 interface ProviderProps {
   children: ReactNode;

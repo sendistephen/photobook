@@ -29,7 +29,7 @@ const PhotoModal = () => {
   if (!isOpen || !selectedPhotoId) return null;
 
   return (
-    <Overlay>
+    <Overlay data-testid="photo-modal">
       <PhotoModalNavigation handleNavigation={handleNavigation} />
       <PhotoModalContent
         isLoading={isLoading}

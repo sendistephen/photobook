@@ -1,6 +1,7 @@
 import {
   render,
   screen,
+  waitFor,
   waitForElementToBeRemoved,
 } from '@testing-library/react';
 import { http, HttpResponse } from 'msw';
@@ -10,10 +11,14 @@ import Explore from '../../src/pages/Explore';
 import { db } from '../mocks/db';
 import { server } from '../mocks/server';
 import { emptyHandlers, handlers } from 'tests/mocks/handlers';
+import { PhotoModal } from '@/components';
+import userEvent from '@testing-library/user-event';
 
 const queryClient = new QueryClient();
 
 describe('Explore', () => {
+  const photoIds: string[] = [];
+
   beforeAll(() => {
     server.listen();
   });
@@ -22,7 +27,6 @@ describe('Explore', () => {
     server.close();
   });
 
-  const photoIds: string[] = [];
   beforeEach(() => {
     queryClient.clear();
     server.resetHandlers();
@@ -69,5 +73,25 @@ describe('Explore', () => {
     // Check for the "No photos found" message
     const noPhotosFound = await screen.findByText('No photos found');
     expect(noPhotosFound).toBeInTheDocument();
+  });
+
+  it.skip('should open modal on photo click', async () => {
+    render(<Explore />, { wrapper: AllProviders });
+    await waitFor(() =>
+      expect(screen.queryAllByTestId('skeleton')).toHaveLength(0),
+    );
+
+    // simulate click on the first photo
+    const photoElement = await screen.findAllByRole('img');
+
+    const user = userEvent.setup();
+    user.click(photoElement[0]);
+
+    render(<PhotoModal />, { wrapper: AllProviders });
+
+    screen.debug();
+    await waitFor(() =>
+      expect(screen.getByTestId('photo-modal')).toBeInTheDocument(),
+    );
   });
 });
