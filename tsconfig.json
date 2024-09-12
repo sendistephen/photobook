@@ -23,7 +23,7 @@
       "./node_modules/@types",
       "./node_modules"
     ],
-    "types": ["vitest/globals", "styled-components"],
+    "types": ["vitest", "vitest/globals", "styled-components"],
     "noEmit": true,
     "noUnusedLocals": true,
     "noUnusedParameters": false,
