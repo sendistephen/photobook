@@ -130,3 +130,16 @@ interface PhotoModalContentProps {
   onFavorite: () => void;
   onClose: () => void;
 }
+
+interface CollectionInfoSectionProps {
+  title: string;
+  totalPhotos: number;
+  userName: string;
+  tags: Tag[];
+}
+
+interface InfiniteCollectionScrollProps {
+    collections: Collection[];
+    fetchNextPage: () => void;
+    hasNextPage: boolean;
+  }
