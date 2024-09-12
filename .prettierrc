@@ -2,5 +2,7 @@
   "singleQuote": true,
   "trailingComma": "all",
   "endOfLine": "lf",
-  "arrowParens": "always"
+  "arrowParens": "always",
+  "tabWidth": 2,
+  "lineWidth": 120
 }
