@@ -4,10 +4,14 @@ import toast from 'react-hot-toast';
 const auth = getAuth(),
   provider = new GoogleAuthProvider();
 
-export const signInWithGoogle = () => {
-  signInWithPopup(auth, provider).catch(() => {
+export const signInWithGoogle = async () => {
+  try {
+    const result = await signInWithPopup(auth, provider);
+    return result.user;
+  } catch(err) {
     toast.error('Failed to sign in with Google.');
-  });
+    throw err;
+  }
 };
 
 export const signOut = () => {
