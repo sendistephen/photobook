@@ -4,6 +4,10 @@ import {
 } from '@/firebase/services/firebase-service';
 import { QueryClient, useMutation, useQueryClient } from 'react-query';
 
+type MutationContext = {
+  previousFavorites: { pages: { favorites: Photo[] } }[] | undefined;
+};
+
 const handleAddFavorite = (queryClient: QueryClient) => async (newPhoto: Photo) => {
   await queryClient.cancelQueries('favorites');
 
@@ -25,7 +29,6 @@ const handleAddFavorite = (queryClient: QueryClient) => async (newPhoto: Photo) 
 
   return { previousFavorites };
 };
-
 
 const handleRemoveFavorite = (queryClient: QueryClient) => async (photoId: string) => {
   await queryClient.cancelQueries('favorites');
@@ -50,10 +53,10 @@ const handleRemoveFavorite = (queryClient: QueryClient) => async (photoId: strin
   return { previousFavorites };
 };
 
-const useAddFavoriteMutation = (queryClient: QueryClient) => {
-  return useMutation(addFavorite, {
-    onMutate: handleAddFavorite(queryClient),
-    onError: (error, newPhoto, context) => {
+const createFavoriteMutation = (queryClient: QueryClient, mutationFn: any, handleFn: any) => {
+  return useMutation(mutationFn, {
+    onMutate: handleFn(queryClient),
+    onError: (error, variables, context?: MutationContext) => { 
       queryClient.setQueryData('favorites', context?.previousFavorites);
     },
     onSettled: () => {
@@ -62,19 +65,13 @@ const useAddFavoriteMutation = (queryClient: QueryClient) => {
   });
 };
 
+const useAddFavoriteMutation = (queryClient: QueryClient) => {
+  return createFavoriteMutation(queryClient, addFavorite, handleAddFavorite)
+}
 
 const useRemoveFavoriteMutation = (queryClient: QueryClient) => {
-  return useMutation(removeFavorite, {
-    onMutate: handleRemoveFavorite(queryClient),
-    onError: (error, photoId, context) => {
-      queryClient.setQueryData('favorites', context?.previousFavorites);
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries('favorites');
-    },
-  });
+  return createFavoriteMutation(queryClient, removeFavorite, handleRemoveFavorite);
 };
-
 
 /**
  * Hook to add or remove a photo from the user's favorites
