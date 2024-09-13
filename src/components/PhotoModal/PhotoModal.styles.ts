@@ -1,3 +1,4 @@
+import { TagsContainer } from '@/styles/GlobalStyles';
 import styled from 'styled-components';
 import { LabelProps } from 'types/theme';
 
@@ -110,10 +111,7 @@ export const PhotoPublicationItem = styled.div`
   gap: ${({ theme }) => theme.spacing.xs};
 `;
 
-export const TagContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: ${({ theme }) => theme.spacing.sm};
+export const TagContainer = styled(TagsContainer)`
   margin-top: ${({ theme }) => theme.spacing.md};
 `;
 

@@ -1,4 +1,5 @@
-import { Link, NavLink } from 'react-router-dom';
+import { StyledNavLink } from '@/styles/GlobalStyles';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const AvatarContainer = styled.div`
@@ -43,21 +44,6 @@ export const StyledLink = styled(Link)`
   gap: 5px;
 `;
 
-export const TagsContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: ${({ theme }) => theme.spacing.sm};
-`;
-
-export const Tag = styled.div`
-  padding: 4px 8px;
-  background-color: ${({ theme }) => theme.colors.cardSurface};
-  border-radius: 4px;
-  font-size: ${({ theme }) => theme.fonts.sm};
-  color: ${({ theme }) => theme.colors.textSecondary};
-  text-transform: capitalize;
-`;
-
 export const Stats = styled.div`
   display: flex;
   gap: 50px;
@@ -98,19 +84,4 @@ export const Tabs = styled.div`
   z-index: 1000;
 `;
 
-export const TabLink = styled(NavLink)`
-  text-decoration: none;
-  color: ${({ theme }) => theme.colors.textSecondary};
-  font-size: ${({ theme }) => theme.fonts.sm};
-  transition:
-    color 0.3s,
-    border-bottom 0.3s;
-
-  &:hover {
-    color: ${({ theme }) => theme.colors.hoverLinkColor};
-  }
-  &.active {
-    color: ${({ theme }) => theme.colors.linkColor};
-    border-bottom: 2px solid ${({ theme }) => theme.colors.linkColor};
-  }
-`;
+export const TabLink = StyledNavLink;

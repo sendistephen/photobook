@@ -9,12 +9,11 @@ import {
   Posts,
   Stats,
   StyledLink,
-  Tag,
-  TagsContainer,
   UserInfo,
 } from '../../pages/UserProfile/UserProfile.styles';
 import IconWrapper from '../Common/IconWrapper';
 import { Label } from '../PhotoModal/PhotoModal.styles';
+import { Tag, TagsContainer } from '@/styles/GlobalStyles';
 
 const StatItem = ({ count, label }: { count: number; label: string }) => (
   <>

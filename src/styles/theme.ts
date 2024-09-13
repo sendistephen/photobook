@@ -1,5 +1,18 @@
 import { BaseColors, Theme } from 'types/theme';
 
+const sharedThemeColors = {
+  primary: '#BB86FC',
+  primaryVariant: '#3700B3',
+  secondary: '#03DAC6',
+  secondaryVariant: '#00BFA5',
+  error: '#B00020',
+  textPrimary: '#000000',
+  textSecondary: '#5F6368',
+  linkColor: '#6c757d',
+  borderLight: '#d1d1d1',
+  borderDark: '#111',
+};
+
 const baseColors: BaseColors = {
   common: {
     linkColor: '#6c757d',
@@ -13,23 +26,16 @@ const baseColors: BaseColors = {
     },
   },
   dark: {
+    ...sharedThemeColors, 
     background: '#121212',
     surface: '#333333',
     cardSurface: '#2C2C2C',
     onBackground: 'rgba(255, 255, 255, 0.87)',
     onSurface: 'rgba(255, 255, 255, 0.87)',
-    primary: '#BB86FC',
-    primaryVariant: '#985EFF',
-    secondary: '#03DAC6',
-    secondaryVariant: '#00BFA5',
-    error: '#CF6679',
     textPrimary: 'rgba(255, 255, 255, 0.87)',
     textSecondary: 'rgba(255, 255, 255, 0.60)',
-    linkColor: '#adb5bd',
     skeletonBase: 'rgba(255, 255, 255, 0.13)',
     skeltonHighlight: 'rgba(255, 255, 255, 0.25)',
-    borderLight: '#111',
-    borderDark: '#d1d1d1',
     hoverLinkBackground: '#444444',
     hoverLinkColor: '#ffffff',
     activeLinkBackground: '#555555',
@@ -38,23 +44,14 @@ const baseColors: BaseColors = {
     focusLinkColor: '#ffffff',
   },
   light: {
+    ...sharedThemeColors, // Merging shared colors
     background: '#FFFFFF',
     surface: '#FFFFFF',
     onBackground: '#000000',
     onSurface: '#000000',
     cardSurface: '#E4E4E7',
-    primary: '#BB86FC',
-    primaryVariant: '#3700B3',
-    secondary: '#03DAC6',
-    secondaryVariant: '#00BFA5',
-    error: '#B00020',
-    textPrimary: '#000000',
-    textSecondary: '#5F6368',
-    linkColor: '#6c757d',
     skeletonBase: '#E4E4E7',
     skeltonHighlight: '#F4F4F5',
-    borderLight: '#d1d1d1',
-    borderDark: '#111',
     hoverLinkBackground: '#f0f0f0',
     hoverLinkColor: '#000000',
     activeLinkBackground: '#e0e0e0',
@@ -100,6 +97,7 @@ const createTheme = (mode: 'dark' | 'light'): Theme => ({
     '6xl': '4.5rem',
   },
 });
+
 export const theme = {
   dark: createTheme('dark'),
   light: createTheme('light'),
