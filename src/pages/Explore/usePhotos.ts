@@ -2,16 +2,7 @@ import { fetchPhotos } from '@/api';
 import { useInfiniteQuery } from 'react-query';
 
 const usePhotos = () => {
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isLoading,
-    isFetching,
-    isFetchingNextPage,
-    isError,
-    error,
-  } = useInfiniteQuery(
+  const query= useInfiniteQuery(
     ['photos'],
     ({ pageParam = 1 }) => fetchPhotos(pageParam),
     {
@@ -19,16 +10,15 @@ const usePhotos = () => {
         lastPage.length ? pages.length + 1 : undefined,
     },
   );
-  const photos = data ? data.pages.flat() : [];
 
   return {
-    photos,
-    fetchNextPage,
-    hasMore: !!hasNextPage,
-    isLoading: isFetching || isFetchingNextPage,
-    isInitialLoading: isLoading,
-    isError,
-    error: error ? (error as Error) : null,
+    photos:query.data ? query.data.pages.flat() : [],
+    fetchNextPage:query.fetchNextPage,
+    hasMore: !!query.hasNextPage,
+    isLoading: query.isFetching || query.isFetchingNextPage,
+    isInitialLoading: query.isLoading,
+    isError: query.isError,
+    error: query.error ? (query.error as Error) : null,
   };
 };
 
