@@ -1,6 +1,7 @@
 import { SkeletonWrapper } from '@/components/Gallery/Gallery.styles';
 import styled, { createGlobalStyle } from 'styled-components';
 import { Container } from '.';
+import { NavLink } from 'react-router-dom';
 
 export const GlobalStyles = createGlobalStyle`
 
@@ -88,4 +89,34 @@ export const Button = styled.button`
     box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
     opacity: 1;
   }
+`;
+
+export const StyledNavLink = styled(NavLink)`
+  font-size: ${({ theme }) => theme.fonts.sm};
+  text-decoration: none;
+  color: ${({ theme }) => theme.colors.textSecondary};
+  transition: color 0.3s, border-bottom 0.3s;
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.hoverLinkColor};
+  }
+  &.active {
+    color: ${({ theme }) => theme.colors.linkColor};
+    border-bottom: 2px solid ${({ theme }) => theme.colors.linkColor};
+  }
+`;
+
+export const Tag = styled.div`
+  padding: 4px 8px;
+  background-color: ${({ theme }) => theme.colors.cardSurface};
+  border-radius: 4px;
+  font-size: ${({ theme }) => theme.fonts.sm};
+  color: ${({ theme }) => theme.colors.textSecondary};
+  text-transform: capitalize;
+`;
+
+export const TagsContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: ${({ theme }) => theme.spacing.sm};
 `;

@@ -1,3 +1,4 @@
+import { TagsContainer } from '@/styles/GlobalStyles';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -39,18 +40,7 @@ export const StyledLink = styled(Link)`
   color: inherit;
   text-decoration: none;
 `;
-export const TagContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: ${({ theme }) => theme.spacing.sm};
+export const TagContainer = styled(TagsContainer)`
   margin-top: ${({ theme }) => theme.spacing.sm};
 `;
 
-export const Tag = styled.div`
-  padding: 4px 8px;
-  background-color: ${({ theme }) => theme.colors.cardSurface};
-  border-radius: 4px;
-  font-size: ${({ theme }) => theme.fonts.sm};
-  color: ${({ theme }) => theme.colors.textSecondary};
-  text-transform: capitalize;
-`;
