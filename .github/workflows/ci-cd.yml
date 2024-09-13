@@ -29,8 +29,13 @@ jobs:
       - name: Lint the codebase
         run: yarn lint
 
-      - name: Run tests
-        run: yarn test
+      - name: Run tests and collect coverage
+        run: npx vitest run --coverage
+
+      - name: Upload results to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   deploy:
     needs: build
