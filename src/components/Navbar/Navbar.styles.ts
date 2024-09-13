@@ -127,64 +127,6 @@ export const Label = styled.span`
     margin-left: 12px;
   }
 `;
-export const Login = styled.div`
-  padding: 10px 20px;
-  display: flex;
-  justify-content: center;
-  color: black;
-  align-items: center;
-  font-size: ${({ theme }) => theme.fonts.sm};
-  background-color: ${({ theme }) => theme.colors.secondary};
-  color: ${({ theme }) => theme.colors.onSecondary};
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition:
-    background-color 0.3s,
-    box-shadow 0.3s,
-    opacity 0.3s;
-
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.secondaryVariant};
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
-    opacity: 0.9;
-  }
-  &:active {
-    background-color: ${({ theme }) => theme.colors.secondaryVariant};
-    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
-    opacity: 1;
-  }
-`;
-export const Logout = styled.button`
-  padding: 10px 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: ${({ theme }) => theme.fonts.sm};
-  background-color: ${({ theme }) => theme.colors.secondary};
-  color: ${({ theme }) => theme.colors.onSecondary};
-  border: none;
-  border-radius: 5px;
-  border-style: none;
-  cursor: pointer;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition:
-    background-color 0.3s,
-    box-shadow 0.3s,
-    opacity 0.3s;
-
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.secondaryVariant};
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
-    opacity: 0.9;
-  }
-  &:active {
-    background-color: ${({ theme }) => theme.colors.secondaryVariant};
-    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
-    opacity: 1;
-  }
-`;
 export const Title = styled.h4`
   font-weight: 500;
   font-size: 13px;

@@ -1,9 +1,13 @@
 import { useDispatch } from 'react-redux';
-import { Login } from './Navbar.styles';
 import { handleLogin } from './authUtils';
+import { Button } from '@/styles/GlobalStyles';
 
 export const LoginButton = () => {
   const dispatch = useDispatch();
 
-  return <Login onClick={() => handleLogin(dispatch)}>Login</Login>;
+  const onHandleLogin = async () => {
+    await handleLogin(dispatch);
+  };
+
+  return <Button onClick={onHandleLogin}>Login</Button>;
 };
