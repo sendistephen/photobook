@@ -143,3 +143,15 @@ interface InfiniteCollectionScrollProps {
     fetchNextPage: () => void;
     hasNextPage: boolean;
   }
+
+
+interface InfiniteScrollWrapperProps {
+  dataLength:number;
+  next:() => void;
+  hasMore:boolean;
+  isLoading:boolean;
+  children:React.ReactNode;
+  loaderComponent?: React.ReactNode;
+  ContainerComponent?: React.ComponentType<{ children: React.ReactNode }>; 
+  endMessage?:React.ReactNode;
+}
