@@ -5,7 +5,7 @@ import PhotoModalNavigation from './PhotoModalNavigation';
 import useBodyScrollLock from './useBodyScrollLock';
 import useCloseModal from './useCloseModal';
 import usePhotoModalStateManager from './usePhotoModalStateManager';
-import usePhotoNavigation from './usePhotoNavigation';
+import { usePhotoNavigation } from './usePhotoNavigation';
 import useSyncUrlWithSelectedPhoto from './useSyncUrlWithSelectedPhoto';
 
 const PhotoModal = () => {
