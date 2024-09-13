@@ -1,7 +1,7 @@
 import { store } from '@/store';
-import { Logout } from './Navbar.styles';
 import { signOut } from '@/firebase/firebaseAuth';
 import { clearUser } from '@/store/authSlice';
+import { Button } from '@/styles/GlobalStyles';
 
 export const LogoutButton = () => {
   const handleLogout = async () => {
@@ -13,5 +13,5 @@ export const LogoutButton = () => {
     }
   };
 
-  return <Logout onClick={handleLogout}>Log out</Logout>;
+  return <Button onClick={handleLogout}>Log out</Button>;
 };
