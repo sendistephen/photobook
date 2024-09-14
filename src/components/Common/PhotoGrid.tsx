@@ -29,7 +29,7 @@ export const PhotoGrid = (props: PhotoGridProps) => (
           <PhotoCard key={item.id + index}>
             <Photo
               onClick={() => props.openModal(item, props.photos)}
-              src={imageExtractor(item)}
+              src={imageExtractor(item) as string}
               alt={item.description || 'Photo'}
             />
           </PhotoCard>
