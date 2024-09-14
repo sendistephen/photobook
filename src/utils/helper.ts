@@ -45,3 +45,24 @@ export const getImageSrc = (urls: Photo['urls']) => {
     urls.full
   );
 };
+
+
+export const imageExtractor = (item: Photo | Collection) => {
+  if ('cover_photo' in item) {
+    // item is a Collection
+    return (
+      item.cover_photo.urls.regular ||
+      item.cover_photo.urls.full ||
+      item.cover_photo.urls.small ||
+      item.cover_photo.urls.thumb
+    );
+  } else {
+    // item is a Photo
+    return (
+      item.urls.regular ||
+      item.urls.full ||
+      item.urls.small ||
+      item.urls.thumb
+    );
+  }
+};
