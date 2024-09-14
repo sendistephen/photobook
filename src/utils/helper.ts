@@ -48,21 +48,7 @@ export const getImageSrc = (urls: Photo['urls']) => {
 
 
 export const imageExtractor = (item: Photo | Collection) => {
-  if ('cover_photo' in item) {
-    // item is a Collection
-    return (
-      item.cover_photo.urls.regular ||
-      item.cover_photo.urls.full ||
-      item.cover_photo.urls.small ||
-      item.cover_photo.urls.thumb
-    );
-  } else {
-    // item is a Photo
-    return (
-      item.urls.regular ||
-      item.urls.full ||
-      item.urls.small ||
-      item.urls.thumb
-    );
-  }
+  const urls = 'cover_photo' in item ? item.cover_photo.urls : item.urls;
+  
+  return urls.regular || urls.full || urls.small || urls.thumb || null;
 };
