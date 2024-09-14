@@ -11,24 +11,24 @@ const SkeletonModal = () => {
         </div>
       </SkeletonUserInfo>
       <SkeletonImage />
-      <SkeletonStats>
-        {[...Array(4)].map((_, index) => (
-          <SkeletonText key={index} style={{ width: '15%' }} />
-        ))}
-      </SkeletonStats>
+      <SkeletonStats>{renderSkeletonTexts(4, '15%')}</SkeletonStats>
       <SkeletonText style={{ width: '50%' }} />
-      {[...Array(2)].map((_, index) => (
-        <SkeletonText key={index} style={{ width: '20%' }} />
-      ))}
-
-      <SkeletonButtons>
-        {[...Array(6)].map((_, index) => (
-          <div key={index}></div>
-        ))}
-      </SkeletonButtons>
+      {renderSkeletonTexts(2, '20%')}
+      <SkeletonButtons>{renderSkeletonDivs(6)}</SkeletonButtons>
     </SkeletonWrapper>
   );
 };
+
+const renderSkeletonTexts = (count: number, width: string) => {
+  return [...Array(count)].map((_, index) => (
+    <SkeletonText key={index} style={{ width }} />
+  ));
+};
+
+const renderSkeletonDivs = (count: number) => {
+  return [...Array(count)].map((_, index) => <div key={index}></div>);
+};
+
 export default SkeletonModal;
 
 const SkeletonWrapper = styled.div`
@@ -51,6 +51,7 @@ const SkeletonAvatar = styled.div`
   background-color: ${({ theme }) => theme.colors.cardSurface};
   border-radius: 50%;
 `;
+
 const SkeletonText = styled.div`
   height: 20px;
   width: 120px;
