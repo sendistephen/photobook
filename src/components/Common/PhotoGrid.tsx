@@ -15,8 +15,9 @@ interface PhotoGridProps {
   imageExtractor: (item: Photo | Collection) => string | null;
 }
 
-export const PhotoGrid = (props: PhotoGridProps) => (
-  <InfiniteScroll
+export const PhotoGrid = (props: PhotoGridProps) => {
+  console.log(props.photos);
+  return (<InfiniteScroll
     dataLength={props.photos.length}
     next={props.fetchNextPage}
     hasMore={props.hasMore}
@@ -29,7 +30,7 @@ export const PhotoGrid = (props: PhotoGridProps) => (
           <PhotoCard key={item.id + index}>
             <Photo
               onClick={() => props.openModal(item, props.photos)}
-              src={imageExtractor(item) as string}
+              src={props.imageExtractor(item) as string}
               alt={item.description || 'Photo'}
             />
           </PhotoCard>
@@ -37,4 +38,5 @@ export const PhotoGrid = (props: PhotoGridProps) => (
       )}
     </StyledPhotoGrid>
   </InfiniteScroll>
-);
+  )
+};

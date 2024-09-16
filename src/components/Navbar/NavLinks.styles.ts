@@ -1,3 +1,4 @@
+import { FlexContainer } from '@/styles/GlobalStyles';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -7,11 +8,9 @@ export const Icon = styled.img`
   cursor: pointer;
   opacity: 1;
 `;
-export const MenuItem = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+export const MenuItem = styled(FlexContainer).attrs({
+  flexDirection: 'column'
+})`
   span {
     margin-top: 2px;
     font-size: 13px;

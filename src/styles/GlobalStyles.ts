@@ -2,6 +2,7 @@ import { SkeletonWrapper } from '@/components/Gallery/Gallery.styles';
 import styled, { createGlobalStyle } from 'styled-components';
 import { Container } from '.';
 import { NavLink } from 'react-router-dom';
+import { FlexContainerProps } from 'types/theme';
 
 export const GlobalStyles = createGlobalStyle`
 
@@ -41,6 +42,14 @@ body{
 .my-masory-grid_column > div {
   margin-bottom: 30px;
 }
+`;
+
+export const FlexContainer = styled.div<FlexContainerProps>`
+  display: flex;
+  justify-content: ${({ justify = 'center' }) => justify};
+  align-items: ${({ align = 'center' }) => align};
+  flex-direction: ${({flexDirection ='row'}) => flexDirection};
+  gap: ${({ theme, gap }) => (gap === '0' ? '0' : theme.spacing[gap || 'md'])};
 `;
 
 export const SuspenseSkeletonContainer = styled(Container)`

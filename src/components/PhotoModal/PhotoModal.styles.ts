@@ -1,8 +1,8 @@
-import { TagsContainer } from '@/styles/GlobalStyles';
+import { FlexContainer, TagsContainer } from '@/styles/GlobalStyles';
 import styled from 'styled-components';
 import { LabelProps } from 'types/theme';
 
-export const Overlay = styled.div`
+export const Overlay = styled(FlexContainer)`
   width: 100%;
   height: 100%;
   position: fixed;
@@ -10,9 +10,6 @@ export const Overlay = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   background-color: rgba(0, 0, 0, 0.6);
   z-index: 200;
 `;
@@ -37,13 +34,9 @@ export const ModalContainer = styled.div`
   } */
 `;
 
-export const ImageContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+export const ImageContainer = styled(FlexContainer)`
   width: 100%;
   max-width: 356px;
-  /* height: 100%; */
   height: 500px;
   overflow: hidden;
 `;
@@ -74,14 +67,12 @@ export const PhotoContent = styled.div`
   margin-top: ${({ theme }) => theme.spacing['6xl']};
   gap: ${({ theme }) => theme.spacing.md};
 `;
-export const PhotoStatsWrapper = styled.div`
-  display: flex;
+export const PhotoStatsWrapper = styled(FlexContainer)`
   justify-content: space-between;
   gap: ${({ theme }) => theme.spacing['3xl']};
 `;
 
-export const PhotoStatistics = styled.div`
-  display: flex;
+export const PhotoStatistics = styled(FlexContainer)`
   justify-content: space-between;
   gap: ${({ theme }) => theme.spacing['6xl']};
 `;
