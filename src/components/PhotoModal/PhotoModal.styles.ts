@@ -106,15 +106,6 @@ export const TagContainer = styled(TagsContainer)`
   margin-top: ${({ theme }) => theme.spacing.md};
 `;
 
-export const TagItem = styled.div`
-  background-color: ${({ theme }) => theme.colors.cardSurface};
-  color: ${({ theme }) => theme.colors.textPrimary};
-  font-size: ${({ theme }) => theme.fonts.xs};
-  border-radius: ${({ theme }) => theme.spacing.xs};
-  padding: ${({ theme }) => theme.spacing.xs};
-  text-transform: capitalize;
-`;
-
 export const PhotoHeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;

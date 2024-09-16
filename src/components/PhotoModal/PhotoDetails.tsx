@@ -4,10 +4,10 @@ import {
   PhotoContent,
   PhotoImage,
   TagContainer,
-  TagItem,
 } from './PhotoModal.styles';
 import PhotoPublicationInfo from './PhotoPublication';
 import PhotoStats from './PhotoStatistics';
+import { TagItem } from '@/styles/GlobalStyles';
 
 interface PhotoDetailsProps {
   photo: Photo | null;
