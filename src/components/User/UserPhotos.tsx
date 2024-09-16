@@ -2,14 +2,15 @@ import useOpenModal from '@/components/PhotoModal/useOpenModal';
 import { imageExtractor } from '@/utils/helper';
 import { useParams } from 'react-router-dom';
 import Skeletons from '../Skeletons';
-import useUserPhotos from './useUserPhotos';
 import { PhotoGrid } from '../Common/PhotoGrid';
+import { useUserData } from './useUserData';
 
 const UserPhotos = () => {
   const { username } = useParams<{ username: string }>();
   const openModal = useOpenModal();
-  const { data, isLoading, hasNextPage, fetchNextPage, error } = useUserPhotos({
-    username: username!
+  const { data, isLoading, hasNextPage, fetchNextPage, error } = useUserData({
+    username: username!,
+    endpoint: 'photos'
   });
 
   if (isLoading) return <Skeletons count={12} />;
