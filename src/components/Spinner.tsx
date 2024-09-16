@@ -1,3 +1,4 @@
+import { FlexContainer } from '@/styles/GlobalStyles';
 import { Loader } from 'lucide-react';
 import styled from 'styled-components';
 
@@ -9,10 +10,7 @@ const Spinner = () => (
 
 export default Spinner;
 
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+const Wrapper = styled(FlexContainer)`
   margin-top: 100px;
 `;
 

@@ -104,3 +104,10 @@ export interface IconWrapperProps {
   size?: string;
   color?: keyof Theme['colors'];
 }
+
+export interface FlexContainerProps {
+  justify?: 'start' | 'end' | 'center' | 'space-between' | 'space-around' | 'space-evenly' | 'unset';
+  align?: 'start' | 'end' | 'center' | 'baseline' | 'stretch';
+  flexDirection?: 'row' | 'column' | 'row-reverse' | 'column-reverse';
+  gap?: keyof Theme['spacing'] | '0';
+}

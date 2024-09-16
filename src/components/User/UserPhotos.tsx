@@ -18,7 +18,7 @@ const UserPhotos = () => {
 
   const allPhotos = (data?.pages?.flat() as Photo[]) || [];
 
-  <PhotoGrid
+  return <PhotoGrid
     photos={allPhotos}
     fetchNextPage={fetchNextPage}
     hasMore={!!hasNextPage}

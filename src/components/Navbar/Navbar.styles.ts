@@ -1,3 +1,4 @@
+import { FlexContainer } from '@/styles/GlobalStyles';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid';
 import { BiSearch } from 'react-icons/bi';
 import { NavLink } from 'react-router-dom';
@@ -25,10 +26,10 @@ export const HeaderContainer = styled.div`
   grid-template-columns: 1fr auto;
   gap: 50px;
 `;
-export const FormGroup = styled.div`
+export const FormGroup = styled(FlexContainer).attrs({
+  gap:'0',justify: 'unset',
+})`
   position: relative;
-  display: flex;
-  align-items: center;
 `;
 export const Input = styled.input`
   background-color: ${(props) => props.theme.colors.background};
@@ -88,14 +89,12 @@ export const SearchIcon = styled(BiSearch)`
   fill: ${(props) => props.theme.borderColor};
 `;
 
-export const StyledLink = styled(NavLink)`
+export const StyledLink = styled(FlexContainer).attrs({
+  as:NavLink,
+  flexDirection: 'column'
+})`
   background: ${(props) => props.theme.activeLink};
   border-radius: 8px;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
 `;
 
 export const MenuThemeItem = styled.button`
@@ -104,11 +103,10 @@ export const MenuThemeItem = styled.button`
   cursor: pointer;
   align-items: center;
 `;
-export const Theme = styled.div`
-  display: flex;
+export const Theme = styled(FlexContainer).attrs({
+  gap:'0'
+})`
   padding: 6px;
-  justify-content: center;
-  align-items: center;
   background: ${(props) => props.theme.activeLink};
   border-radius: 5px;
 `;
