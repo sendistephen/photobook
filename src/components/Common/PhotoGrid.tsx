@@ -15,9 +15,8 @@ interface PhotoGridProps {
   imageExtractor: (item: Photo | Collection) => string | null;
 }
 
-export const PhotoGrid = (props: PhotoGridProps) => {
-  console.log(props.photos);
-  return (<InfiniteScroll
+export const PhotoGrid = (props: PhotoGridProps) => (
+  <InfiniteScroll
     dataLength={props.photos.length}
     next={props.fetchNextPage}
     hasMore={props.hasMore}
@@ -38,5 +37,4 @@ export const PhotoGrid = (props: PhotoGridProps) => {
       )}
     </StyledPhotoGrid>
   </InfiniteScroll>
-  )
-};
+);

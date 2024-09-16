@@ -133,7 +133,6 @@ export const TagItem = styled.div`
   text-transform: capitalize;
 `;
 
-
 export const TagsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
