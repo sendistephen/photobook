@@ -124,6 +124,16 @@ export const Tag = styled.div`
   text-transform: capitalize;
 `;
 
+export const TagItem = styled.div`
+  background-color: ${({ theme }) => theme.colors.cardSurface};
+  color: ${({ theme }) => theme.colors.textPrimary};
+  font-size: ${({ theme }) => theme.fonts.xs};
+  border-radius: ${({ theme }) => theme.spacing.xs};
+  padding: ${({ theme }) => theme.spacing.xs};
+  text-transform: capitalize;
+`;
+
+
 export const TagsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
