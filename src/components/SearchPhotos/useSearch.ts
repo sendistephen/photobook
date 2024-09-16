@@ -1,14 +1,11 @@
-import { searchCollections, searchPhotos } from '@/api';
+import { search } from '@/api';
 import { QueryFunctionContext, useInfiniteQuery } from 'react-query';
 
-const getFetchFunction = (type: 'photos' | 'collections') =>
-  type === 'photos' ? searchPhotos : searchCollections;
 
 const fetchDataForPage =
   (type: 'photos' | 'collections', query: string) =>
   ({ pageParam = 1 }: QueryFunctionContext<string[], any>) => {
-    const fetchFunction = getFetchFunction(type);
-    return fetchFunction(query, pageParam, 20);
+    return search(type,query,pageParam, 20)
   };
 
 const getNextPageParam = (lastPage: any, allPages: any) => {
