@@ -1,21 +1,10 @@
-import { fetchUserData } from '@/api';
-import { useInfiniteQuery } from 'react-query';
+import { useUserData } from './useUserData';
 
 interface Props {
   username: string;
-  page: number;
 }
-const useUserPhotos = ({ username, page }: Props) => {
-  return useInfiniteQuery<Photo[], Error>(
-    ['userPhotos', username],
-    ({ pageParam = 1 }) => fetchUserData(username, 'photos', pageParam),
-    {
-      getNextPageParam: (lastPage, pages) => {
-        if (lastPage.length === 0) return false;
-        return pages.length + 1;
-      },
-    },
-  );
+const useUserPhotos = ({ username }: Props) => {
+  return useUserData<Photo>({ username, endpoint: 'photos' });
 };
 
 export default useUserPhotos;

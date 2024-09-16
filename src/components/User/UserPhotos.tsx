@@ -9,8 +9,7 @@ const UserPhotos = () => {
   const { username } = useParams<{ username: string }>();
   const openModal = useOpenModal();
   const { data, isLoading, hasNextPage, fetchNextPage, error } = useUserPhotos({
-    username: username!,
-    page: 1,
+    username: username!
   });
 
   if (isLoading) return <Skeletons count={12} />;
