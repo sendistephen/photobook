@@ -58,23 +58,12 @@ export const fetchPhoto = async (photoId: string) => {
   return fetchData<Photo>(`photos/${photoId}`);
 };
 
-export const searchPhotos = async (
-  query: string,
-  page: number,
+  export const search = async(
+    type: 'photos' | 'collections' | 'users',
+    query: string,
+    page: number,
   perPage: number = 20,
-) =>
-  fetchData<ApiResponse>('search/photos', { query, page, per_page: perPage });
-
-export const searchCollections = async (
-  query: string,
-  page: number,
-  perPage: number = 20,
-) =>
-  fetchData<ApiResponse>('search/collections', {
-    query,
-    page,
-    per_page: perPage,
-  });
+) => fetchData<ApiResponse>(`search/${type}`, { query, page, per_page: perPage });
 
 export const fetchUser = async (username: string) =>
   fetchData<User>(`users/${username}`);
