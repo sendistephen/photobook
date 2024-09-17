@@ -3,7 +3,7 @@ import PhotoDetails from './PhotoDetails';
 import PhotoModalHeader from './PhotoHeader';
 import { CloseButton, ModalContainer } from './PhotoModal.styles';
 
-const PhotoModalContent = (props: PhotoModalContentProps) => {
+const PhotoModalContent = (props: PhotoModalProps) => {
   return (
     <ModalContainer>
       {props.isLoading || !props.photo ? (
