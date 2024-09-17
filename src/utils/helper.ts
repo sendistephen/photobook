@@ -46,13 +46,13 @@ export const getImageSrc = (urls: Photo['urls']) => {
   );
 };
 
-
 export const imageExtractor = (item: Photo | Collection) => {
   const urls = 'cover_photo' in item ? item.cover_photo.urls : item.urls;
-  
+
   return urls.regular || urls.full || urls.small || urls.thumb || null;
 };
 
-
-
-
+export const getStat = (photo: Photo | null) => [
+  { label: 'Views', value: photo?.views },
+  { label: 'Downloads', value: photo?.downloads },
+];
