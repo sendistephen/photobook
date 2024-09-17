@@ -123,7 +123,7 @@ interface SearchParams {
 
 type UserDataType = 'photos' | 'likes' | 'collections';
 
-interface PhotoModalContentProps {
+interface PhotoModalProps {
   isLoading: boolean;
   photo: Photo | null;
   isFavorited: boolean;
