@@ -1,4 +1,4 @@
-import { TagsContainer } from '@/styles/GlobalStyles';
+import { FlexContainer, TagsContainer } from '@/styles/GlobalStyles';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -16,10 +16,12 @@ export const CollectionImage = styled.img`
   transition: transform 0.3s ease-in-out;
 `;
 
-export const CollectionCard = styled.div`
+export const CollectionCard = styled(FlexContainer).attrs({
+  flexDirection: 'column',
+  justify: 'start',
+  align: 'start',
+})`
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
   border-radius: 4px;
   &:hover {
     ${CollectionImage} {
@@ -28,11 +30,12 @@ export const CollectionCard = styled.div`
   }
 `;
 
-export const CollectionInfo = styled.div`
+export const CollectionInfo = styled(FlexContainer).attrs({
+  flexDirection: 'column',
+  align: 'start',
+  gap: 'sm',
+})`
   padding: ${({ theme }) => theme.spacing.md} 0;
-  display: flex;
-  flex-direction: column;
-  gap: ${({ theme }) => theme.spacing.sm};
 `;
 
 export const StyledLink = styled(Link)`
@@ -43,4 +46,3 @@ export const StyledLink = styled(Link)`
 export const TagContainer = styled(TagsContainer)`
   margin-top: ${({ theme }) => theme.spacing.sm};
 `;
-
