@@ -66,12 +66,13 @@ export const Following = styled(FlexContainer).attrs({
   gap: 'sm',
 })``;
 
-export const Tabs = styled.div`
+export const Tabs = styled(FlexContainer).attrs({
+  gap: 'xl',
+  justify: 'start',
+})`
   padding: 16px 0;
   margin-top: 100px;
   margin-bottom: 30px;
-  display: flex;
-  gap: ${({ theme }) => theme.spacing.xl};
   background-color: ${({ theme }) => theme.colors.background};
   position: sticky;
   top: 70px;

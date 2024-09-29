@@ -67,19 +67,19 @@ export const PhotoContent = styled.div`
   margin-top: ${({ theme }) => theme.spacing['6xl']};
   gap: ${({ theme }) => theme.spacing.md};
 `;
-export const PhotoStatsWrapper = styled(FlexContainer)`
-  justify-content: space-between;
-  gap: ${({ theme }) => theme.spacing['3xl']};
-`;
+export const PhotoStatsWrapper = styled(FlexContainer).attrs({
+  justify: 'space-between',
+  gap: '3xl',
+})``;
 
-export const PhotoStatistics = styled(FlexContainer)`
-  justify-content: space-between;
-  gap: ${({ theme }) => theme.spacing['6xl']};
-`;
-export const StatBlock = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
+export const PhotoStatistics = styled(FlexContainer).attrs({
+  justify: 'space-between',
+  gap: '6xl',
+})``;
+
+export const StatBlock = styled(FlexContainer).attrs({
+  flexDirection: 'column',
+})``;
 
 export const Label = styled.div<LabelProps>`
   font-size: ${({ size, theme }) =>
@@ -89,26 +89,25 @@ export const Label = styled.div<LabelProps>`
     color ? theme.colors[color] : theme.colors.textPrimary};
 `;
 
-export const PhotoPublication = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: ${({ theme }) => theme.spacing.sm};
+export const PhotoPublication = styled(FlexContainer).attrs({
+  flexDirection: 'column',
+  align: 'start',
+  gap: 'sm',
+})`
   margin-top: ${({ theme }) => theme.spacing.md};
 `;
 
-export const PhotoPublicationItem = styled.div`
-  display: flex;
-  align-items: center;
-  gap: ${({ theme }) => theme.spacing.xs};
-`;
+export const PhotoPublicationItem = styled(FlexContainer).attrs({
+  gap: 'xs',
+})``;
 
 export const TagContainer = styled(TagsContainer)`
   margin-top: ${({ theme }) => theme.spacing.md};
 `;
 
-export const PhotoHeaderContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
+export const PhotoHeaderContainer = styled(FlexContainer).attrs({
+  justify: 'space-between',
+})`
   width: 100%;
   margin-bottom: ${({ theme }) => theme.spacing.lg};
 `;
@@ -120,21 +119,23 @@ export const PhotoHeaderImage = styled.img`
   object-fit: cover;
 `;
 
-export const PhotoHeaderInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-export const PhotoHeaderUser = styled.div`
-  display: flex;
-  justify-content: space-between;
-  gap: ${({ theme }) => theme.spacing.sm};
+export const PhotoHeaderInfo = styled(FlexContainer).attrs({
+  flexDirection: 'column',
+  align: 'start',
+  gap: '0',
+})``;
+
+export const PhotoHeaderUser = styled(FlexContainer).attrs({
+  justify: 'space-between',
+  gap: 'sm',
+})`
   cursor: pointer;
 `;
-export const PhotoHeaderCTA = styled.div`
-  display: flex;
-  gap: ${({ theme }) => theme.spacing.sm};
-  align-items: center;
-`;
+
+export const PhotoHeaderCTA = styled(FlexContainer).attrs({
+  gap: 'sm',
+})``;
+
 export const StyledButton = styled.button`
   background-color: ${({ theme }) => theme.colors.cardSurface};
   box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1);
@@ -169,12 +170,14 @@ export const StyledSliderButton = styled.button`
     color: ${({ theme }) => theme.colors.skeltonHighlight};
   }
 `;
-export const NavigationWrapper = styled.div`
+export const NavigationWrapper = styled(FlexContainer).attrs({
+  flexDirection: 'row',
+  justify: 'space-between',
+  align: 'center',
+})`
   width: 100%;
   position: absolute;
   top: 50%;
-  display: flex;
-  justify-content: space-between;
   transform: translateY(-50%);
   z-index: 200;
 `;
