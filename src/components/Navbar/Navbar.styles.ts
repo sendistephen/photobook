@@ -27,7 +27,8 @@ export const HeaderContainer = styled.div`
   gap: 50px;
 `;
 export const FormGroup = styled(FlexContainer).attrs({
-  gap:'0',justify: 'unset',
+  gap: '0',
+  justify: 'unset',
 })`
   position: relative;
 `;
@@ -90,8 +91,8 @@ export const SearchIcon = styled(BiSearch)`
 `;
 
 export const StyledLink = styled(FlexContainer).attrs({
-  as:NavLink,
-  flexDirection: 'column'
+  as: NavLink,
+  flexDirection: 'column',
 })`
   background: ${(props) => props.theme.activeLink};
   border-radius: 8px;
@@ -104,7 +105,7 @@ export const MenuThemeItem = styled.button`
   align-items: center;
 `;
 export const Theme = styled(FlexContainer).attrs({
-  gap:'0'
+  gap: '0',
 })`
   padding: 6px;
   background: ${(props) => props.theme.activeLink};
