@@ -1,5 +1,4 @@
-import { StyledNavLink } from '@/styles/GlobalStyles';
-import { Link } from 'react-router-dom';
+import { FlexContainer, StyledNavLink } from '@/styles/GlobalStyles';
 import styled from 'styled-components';
 
 export const AvatarContainer = styled.div`
@@ -21,11 +20,10 @@ export const AvatarContainer = styled.div`
     justify-self: center;
   }
 `;
-export const UserInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: ${({ theme }) => theme.spacing.md};
-`;
+export const UserInfo = styled(FlexContainer).attrs({
+  flexDirection: 'column',
+  gap: 'md',
+})``;
 export const Avatar = styled.img`
   width: 150px;
   height: 150px;
@@ -38,39 +36,35 @@ export const Avatar = styled.img`
     height: 200px;
   }
 `;
-export const StyledLink = styled(Link)`
+
+export const StyledLink = styled(StyledNavLink)`
   display: flex;
-  align-items: start;
+  align-items: center;
   gap: 5px;
 `;
 
-export const Stats = styled.div`
-  display: flex;
-  gap: 50px;
-  justify-content: center;
-
+export const Stats = styled(FlexContainer).attrs({
+  gap: 'md',
+})`
   @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
     flex-direction: row;
     justify-content: start;
     gap: 10px;
   }
 `;
-export const Posts = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: ${({ theme }) => theme.spacing.sm};
-`;
+export const Posts = styled(FlexContainer).attrs({
+  flexDirection: 'column',
+  gap: 'sm',
+})``;
 
-export const Followers = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: ${({ theme }) => theme.spacing.sm};
-`;
-export const Following = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: ${({ theme }) => theme.spacing.sm};
-`;
+export const Followers = styled(FlexContainer).attrs({
+  flexDirection: 'column',
+  gap: 'sm',
+})``;
+export const Following = styled(FlexContainer).attrs({
+  flexDirection: 'column',
+  gap: 'sm',
+})``;
 
 export const Tabs = styled.div`
   padding: 16px 0;

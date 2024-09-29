@@ -10,7 +10,7 @@ import {
   Stats,
   StyledLink,
   UserInfo,
-} from '../../pages/UserProfile/UserProfile.styles';
+} from '@/pages/UserProfile/UserProfile.styles';
 import IconWrapper from '../Common/IconWrapper';
 import { Label } from '../PhotoModal/PhotoModal.styles';
 import { Tag, TagsContainer } from '@/styles/GlobalStyles';
