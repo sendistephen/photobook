@@ -1,4 +1,11 @@
-import { FlexContainer, TagsContainer } from '@/styles/GlobalStyles';
+import {
+  FlexColumnStartNoGap,
+  FlexColumnStartSmGap,
+  FlexContainer,
+  FlexRowSpaceBetween,
+  FlexRowSpaceBetweenCenter,
+  TagsContainer,
+} from '@/styles/GlobalStyles';
 import styled from 'styled-components';
 import { LabelProps } from 'types/theme';
 
@@ -89,11 +96,7 @@ export const Label = styled.div<LabelProps>`
     color ? theme.colors[color] : theme.colors.textPrimary};
 `;
 
-export const PhotoPublication = styled(FlexContainer).attrs({
-  flexDirection: 'column',
-  align: 'start',
-  gap: 'sm',
-})`
+export const PhotoPublication = styled(FlexColumnStartSmGap)`
   margin-top: ${({ theme }) => theme.spacing.md};
 `;
 
@@ -105,9 +108,7 @@ export const TagContainer = styled(TagsContainer)`
   margin-top: ${({ theme }) => theme.spacing.md};
 `;
 
-export const PhotoHeaderContainer = styled(FlexContainer).attrs({
-  justify: 'space-between',
-})`
+export const PhotoHeaderContainer = styled(FlexRowSpaceBetween)`
   width: 100%;
   margin-bottom: ${({ theme }) => theme.spacing.lg};
 `;
@@ -119,11 +120,7 @@ export const PhotoHeaderImage = styled.img`
   object-fit: cover;
 `;
 
-export const PhotoHeaderInfo = styled(FlexContainer).attrs({
-  flexDirection: 'column',
-  align: 'start',
-  gap: '0',
-})``;
+export const PhotoHeaderInfo = FlexColumnStartNoGap;
 
 export const PhotoHeaderUser = styled(FlexContainer).attrs({
   justify: 'space-between',
@@ -170,11 +167,7 @@ export const StyledSliderButton = styled.button`
     color: ${({ theme }) => theme.colors.skeltonHighlight};
   }
 `;
-export const NavigationWrapper = styled(FlexContainer).attrs({
-  flexDirection: 'row',
-  justify: 'space-between',
-  align: 'center',
-})`
+export const NavigationWrapper = styled(FlexRowSpaceBetweenCenter)`
   width: 100%;
   position: absolute;
   top: 50%;

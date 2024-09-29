@@ -48,9 +48,32 @@ export const FlexContainer = styled.div<FlexContainerProps>`
   display: flex;
   justify-content: ${({ justify = 'center' }) => justify};
   align-items: ${({ align = 'center' }) => align};
-  flex-direction: ${({flexDirection ='row'}) => flexDirection};
+  flex-direction: ${({ flexDirection = 'row' }) => flexDirection};
   gap: ${({ theme, gap }) => (gap === '0' ? '0' : theme.spacing[gap || 'md'])};
 `;
+
+export const FlexColumnStartNoGap = styled(FlexContainer).attrs({
+  flexDirection: 'column',
+  align: 'start',
+  gap: '0',
+})``;
+
+export const FlexColumnStartSmGap = styled(FlexContainer).attrs({
+  flexDirection: 'column',
+  align: 'start',
+  gap: 'sm',
+})``;
+
+export const FlexRowSpaceBetweenCenter = styled(FlexContainer).attrs({
+  flexDirection: 'row',
+  justify: 'space-between',
+  align: 'center',
+})``;
+
+export const FlexRowSpaceBetween = styled(FlexContainer).attrs({
+  flexDirection: 'row',
+  justify: 'space-between',
+})``;
 
 export const SuspenseSkeletonContainer = styled(Container)`
   margin-top: 200px;
@@ -104,7 +127,9 @@ export const StyledNavLink = styled(NavLink)`
   font-size: ${({ theme }) => theme.fonts.sm};
   text-decoration: none;
   color: ${({ theme }) => theme.colors.textSecondary};
-  transition: color 0.3s, border-bottom 0.3s;
+  transition:
+    color 0.3s,
+    border-bottom 0.3s;
 
   &:hover {
     color: ${({ theme }) => theme.colors.hoverLinkColor};
