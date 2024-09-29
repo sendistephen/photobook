@@ -1,4 +1,8 @@
-import { FlexContainer, TagsContainer } from '@/styles/GlobalStyles';
+import {
+  FlexColumnStartSmGap,
+  FlexContainer,
+  TagsContainer,
+} from '@/styles/GlobalStyles';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -30,11 +34,7 @@ export const CollectionCard = styled(FlexContainer).attrs({
   }
 `;
 
-export const CollectionInfo = styled(FlexContainer).attrs({
-  flexDirection: 'column',
-  align: 'start',
-  gap: 'sm',
-})`
+export const CollectionInfo = styled(FlexColumnStartSmGap)`
   padding: ${({ theme }) => theme.spacing.md} 0;
 `;
 
