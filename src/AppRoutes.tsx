@@ -1,5 +1,6 @@
 import { lazy, Suspense } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
+import ErrorBoundary from './components/ErrorBoundary';
 import ProtectedRoute from './components/ProtectedRoute';
 
 const Explore = lazy(() => import('./pages/Explore')),
@@ -20,7 +21,11 @@ const Explore = lazy(() => import('./pages/Explore')),
     <Suspense fallback={null}>
       <Routes>
         <Route path="/" element={<Explore />} />
-        <Route path="/users/:username" element={<UserProfile />}>
+        <Route path="/users/:username" element={
+          <ErrorBoundary>
+            <UserProfile />
+          </ErrorBoundary>
+        }>
           <Route index element={<Navigate replace to="photos" />} />
           <Route path="photos" element={<UserPhotos />} />
           <Route path="collections" element={<UserCollections />} />

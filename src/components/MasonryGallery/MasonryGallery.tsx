@@ -1,3 +1,4 @@
+import { useCallback, useMemo } from 'react';
 import { StyledMasonry } from '../Gallery/Gallery.styles';
 import Photo from '../Gallery/Photo';
 
@@ -12,20 +13,40 @@ const MasonryGallery = ({
   breakpointColumnObj,
   handleOpenPhoto,
 }: MasonryGalleryProps) => {
+  const handlePhotoClick = useCallback(
+    (photo: Photo) => {
+      handleOpenPhoto(photo, photos);
+    },
+    [handleOpenPhoto, photos]
+  );
+
+  const photoElements = useMemo(() => {
+    return photos.map((photo, index) => {
+      const isAboveFold = index < 6;
+      
+      return (
+        <div
+          key={`${photo.id}-${index}`}
+          onClick={() => handlePhotoClick(photo)}
+          style={{ cursor: 'pointer' }}
+        >
+          <Photo 
+            photo={photo} 
+            loading={isAboveFold ? 'eager' : 'lazy'}
+            priority={isAboveFold}
+          />
+        </div>
+      );
+    });
+  }, [photos, handlePhotoClick]);
+
   return (
     <StyledMasonry
       breakpointCols={breakpointColumnObj}
       className="my-masory-grid"
       columnClassName="my-masory-grid_column"
     >
-      {photos.map((photo, index) => (
-        <div
-          key={`${photo.id}-${index}`}
-          onClick={() => handleOpenPhoto(photo, photos)}
-        >
-          <Photo photo={photo} />
-        </div>
-      ))}
+      {photoElements}
     </StyledMasonry>
   );
 };

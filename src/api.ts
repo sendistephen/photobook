@@ -40,7 +40,11 @@ export async function fetchUserData<T>(
 }
 
 export const fetchPhotos = async (page: number, perPage: number = 20) => {
-  return fetchData<Photo[]>('photos', { page, per_page: perPage });
+  return fetchData<Photo[]>('photos', { 
+    page, 
+    per_page: perPage,
+    order_by: 'latest'
+  });
 };
 
 export const fetchCollectionPhotos = async (

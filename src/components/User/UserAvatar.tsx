@@ -1,6 +1,6 @@
 import { shortenNumber } from '../../utils/helper';
 
-import { Instagram, Twitter } from 'lucide-react';
+import { Instagram, X } from 'lucide-react';
 import {
   Avatar,
   AvatarContainer,
@@ -15,24 +15,31 @@ import IconWrapper from '../Common/IconWrapper';
 import { Label } from '../PhotoModal/PhotoModal.styles';
 import { Tag, TagsContainer } from '@/styles/GlobalStyles';
 
-const StatItem = ({ count, label }: { count: number; label: string }) => (
+const StatItem = ({ count, label }: { count: number | undefined; label: string }) => (
   <>
-    <Label size="md">{shortenNumber(count)}</Label>
+    <Label size="md">{count ? shortenNumber(count) : '0'}</Label>
     <Label size="xs">{label}</Label>
   </>
 );
 const UserAvatar = ({ user }: { user: User }) => {
+  if (!user) {
+    return null;
+  }
+
   return (
     <AvatarContainer>
-      <Avatar src={user.profile_image.large} alt={user.name} />
+      <Avatar 
+        src={user.profile_image?.large || user.profile_image?.medium || user.profile_image?.small || ''} 
+        alt={user.name || 'User'} 
+      />
       <UserInfo>
         <Label size="3xl" weight="bold">
-          {user.name}
+          {user.name || 'Unknown User'}
         </Label>
         <Label size="sm">
           {user.bio
             ? user.bio
-            : `Download free, beautiful high-quality photos curated by ${user.name}`}
+            : `Download free, beautiful high-quality photos curated by ${user.name || 'this user'}`}
         </Label>
         <Stats>
           <Posts>
@@ -45,7 +52,7 @@ const UserAvatar = ({ user }: { user: User }) => {
             <StatItem count={user.following_count} label="Following" />
           </Following>
         </Stats>
-        {user.social.instagram_username && (
+        {user.social?.instagram_username && (
           <StyledLink
             to={`https://instagram.com/${user.social.instagram_username}`}
           >
@@ -55,21 +62,25 @@ const UserAvatar = ({ user }: { user: User }) => {
             </Label>
           </StyledLink>
         )}
-        {user.social.twitter_username && (
+        {user.social?.twitter_username && (
           <StyledLink
             to={`https://twitter.com/${user.social.twitter_username}`}
           >
-            <IconWrapper icon={Twitter} color="textSecondary" />
+            <IconWrapper icon={X} color="textSecondary" />
             <Label color="textSecondary">{user.social.twitter_username}</Label>
           </StyledLink>
         )}
 
-        <Label>Interests</Label>
-        <TagsContainer>
-          {user.tags.custom.map((interest, index) => (
-            <Tag key={index}>{interest.title}</Tag>
-          ))}
-        </TagsContainer>
+        {user.tags?.custom && user.tags.custom.length > 0 && (
+          <>
+            <Label>Interests</Label>
+            <TagsContainer>
+              {user.tags.custom.map((interest, index) => (
+                <Tag key={index}>{interest.title}</Tag>
+              ))}
+            </TagsContainer>
+          </>
+        )}
       </UserInfo>
     </AvatarContainer>
   );

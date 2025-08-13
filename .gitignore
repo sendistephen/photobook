@@ -130,3 +130,5 @@ server/
 .vercel
 
 /playground.yml
+CLAUDE.md
+CHANGELOG.md

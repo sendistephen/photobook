@@ -26,7 +26,7 @@ const MenuItems = ({ handleToggle }: NavbarProps) => (
     {menu.map((item, index) => (
       <NavLinks key={index} item={item} />
     ))}
-    <MenuThemeItem onClick={handleToggle}>
+    <MenuThemeItem onClick={handleToggle} aria-label="toggle theme">
       <IconWrapper icon={SunMoon} color="onSurface" />
     </MenuThemeItem>
     <AuthControls />
@@ -43,12 +43,18 @@ const Navbar = () => {
           <SearchBar />
           <BuggerIcon>
             {isOpen ? (
-              <StyledXMarkIcon onClick={() => setIsOpen(!isOpen)} />
+              <StyledXMarkIcon
+                onClick={() => setIsOpen(!isOpen)}
+                data-testid="burger-icon"
+              />
             ) : (
-              <StyledBars3Icon onClick={() => setIsOpen(!isOpen)} />
+              <StyledBars3Icon
+                onClick={() => setIsOpen(!isOpen)}
+                data-testid="hamburger-icon"
+              />
             )}
           </BuggerIcon>
-          <MenuWrapper isOpen={isOpen}>
+          <MenuWrapper isOpen={isOpen} data-testid="mobile-menu">
             <MenuItems handleToggle={handleToggle} />
           </MenuWrapper>
         </HeaderContainer>

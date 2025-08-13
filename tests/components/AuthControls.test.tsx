@@ -6,12 +6,6 @@ import { setUser, clearUser } from '@/store/authSlice';
 import * as firebaseAuth from '@/firebase/firebaseAuth';
 import { store } from '@/store';
 
-// Mock the signInWithGoogle function from firebaseAuth
-vi.mock('@/firebase/firebaseAuth', () => ({
-  signInWithGoogle: vi.fn(),
-  signOut: vi.fn(),
-}));
-
 describe('AuthControls', () => {
   it('should render `LoginButton` when user is not logged in', () => {
     // Ensure user is not logged in

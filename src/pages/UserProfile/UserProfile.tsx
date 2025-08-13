@@ -11,13 +11,38 @@ const UserProfile = () => {
 
   const { user, isLoading, error } = useUser({ username: username ?? null });
 
-  if (isLoading) return <Spinner />;
-
-  if (error) {
-    return <span>Error</span>;
+  if (isLoading) {
+    return (
+      <Wrapper>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}>
+          <Spinner />
+        </div>
+      </Wrapper>
+    );
   }
 
-  if (!user || user instanceof Error) return <span>User not found</span>;
+  if (error) {
+    return (
+      <Wrapper>
+        <div style={{ textAlign: 'center', padding: '2rem' }}>
+          <h2>Error loading user profile</h2>
+          <p>Sorry, we couldn't load the user profile. Please try again later.</p>
+          <button onClick={() => window.location.reload()}>Retry</button>
+        </div>
+      </Wrapper>
+    );
+  }
+
+  if (!user || user instanceof Error) {
+    return (
+      <Wrapper>
+        <div style={{ textAlign: 'center', padding: '2rem' }}>
+          <h2>User not found</h2>
+          <p>The user "{username}" could not be found.</p>
+        </div>
+      </Wrapper>
+    );
+  }
 
   return (
     <Wrapper>

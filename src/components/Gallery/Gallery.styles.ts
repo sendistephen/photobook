@@ -9,6 +9,60 @@ export const ImageWrapper = styled.div`
   overflow: hidden;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+  
+  &:hover {
+    transform: scale(1.02);
+  }
+`;
+
+export const ImageContainer = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+`;
+
+export const BlurPlaceholder = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+  background-size: 200% 200%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top-color: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes shimmer {
+    0% {
+      background-position: -200% -200%;
+    }
+    100% {
+      background-position: 200% 200%;
+    }
+  }
+  
+  @keyframes spin {
+    to {
+      transform: translate(-50%, -50%) rotate(360deg);
+    }
+  }
 `;
 
 export const Image = styled.img`
@@ -16,6 +70,8 @@ export const Image = styled.img`
   height: 100%;
   display: block;
   object-fit: cover;
+  position: relative;
+  z-index: 1;
 `;
 export const SkeletonContainer = styled.div`
   display: flex;
@@ -48,7 +104,7 @@ export const SkeletonWrapper = styled.div`
   }
 `;
 export const StyledSkeleton = styled.div`
-  width: 30%;
+  width: 100%;
   height: 300px;
   border-radius: 8px;
   background-color: ${(props) => props.theme.colors.skeletonBase};
@@ -58,7 +114,9 @@ export const StyledSkeleton = styled.div`
     ${(props) => props.theme.colors.skeltonHighlight},
     ${(props) => props.theme.colors.skeletonBase}
   );
+  background-size: 200px 100%;
   animation: shine 1.6s infinite linear;
+  will-change: background-position;
 
   @keyframes shine {
     0% {

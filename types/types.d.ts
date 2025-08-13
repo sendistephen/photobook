@@ -23,6 +23,9 @@ interface Photo {
   downloads: number;
   description: string;
   published_at: string;
+  width: number;
+  height: number;
+  color: string;
   exif: {
     name: string;
   };
@@ -35,23 +38,23 @@ interface User {
   name: string;
   username: string;
   profile_image: {
-    small: string;
-    large: string;
-    medium: string;
+    small?: string;
+    large?: string;
+    medium?: string;
   };
-  bio: string;
-  portfolio_url: string;
-  followers_count: number;
-  following_count: number;
-  downloads: number;
-  instagram_username: string;
-  social: {
-    instagram_username: string;
-    portfolio_url: string;
-    twitter_username: string;
+  bio?: string;
+  portfolio_url?: string;
+  followers_count?: number;
+  following_count?: number;
+  downloads?: number;
+  instagram_username?: string;
+  social?: {
+    instagram_username?: string;
+    portfolio_url?: string;
+    twitter_username?: string;
   };
-  tags: {
-    custom: {
+  tags?: {
+    custom?: {
       title: string;
     }[];
   };
